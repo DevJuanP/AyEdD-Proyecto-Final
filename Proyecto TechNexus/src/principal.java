@@ -60,6 +60,6 @@ public class principal extends JFrame implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtnNewButton(ActionEvent e) {
-		textArea.append("estoy muerto \n");
+		textArea.append("ohñoo \n");
 	}
 }
