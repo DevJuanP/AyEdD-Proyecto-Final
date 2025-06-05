@@ -17,6 +17,8 @@ public class pruebas extends JFrame {
 		pruebas frame = new pruebas();
 		frame.setVisible(true);
 	}
+	
+	private JTextArea txtOut;
 
 	public pruebas() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,14 +32,26 @@ public class pruebas extends JFrame {
 		btnProcesar.setBounds(280, 20, 100, 25);
 		getContentPane().add(btnProcesar);
 		
-		JTextArea txtOut = new JTextArea();
+		txtOut = new JTextArea();
 		
 		JScrollPane scr = new JScrollPane(txtOut);
 		scr.setBounds(20, 55, 400, 200);
 		getContentPane().add(scr);
 		
-		Alumno a1 = new Alumno(22, 926948098, "pepe", "paredes", "72884005");
+		btnProcesar.addActionListener(e -> {
+			Alumno a1 = new Alumno(22, 926948098, "pepe", "paredes", "72884005");
+			Alumno a2 = new Alumno(22, 926948098, "pepe", "paredes", "72884005");
+			Alumno a3 = new Alumno(22, 926948098, "pepe", "paredes", "72884005");
+			Alumno a4 = new Alumno(22, 926948098, "pepe", "paredes", "72884005");
+			abc(a1);
+			abc(a2);
+			abc(a3);
+			abc(a4);
+		});
 		
+	}
+	
+	void abc(Alumno a1) {
 		txtOut.append("codigo: "+a1.getCodAlumno()+"\n");
 		txtOut.append("edad : "+a1.getEdad()+"\n");
 		txtOut.append("celular: "+a1.getCelular()+"\n");
@@ -45,7 +59,6 @@ public class pruebas extends JFrame {
 		txtOut.append("nombre: "+a1.getNombres()+"\n");
 		txtOut.append("apellidos: "+a1.getApellidos()+"\n");
 		txtOut.append("dni: "+a1.getDni());
-		
 	}
 
 }
