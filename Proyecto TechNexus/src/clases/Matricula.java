@@ -2,14 +2,17 @@ package clases;
 //LOCAL DATE Y TIME AYUDAN A ALMACENAR FECHAS Y HORAS 
 import java.time.LocalDate;
 import java.time.LocalTime;
+//DATE TIME FORM PARA AGREGAR FORMATO Y PARSEAR EL TEXTO A OBJETOS DE TIPO FECHA U HORA
+import java.time.format.DateTimeFormatter;
+
 
 public class Matricula {
 	//contador
 	static private int contadorMatricula = 100001;
 
 	private int numMatricula,codAlumno,codCurso;
-	private LocalDate fecha;
-	private LocalTime hora;
+	private String fecha;
+	private String hora;
 	
 
 	
@@ -21,8 +24,8 @@ public Matricula(int codAlumno, int codCurso) {
 		this.numMatricula = contadorMatricula++;
 		this.codAlumno = codAlumno;
 		this.codCurso = codCurso;
-		this.fecha = LocalDate.now();
-		this.hora = LocalTime.now();
+		this.fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		this.hora  = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 	}
 
 
@@ -34,15 +37,7 @@ public Matricula(int codAlumno, int codCurso) {
 
 //GETTER AND SETTER
 	
-//metodo toostring para mostrar la informacion... metodo modificado
-	@Override
-	public String toString() {
-		return    "Numero de matricula: " + numMatricula +"\n"+
-				  "Codigo de alumno: " + codAlumno +"\n"+ 
-				  "Codigo de curso" + codCurso+"\n"+
-				  "Fecha: " + fecha +"\n"+
-				  "Hora: " + hora;
-	}
+
 
 
 	public static int getContadorMatricula() {
@@ -85,25 +80,47 @@ public Matricula(int codAlumno, int codCurso) {
 	}
 
 
-	public LocalDate getFecha() {
+
+
+
+	public String getFecha() {
 		return fecha;
 	}
 
 
-	public void setFecha(LocalDate fecha) {
+
+
+
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
 
-	public LocalTime getHora() {
+
+
+
+	public String getHora() {
 		return hora;
 	}
 
 
-	public void setHora(LocalTime hora) {
+
+
+
+	public void setHora(String hora) {
 		this.hora = hora;
 	}
-	
+
+
+	//metodo toostring para mostrar la informacion... metodo modificado
+	@Override
+	public String toString() {
+		return    "Numero de matricula: " + numMatricula +"\n"+
+				  "Codigo de alumno: " + codAlumno +"\n"+ 
+				  "Codigo de curso" + codCurso+"\n"+
+				  "Fecha: " + fecha +"\n"+
+				  "Hora: " + hora;
+	}
 	
 	
 	
