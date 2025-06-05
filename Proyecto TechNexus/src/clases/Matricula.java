@@ -10,7 +10,7 @@ public class Matricula {
 	//contador
 	static private int contadorMatricula = 100001;
 
-	private int numMatricula,codAlumno,codCurso;
+	private int numMatricula,codAlumno,codCurso,estado;
 	private String fecha;
 	private String hora;
 	
@@ -22,6 +22,7 @@ public class Matricula {
 
 public Matricula(int codAlumno, int codCurso) {
 		this.numMatricula = contadorMatricula++;
+		this.estado = 1;
 		this.codAlumno = codAlumno;
 		this.codCurso = codCurso;
 		this.fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
