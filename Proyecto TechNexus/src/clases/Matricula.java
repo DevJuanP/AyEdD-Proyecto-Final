@@ -2,10 +2,7 @@ package clases;
 //LOCAL DATE Y TIME AYUDAN A ALMACENAR FECHAS Y HORAS 
 import java.time.LocalDate;
 import java.time.LocalTime;
-//DATE TIME FORM PARA AGREGAR FORMATO Y PARSEAR EL TEXTO A OBJETOS DE TIPO FECHA U HORA
-import java.time.format.DateTimeFormatter;
-//DATE TIME EXCEPTION LANZA UNA EXCEPCION EN CASO DE QUE EL FORMATO SEA INCORRECTO O UNA FECHA INCORRECTA
-import java.time.format.DateTimeParseException;
+
 public class Matricula {
 	//contador
 	static private int contadorMatricula = 100001;
@@ -14,41 +11,20 @@ public class Matricula {
 	private LocalDate fecha;
 	private LocalTime hora;
 	
-	//CREACION DE LOS FOMATOS DE DECHA Y HORA 
-	static public final DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	static public final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");	
-	
+
 	
 
 		
 	
 
-public Matricula(int codAlumno, int codCurso, String fecha, String hora) {
+public Matricula(int codAlumno, int codCurso) {
 		this.numMatricula = contadorMatricula++;
 		this.codAlumno = codAlumno;
 		this.codCurso = codCurso;
-		this.fecha = ConvertirFecha(fecha);
-		this.hora = ConvertirHora(hora);
+		this.fecha = LocalDate.now();
+		this.hora = LocalTime.now();
 	}
 
-
-//metodos para comvertir las fechas y horas String a objetos date/time
- private LocalDate ConvertirFecha(String fecha) {
-	 try {
-		 return LocalDate.parse(fecha, formatoFecha);
-	 }catch (DateTimeParseException e) {
-		throw new IllegalArgumentException("Fecha incorrecta, ingrese correctamente los datos.");
-	}
- }
- 
-
- private LocalTime ConvertirHora(String hora) {
-	 try {
-		 return  LocalTime.parse(hora, formatoHora);
-	 }catch (DateTimeParseException e) {
-		throw new IllegalArgumentException("Hora incorrecta, ingrese correctamente los datos.");
-	}
- }
 
 
 
@@ -57,6 +33,18 @@ public Matricula(int codAlumno, int codCurso, String fecha, String hora) {
 
 
 //GETTER AND SETTER
+	
+//metodo toostring para mostrar la informacion... metodo modificado
+	@Override
+	public String toString() {
+		return    "Numero de matricula: " + numMatricula +"\n"+
+				  "Codigo de alumno: " + codAlumno +"\n"+ 
+				  "Codigo de curso" + codCurso+"\n"+
+				  "Fecha: " + fecha +"\n"+
+				  "Hora: " + hora;
+	}
+
+
 	public static int getContadorMatricula() {
 		return contadorMatricula;
 	}
@@ -97,7 +85,6 @@ public Matricula(int codAlumno, int codCurso, String fecha, String hora) {
 	}
 
 
-	
 	public LocalDate getFecha() {
 		return fecha;
 	}
@@ -115,16 +102,6 @@ public Matricula(int codAlumno, int codCurso, String fecha, String hora) {
 
 	public void setHora(LocalTime hora) {
 		this.hora = hora;
-	}
-
-//metodo toostring para mostrar la informacion... metodo modificado
-	@Override
-	public String toString() {
-		return    "Numero de matricula: " + numMatricula +"\n"+
-				  "Codigo de alumno: " + codAlumno +"\n"+ 
-				  "Codigo de curso" + codCurso+"\n"+
-				  "Fecha: " + fecha.format(formatoFecha) +"\n"+
-				  "Hora: " + hora.format(formatoHora);
 	}
 	
 	
