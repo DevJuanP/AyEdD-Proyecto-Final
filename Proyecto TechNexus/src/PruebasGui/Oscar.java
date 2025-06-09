@@ -1,4 +1,4 @@
-package gui;
+package PruebasGui;
 
 import java.awt.EventQueue;
 import javax.swing.*;
@@ -9,18 +9,18 @@ import javax.swing.border.EmptyBorder;
 
 import clases.Alumno;
 
-public class pruebas extends JFrame {
+public class Oscar extends JFrame {
 
 	private JPanel contentPane;
 
 	public static void main(String[] args) {
-		pruebas frame = new pruebas();
+		Oscar frame = new Oscar();
 		frame.setVisible(true);
 	}
 	
 	private JTextArea txtOut;
 
-	public pruebas() {
+	public Oscar() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -38,5 +38,26 @@ public class pruebas extends JFrame {
 		scr.setBounds(20, 55, 400, 200);
 		getContentPane().add(scr);
 		
+		btnProcesar.addActionListener(e -> {
+			//aquí la lógica
+			Imprimir("Codea pues ----→> (╯°□°）╯︵ ┻━┻");
+			Imprimir();
+			Imprimir("          (¬_¬ )");
+			Imprimir();
+			Imprimir("          (ᵔ◡ᵔ)");
+		});
+			
+	}
+	void Listar(Alumno a1) {
+		//aquí el listado de tu clase
+	}
+	void Imprimir(String s) {
+		txtOut.append(s + "\n");
+	}
+	void Imprimir(){
+		Imprimir("");
+	}
+	void Limpiar() {
+		txtOut.setText("");
 	}
 }
