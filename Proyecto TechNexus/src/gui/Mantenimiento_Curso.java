@@ -16,6 +16,8 @@ import javax.swing.JSeparator;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class Mantenimiento_Curso extends JFrame {
 
@@ -26,6 +28,7 @@ public class Mantenimiento_Curso extends JFrame {
 	private JTextField textHoras;
 	private JTextField textCodigo;
 	private JTextField textField;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -116,9 +119,9 @@ public class Mantenimiento_Curso extends JFrame {
 		cmbxCiclo.setBounds(108, 73, 139, 20);
 		contentPane.add(cmbxCiclo);
 		
-		JLabel lblNewLabel_1_1_2 = new JLabel("Consulta");
-		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1_2.setBounds(23, 112, 46, 20);
+		JLabel lblNewLabel_1_1_2 = new JLabel("CONSULTAR:");
+		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_1_1_2.setBounds(53, 116, 102, 20);
 		contentPane.add(lblNewLabel_1_1_2);
 		
 		JRadioButton rdbtnNombresYApellido = new JRadioButton("Nombres y Apellido");
@@ -142,31 +145,83 @@ public class Mantenimiento_Curso extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(23, 103, 578, 2);
+		separator.setForeground(new Color(128, 128, 128));
+		separator.setBounds(23, 113, 583, 33);
 		contentPane.add(separator);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(23, 191, 578, 194);
+		scrollPane.setBounds(23, 203, 578, 194);
 		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+			},
+			new String[] {
+				"C\u00D3DIGO", "ASIGNATURA", "CICLO", "CR\u00C9DITOS", "HORAS"
+			}
+		));
+		scrollPane.setViewportView(table);
 		
 		JButton btnAdicionar = new JButton("ADICIONAR");
 		btnAdicionar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnAdicionar.setBounds(76, 407, 107, 21);
+		btnAdicionar.setBounds(130, 417, 107, 21);
 		contentPane.add(btnAdicionar);
 		
 		JButton btnModificar = new JButton("MODIFICAR");
 		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnModificar.setBounds(259, 407, 107, 21);
+		btnModificar.setBounds(254, 417, 107, 21);
 		contentPane.add(btnModificar);
 		
 		JButton btnEliminar = new JButton("ELIMINAR");
 		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnEliminar.setBounds(442, 407, 107, 21);
+		btnEliminar.setBounds(378, 417, 107, 21);
 		contentPane.add(btnEliminar);
 		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(23, 179, 578, 2);
+		JSeparator separator_1 = new JSeparator(SwingConstants.VERTICAL);
+		separator_1.setForeground(new Color(128, 128, 128));
+		separator_1.setBounds(23, 113, 20, 64);
 		contentPane.add(separator_1);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setForeground(new Color(160, 160, 160));
+		separator_2.setBounds(23, 176, 583, 33);
+		contentPane.add(separator_2);
+		
+		JSeparator separator_1_1 = new JSeparator(SwingConstants.VERTICAL);
+		separator_1_1.setForeground(new Color(128, 128, 128));
+		separator_1_1.setBounds(605, 113, 20, 64);
+		contentPane.add(separator_1_1);
+		
+		JButton btnNuevo = new JButton("NUEVO");
+		btnNuevo.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnNuevo.setBounds(17, 417, 96, 21);
+		contentPane.add(btnNuevo);
+		
+		JButton btnSalir = new JButton("SALIR");
+		btnSalir.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnSalir.setBounds(502, 417, 107, 21);
+		contentPane.add(btnSalir);
 		
 	}
 }
