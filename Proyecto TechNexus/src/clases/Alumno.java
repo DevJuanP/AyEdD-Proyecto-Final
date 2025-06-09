@@ -1,11 +1,14 @@
 package clases;
 
 public class Alumno {
-	private int codAlumno = 202510000, edad, celular, estado;
+	private int codAlumno, edad, celular, estado;
 	private String nombres, apellidos, dni;
 	
+	private static int genCode = 202510000;
+	
 	public Alumno(int edad, int celular, String nombres, String apellidos, String dni) {
-		this.codAlumno++;
+		genCode++;
+		this.codAlumno = genCode;
 		this.edad = edad;
 		this.celular = celular;
 		this.estado = 0;
