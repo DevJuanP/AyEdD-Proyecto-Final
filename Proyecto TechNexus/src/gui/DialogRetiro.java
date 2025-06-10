@@ -37,7 +37,7 @@ public class DialogRetiro extends JFrame {
 	private JLabel lblCdigoMaticula;
 	private JLabel lblCdigoAlumno;
 	private JLabel lblNombreDelAlumno;
-	private JTextField textCodMat;
+	private JTextField txtCodAlum;
 	private JTextField txtNomApelli;
 	private JLabel lblCdigoCurso;
 	private JTextField txtCodMat;
@@ -50,10 +50,10 @@ public class DialogRetiro extends JFrame {
 	private JTextField txtCodCurso;
 	private JScrollPane scrollPane;
 	private JTable table;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
-	private JButton btnNewButton_2;
-	private JButton btnNewButton_3;
+	private JButton btnBuscar;
+	private JButton btnRegistrar;
+	private JButton btnModificar;
+	private JButton btnEliminar;
 
 	/**
 	 * Launch the application.
@@ -75,6 +75,7 @@ public class DialogRetiro extends JFrame {
 	 * Create the frame.
 	 */
 	public DialogRetiro() {
+		setTitle("Retiro");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
 		setSize(900, 608);
@@ -93,7 +94,7 @@ public class DialogRetiro extends JFrame {
 		lblTitle.setBounds(0, 0, 884, 26);
 		contentPane.add(lblTitle);
 		
-		lblCdigoMaticula = new JLabel("Código Maticula");
+		lblCdigoMaticula = new JLabel("Código Matricula");
 		lblCdigoMaticula.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCdigoMaticula.setBounds(22, 71, 123, 25);
 		contentPane.add(lblCdigoMaticula);
@@ -108,9 +109,9 @@ public class DialogRetiro extends JFrame {
 		lblNombreDelAlumno.setBounds(22, 141, 123, 25);
 		contentPane.add(lblNombreDelAlumno);
 		
-		textCodMat = new JTextField();
-		textCodMat.setBounds(161, 106, 109, 25);
-		contentPane.add(textCodMat);
+		txtCodAlum = new JTextField();
+		txtCodAlum.setBounds(161, 106, 109, 25);
+		contentPane.add(txtCodAlum);
 		
 		txtNomApelli = new JTextField();
 		txtNomApelli.setBounds(161, 141, 396, 25);
@@ -173,25 +174,25 @@ public class DialogRetiro extends JFrame {
 		JTableHeader header = table.getTableHeader();
 		header.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
-		btnNewButton = new JButton("Buscar");
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnNewButton.setBounds(297, 69, 90, 30);
-		contentPane.add(btnNewButton);
+		btnBuscar = new JButton("Buscar");
+		btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnBuscar.setBounds(297, 69, 90, 30);
+		contentPane.add(btnBuscar);
 		
-		btnNewButton_1 = new JButton("Registrar");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnNewButton_1.setBounds(97, 524, 90, 30);
-		contentPane.add(btnNewButton_1);
+		btnRegistrar = new JButton("Registrar");
+		btnRegistrar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnRegistrar.setBounds(97, 524, 90, 30);
+		contentPane.add(btnRegistrar);
 		
-		btnNewButton_2 = new JButton("Modificar");
-		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnNewButton_2.setBounds(392, 524, 90, 30);
-		contentPane.add(btnNewButton_2);
+		btnModificar = new JButton("Modificar");
+		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnModificar.setBounds(392, 524, 90, 30);
+		contentPane.add(btnModificar);
 		
-		btnNewButton_3 = new JButton("Eliminar");
-		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnNewButton_3.setBounds(707, 524, 90, 30);
-		contentPane.add(btnNewButton_3);
+		btnEliminar = new JButton("Eliminar");
+		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnEliminar.setBounds(707, 524, 90, 30);
+		contentPane.add(btnEliminar);
 		
 		
 
