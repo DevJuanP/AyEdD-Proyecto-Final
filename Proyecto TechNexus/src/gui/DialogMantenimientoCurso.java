@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 
@@ -58,6 +59,7 @@ public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 	private JRadioButton rbtnCodigo;
 	private JRadioButton rbtnAsignatura;
 	private int filaSeleccionada = -1;
+	private JButton btnGuardar;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -78,7 +80,7 @@ public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 		
 		setTitle("Mantenimiento de curso");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 637, 467);
+		setBounds(100, 100, 637, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -165,19 +167,19 @@ public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 		btnRegistrar = new JButton("REGISTRAR");
 		btnRegistrar.addActionListener(this);
 		btnRegistrar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnRegistrar.setBounds(185, 368, 107, 21);
+		btnRegistrar.setBounds(135, 368, 107, 21);
 		contentPane.add(btnRegistrar);
 		
 		btnModificar = new JButton("MODIFICAR");
 		btnModificar.addActionListener(this);
 		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnModificar.setBounds(331, 368, 107, 21);
+		btnModificar.setBounds(256, 368, 107, 21);
 		contentPane.add(btnModificar);
 		
 		btnEliminar = new JButton("ELIMINAR");
 		btnEliminar.addActionListener(this);
 		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnEliminar.setBounds(477, 368, 107, 21);
+		btnEliminar.setBounds(498, 368, 107, 21);
 		contentPane.add(btnEliminar);
 		
 		lblConsultar = new JLabel("CONSULTAR:");
@@ -219,7 +221,7 @@ public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 		btnNuevo = new JButton("NUEVO");
 		btnNuevo.addActionListener(this);
 		btnNuevo.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnNuevo.setBounds(39, 368, 107, 21);
+		btnNuevo.setBounds(23, 368, 98, 21);
 		contentPane.add(btnNuevo);
 		
 		rbtnCodigo = new JRadioButton("C\u00F3digo");
@@ -235,9 +237,18 @@ public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 		ButtonGroup grupoBusqueda = new ButtonGroup();
 		grupoBusqueda.add(rbtnCodigo);
 		grupoBusqueda.add(rbtnAsignatura);
+		
+		btnGuardar = new JButton("GUARDAR");
+		btnGuardar.addActionListener(this);
+		btnGuardar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnGuardar.setBounds(377, 368, 107, 21);
+		contentPane.add(btnGuardar);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnGuardar) {
+			doBtnGuardarActionPerformed(e);
+		}
 		if (e.getSource() == btnBuscar) {
 			doBtnBuscarActionPerformed(e);
 		}
@@ -254,6 +265,7 @@ public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 			doBtnRegistrarActionPerformed(e);
 		}
 	}
+	
 	protected void doBtnRegistrarActionPerformed(ActionEvent e) {
 		try {
 			// Leer datos de los campos
@@ -274,78 +286,80 @@ public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 					c.getHoras(),
 			});
 		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(this, "Por favor, ingrese valores numéricos válidos en los campos numéricos.");
+			JOptionPane.showMessageDialog(this, "Por favor, ingrese valores correctos en los campos indicados.");
 		}
 	}
+	
 	protected void doBtnModificarActionPerformed(ActionEvent e) {
-		if (filaSeleccionada == -1) {
-	        JOptionPane.showMessageDialog(this, "Primero debes buscar un curso para modificar.");
-	        return;
-	    }
-
-	    try {
-	        String asignatura = txtAsignatura.getText();
-	        int ciclo = Integer.parseInt(cmbCiclo.getSelectedItem().toString());
-	        int creditos = Integer.parseInt(txtCreditos.getText());
-	        int horas = Integer.parseInt(txtHoras.getText());
-
-	        DefaultTableModel model = (DefaultTableModel) table.getModel();
-
-	        model.setValueAt(asignatura, filaSeleccionada, 1);
-	        model.setValueAt(ciclo, filaSeleccionada, 2);
-	        model.setValueAt(creditos, filaSeleccionada, 3);
-	        model.setValueAt(horas, filaSeleccionada, 4);
-
-	        JOptionPane.showMessageDialog(this, "Curso modificado exitosamente.");
-
-	        // Reset
-	        filaSeleccionada = -1;
-	        txtCodigo.setEditable(true);
-	        doBtnNuevoActionPerformed(e);
-
-	    } catch (Exception ex) {
-	        JOptionPane.showMessageDialog(this, "Error al modificar. Verifica los campos.");
-	    }
+		//Parametros
+		int fila, respuesta;
+		try {
+			//Llama a la fila
+			fila=table.getSelectedRow();
+			if(fila==-1) { //Cuando no se selecciona ninguna fila
+				JOptionPane.showMessageDialog(null, "Debes selecionar primero una fila.","Advertencia",JOptionPane.WARNING_MESSAGE);
+			}else {//Selecciona la fila al dar boton modificar
+				respuesta=JOptionPane.showConfirmDialog(null, "Desea modificar este registro?","Modificar",JOptionPane.YES_NO_OPTION);
+				//Cuando acepta modificar 
+				if(respuesta==JOptionPane.YES_NO_OPTION) {
+					txtCodigo.setText(String.valueOf(table.getValueAt(fila, 0)));
+					txtCodigo.setEditable(false);
+					txtAsignatura.setText(String.valueOf(table.getValueAt(fila, 1)));
+					cmbCiclo.setSelectedItem(String.valueOf(table.getValueAt(fila, 2)));
+					txtCreditos.setText(String.valueOf(table.getValueAt(fila, 3)));
+					txtHoras.setText(String.valueOf(table.getValueAt(fila, 4)));
+					DefaultTableModel model = (DefaultTableModel) table.getModel();
+					model.removeRow(fila);
+				}
+			}
+		} catch (Exception e2) {
+			// TODO: handle exception
+		}
 	}
+	
 	protected void doBtnEliminarActionPerformed(ActionEvent e) {
+		int fila, respuesta;
+		fila=table.getSelectedRow();
+		if(fila==-1) {
+			JOptionPane.showMessageDialog(null, "Selecciona primero un registro","Advertencia",JOptionPane.WARNING_MESSAGE);
+			
+		}else {
+			respuesta=JOptionPane.showConfirmDialog(null, "Desea eliminar este registro?","Eliminar",JOptionPane.YES_NO_OPTION);
+			if(respuesta==JOptionPane.YES_NO_OPTION) {
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.removeRow(fila);
+			}
+		}
 	}
 	protected void doBtnNuevoActionPerformed(ActionEvent e) {
 		txtCodigo.setText("");
+		txtCodigo.setEditable(true);
 		txtAsignatura.setText("");
 		cmbCiclo.setSelectedIndex(0);
 		txtCreditos.setText("");
 		txtHoras.setText("");
 	}
+	
 	protected void doBtnBuscarActionPerformed(ActionEvent e) {
-	    String criterio = txtCodigoCurso.getText().trim();
-	    DefaultTableModel model = (DefaultTableModel) table.getModel();
-	    filaSeleccionada = -1;
-
-	    for (int i = 0; i < model.getRowCount(); i++) {
-	        String valorCelda = "";
-
-	        if (rbtnCodigo.isSelected()) {
-	            valorCelda = model.getValueAt(i, 0).toString(); // código
-	        } else if (rbtnAsignatura.isSelected()) {
-	            valorCelda = model.getValueAt(i, 1).toString(); // asignatura
-	        }
-
-	        if (valorCelda.equalsIgnoreCase(criterio)) {
-	            filaSeleccionada = i;
-
-	            // Llenar campos de texto con los datos encontrados
-	            txtCodigo.setText(model.getValueAt(i, 0).toString());
-	            txtAsignatura.setText(model.getValueAt(i, 1).toString());
-	            cmbCiclo.setSelectedItem(model.getValueAt(i, 2).toString());
-	            txtCreditos.setText(model.getValueAt(i, 3).toString());
-	            txtHoras.setText(model.getValueAt(i, 4).toString());
-
-	            // Deshabilitar campo de código para evitar cambios
-	            txtCodigo.setEditable(false);
-	            return;
-	        }
-	    }
-
-	    JOptionPane.showMessageDialog(this, "No se encontró el curso.");
+	}
+	protected void doBtnGuardarActionPerformed(ActionEvent e) {
+		// Leer datos de los campos
+		int codCurso = Integer.parseInt(txtCodigo.getText());
+		String asignatura = txtAsignatura.getText();
+		int ciclo = Integer.parseInt((String) cmbCiclo.getSelectedItem());
+		int creditos = Integer.parseInt(txtCreditos.getText());
+		int horas = Integer.parseInt(txtHoras.getText());
+		//Crear objeto
+		Curso c = new Curso(codCurso, ciclo, creditos, horas, asignatura);
+		// Agregar la tabla
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.addRow(new Object[] {
+				c.getCodCurso(),
+				c.getAsignatura(),
+				c.getCiclo(),
+				c.getCreditos(),
+				c.getHoras(),
+		});
+		JOptionPane.showMessageDialog(null, "Se modifico correctamente el registro");
 	}
 }
