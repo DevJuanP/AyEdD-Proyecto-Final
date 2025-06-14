@@ -32,7 +32,7 @@ import javax.swing.Timer;
 
 //import java.awt.Component;
 
-public class DialogRetiro extends JFrame implements ActionListener {
+public class DialogRegistroRetiro extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -71,7 +71,7 @@ public class DialogRetiro extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DialogRetiro frame = new DialogRetiro();
+					DialogRegistroRetiro frame = new DialogRegistroRetiro();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -83,7 +83,7 @@ public class DialogRetiro extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public DialogRetiro() {
+	public DialogRegistroRetiro() {
 		setTitle("Retiro");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);

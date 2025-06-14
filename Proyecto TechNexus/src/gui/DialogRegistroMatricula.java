@@ -18,7 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class DialogMatricula extends JFrame {
+public class DialogRegistroMatricula extends JFrame {
 
 	private JPanel contentPane;
 	JLabel TXThora;
@@ -77,7 +77,7 @@ public class DialogMatricula extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DialogMatricula frame = new DialogMatricula();
+					DialogRegistroMatricula frame = new DialogRegistroMatricula();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -89,7 +89,7 @@ public class DialogMatricula extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DialogMatricula() {
+	public DialogRegistroMatricula() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 707, 484);
 		contentPane = new JPanel();

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.awt.event.ActionListener;
 
 
-public class AlumnoGui extends JFrame implements ActionListener{
+public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JPanel panelConsulta;
@@ -65,11 +65,11 @@ public class AlumnoGui extends JFrame implements ActionListener{
 
 	public static void main(String[] args) {
 		cargarAlumnos();
-		AlumnoGui frame = new AlumnoGui();
+		DialogMantenimientoAlumno frame = new DialogMantenimientoAlumno();
 		frame.setVisible(true);
 	}
 
-	public AlumnoGui() {
+	public DialogMantenimientoAlumno() {
 		setTitle("Mantenimiento de Alumno");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 600);
