@@ -1,15 +1,22 @@
 package gui;
 
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import clases.Curso;
+
 import java.awt.Font;
 import java.awt.Image;
 import javax.swing.Icon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.UIManager;
 
-public class Principal extends JFrame {
+public class Principal extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -36,6 +43,10 @@ public class Principal extends JFrame {
 	public static void main(String[] args) {
 		Principal frame = new Principal();
 		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
+        // Establece los textos de los botones en español
+        UIManager.put("OptionPane.yesButtonText", "Sí");
+        UIManager.put("OptionPane.noButtonText", "No");
 	}
 
 	public Principal() {
@@ -55,6 +66,7 @@ public class Principal extends JFrame {
 		mnMatenimiento.add(mntmAlumno);
 		
 		mntCurso = new JMenuItem("Curso");
+		mntCurso.addActionListener(this);
 		mntCurso.setFont(new Font("Tahoma", Font.BOLD, 12));
 		mnMatenimiento.add(mntCurso);
 		
@@ -107,10 +119,12 @@ public class Principal extends JFrame {
 		mnReporte.add(mntmMatriculaPorCurso);
 		
 		mnArchivo = new JMenu("Archivo");
+		mnArchivo.addActionListener(this);
 		mnArchivo.setFont(new Font("Tahoma", Font.BOLD, 12));
 		menuBar.add(mnArchivo);
 		
 		mntmSalir = new JMenuItem("Salir\r\n");
+		mntmSalir.addActionListener(this);
 		mnArchivo.add(mntmSalir);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -128,5 +142,27 @@ public class Principal extends JFrame {
 		lblFondo.setIcon(iconoRedimencionado);
 		contentPane.add(lblFondo);
 		
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == mntmSalir) {
+			doMntmSalirActionPerformed(e);
+		}
+		if (e.getSource() == mntCurso) {
+			doMntCursoActionPerformed(e);
+		}
+	}
+	protected void doMntCursoActionPerformed(ActionEvent e) {
+		DialogMantenimientoCurso dMCurso = new DialogMantenimientoCurso();
+		dMCurso.setLocationRelativeTo(dMCurso);
+		dMCurso.setVisible(true);
+	}
+	protected void doMntmSalirActionPerformed(ActionEvent e) {
+        // Establece los textos de los botones en español
+        UIManager.put("OptionPane.yesButtonText", "Sí");
+        UIManager.put("OptionPane.noButtonText", "No");
+		int respuesta;
+		respuesta=JOptionPane.showConfirmDialog(this, "¿Estas seguro que desea salir?","IMPORTANTE",JOptionPane.YES_NO_OPTION);
+		if(respuesta == 0)
+		System.exit(0);
 	}
 }
