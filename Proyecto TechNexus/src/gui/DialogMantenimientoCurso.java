@@ -269,6 +269,11 @@ public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 		try {
 			// Leer datos de los campos
 			int codCurso = Integer.parseInt(txtCodigo.getText());
+			//Validación de codigo 4 digitos
+			if(String.valueOf(codCurso).length() !=4) {
+                JOptionPane.showMessageDialog(this, "El código del curso debe tener exactamente 4 dígitos.");
+                return;
+            }
 			String asignatura = txtAsignatura.getText();
 			int ciclo = Integer.parseInt((String) cmbCiclo.getSelectedItem());
 			int creditos = Integer.parseInt(txtCreditos.getText());
