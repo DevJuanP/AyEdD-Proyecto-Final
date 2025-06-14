@@ -18,15 +18,21 @@ import javax.swing.border.EmptyBorder;
 //import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.JButton;
-//import javax.swing.ScrollPaneConstants;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import clases.Retiro;
 
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+//import javax.swing.ScrollPaneConstants;
+import javax.swing.Timer;
 
 
 
 //import java.awt.Component;
 
-public class DialogRetiro extends JFrame {
+public class DialogRetiro extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -45,16 +51,19 @@ public class DialogRetiro extends JFrame {
 	private JTextField txtCurso;
 	private JLabel lblFecha;
 	private JTextField txtFecha;
-	private JLabel lblFecha_1;
+	private JLabel lblHora;
 	private JTextField txtHora;
 	private JTextField txtCodCurso;
 	private JScrollPane scrollPane;
-	private JTable table;
+	private JTable tblDeDatos;
 	private JButton btnBuscar;
 	private JButton btnRegistrar;
 	private JButton btnModificar;
 	private JButton btnEliminar;
-
+	private JLabel lblCdigoRetiro;
+	private JTextField txtCodRetiro;
+	private Timer tiempo;
+	Retiro re1 = new Retiro();
 	/**
 	 * Launch the application.
 	 */
@@ -142,39 +151,62 @@ public class DialogRetiro extends JFrame {
 		
 		txtFecha = new JTextField();
 		txtFecha.setBounds(87, 202, 114, 25);
+		txtFecha.setText(re1.getFecha());
+		txtFecha.setEditable(false);
+		txtFecha.setFocusable(false);
+		txtFecha.setCursor(null);
 		contentPane.add(txtFecha);
 		
-		lblFecha_1 = new JLabel("Hora");
-		lblFecha_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblFecha_1.setBounds(274, 198, 44, 25);
-		contentPane.add(lblFecha_1);
+		lblHora = new JLabel("Hora");
+		lblHora.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblHora.setBounds(274, 198, 44, 25);
+		contentPane.add(lblHora);
 		
 		txtHora = new JTextField();
 		txtHora.setBounds(328, 200, 114, 25);
+		txtHora.setText(re1.getHora());
+		txtHora.setEditable(false);
+		txtHora.setFocusable(false);
+		txtHora.setCursor(null);
 		contentPane.add(txtHora);
 		
 		txtCodCurso = new JTextField();
 		txtCodCurso.setBounds(707, 106, 150, 25);
 		contentPane.add(txtCodCurso);
 		
+		lblCdigoRetiro = new JLabel("Código retiro");
+		lblCdigoRetiro.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblCdigoRetiro.setBounds(617, 71, 91, 25);
+		contentPane.add(lblCdigoRetiro);
+		
+		txtCodRetiro = new JTextField();
+		txtCodRetiro.setBounds(707, 71, 150, 25);
+		txtCodRetiro.setText("200001");
+		txtCodRetiro.setEditable(false);
+		txtCodRetiro.setFocusable(false);
+		txtCodRetiro.setCursor(null);
+		contentPane.add(txtCodRetiro);
+		
+		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(22, 264, 840, 249);
 		contentPane.add(scrollPane);
 		
-		table = new JTable();
+		tblDeDatos = new JTable();
 		//table.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		table.setModel(new DefaultTableModel(
+		tblDeDatos.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
 				"Código Retiro", "Código Alumno", "Nombre y Apellidos", "Código curso", "Curso", "Fecha", "Hora"
 			}
 		));
-		scrollPane.setViewportView(table);
-		JTableHeader header = table.getTableHeader();
+		scrollPane.setViewportView(tblDeDatos);
+		JTableHeader header = tblDeDatos.getTableHeader();
 		header.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(this);
 		btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnBuscar.setBounds(297, 69, 90, 30);
 		contentPane.add(btnBuscar);
@@ -195,6 +227,28 @@ public class DialogRetiro extends JFrame {
 		contentPane.add(btnEliminar);
 		
 		
+		// incicializacion de reloj
+		tiempo = new Timer(1000, e -> horaActualizada());
+		tiempo.start();
+		
 
 }
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnBuscar) {
+			do_btnBuscar_actionPerformed(e);
+		}
+	}
+	protected void do_btnBuscar_actionPerformed(ActionEvent e) {
+		
+	}
+	
+	
+
+	
+	private void horaActualizada() {
+		String Hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+		txtHora.setText(Hora);
+	}
+	
+	//ultima llave
 	}

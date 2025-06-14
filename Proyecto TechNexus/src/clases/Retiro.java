@@ -9,20 +9,30 @@ public class Retiro {
 	private int numRetiro, numMatricula;
 	private String fecha, hora;
 	private static int contador;
+	public static int prueba, conta;
 	
 	static {
 		contador = 200001;
+		//conta = 5;
 	}
-
-	public Retiro( int numMatricula) {
+	public Retiro(int numMatricula) {
 		this.numRetiro = contador++;
 		this.numMatricula = numMatricula;
 		this.fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		this.hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 	}
 
-	//get and set
+
+	public Retiro() {
+		super();
+		this.fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		this.hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+		//this.conta++;
+	}
 	
+
+	//get and set
+
 	public int getNumRetiro() {
 		return numRetiro;
 	}
@@ -54,8 +64,5 @@ public class Retiro {
 	public void setHora(String hora) {
 		this.hora = hora;
 	}
-	
-
-	
 	
 }
