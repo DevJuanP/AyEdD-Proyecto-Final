@@ -16,6 +16,22 @@ public class Alumno {
 		this.apellidos = apellidos;
 		this.dni = dni;
 	}
+	
+	public Alumno(int edad, int celular, String nombres, String apellidos, String dni, String s) {
+		switch(s) {
+			case "LEER_DATOS":
+				this.estado = 3;//3 que se usa para leer datos
+				break;
+			default:
+				this.estado = 0;
+		}
+		this.codAlumno = genCode;
+		this.edad = edad;
+		this.celular = celular;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.dni = dni;
+	}
 
 	public int getCodAlumno() {
 		return codAlumno;

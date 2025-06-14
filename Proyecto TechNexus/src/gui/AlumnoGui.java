@@ -3,11 +3,8 @@ package gui;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -18,13 +15,56 @@ import javax.swing.*;
 
 import java.util.ArrayList;
 
+import java.awt.event.ActionListener;
 
-public class AlumnoGui extends JFrame {
+
+public class AlumnoGui extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JPanel panelConsulta;
+	
+	private JLabel lblTitle;
+	
+	private JLabel lblNombre;
+	private JTextField txtNombre;
+	
+	private JLabel lblApellidos;
+	private JTextField txtApellidos;
+	
+	private JLabel lblCodigo;
+	private JTextField txtCodigo;
+	
+	private JLabel lblEdad;
+	private JTextField txtEdad;
+	
+	private JLabel lblTelefono;
+	private JTextField txtTelefono;
+	
+	private JLabel lblDNI;
+	private JTextField txtDNI;
+	
+	private JRadioButton rdbDni;
+	private JRadioButton rdbApellidos;
+	private ButtonGroup grupo;
+	
+	private JTextField txtBuscar;
+	private JButton btnBuscar;
+	
+	private JTable tblAlumnos;
+	private JScrollPane scrollTabla;
+	
+	private JButton btnNuevo;
+	private JButton btnRegistrar;
+	private JButton btnModificar;
+	private JButton btnEliminar;
+	
+	//otros
+	private DefaultTableModel modelo;
+	
+	private static ArrayList<Alumno> alumnosList = new ArrayList<>();
 
 	public static void main(String[] args) {
+		cargarAlumnos();
 		AlumnoGui frame = new AlumnoGui();
 		frame.setVisible(true);
 	}
@@ -40,7 +80,7 @@ public class AlumnoGui extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblTitle = new JLabel("MANTENIMIENTO ALUMNO");
+		lblTitle = new JLabel("MANTENIMIENTO ALUMNO");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(255, 255, 255));
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -49,44 +89,52 @@ public class AlumnoGui extends JFrame {
 		lblTitle.setBackground(new Color(0, 0, 0));
 		getContentPane().add(lblTitle);
 		
-		JLabel lblNombre = new JLabel("Nombres :");
+		lblNombre = new JLabel("Nombres :");
 		lblNombre.setBounds(25, 75, 120, 25);
 		getContentPane().add(lblNombre);
 		
-		JTextField txtNombre = new JTextField();
+		txtNombre = new JTextField();
 		txtNombre.setBounds(120, 75, 420, 25);
 		getContentPane().add(txtNombre);
 		
-		JLabel lblApellidos = new JLabel("Apellidos :");
+		lblApellidos = new JLabel("Apellidos :");
 		lblApellidos.setBounds(25, 110, 120, 25);
 		getContentPane().add(lblApellidos);
 		
-		JTextField txtApellidos = new JTextField();
+		txtApellidos = new JTextField();
 		txtApellidos.setBounds(120, 110, 420, 25);
 		getContentPane().add(txtApellidos);
 		
-		JLabel lblCodigo = new JLabel("Código :");
+		lblCodigo = new JLabel("Código :");
 		lblCodigo.setBounds(25, 40, 120, 25);
 		getContentPane().add(lblCodigo);
 		
-		JTextField txtCodigo = new JTextField();
+		txtCodigo = new JTextField();
 		txtCodigo.setBounds(120, 40, 100, 25);
 		txtCodigo.setEditable(false);
 		getContentPane().add(txtCodigo);
 		
-		JLabel lblTelefono = new JLabel("Telefono :");
+		lblEdad = new JLabel("Edad :");
+		lblEdad.setBounds(600, 40, 120, 25);
+		getContentPane().add(lblEdad);
+		
+		txtEdad = new JTextField();
+		txtEdad.setBounds(690, 40, 100, 25);
+		getContentPane().add(txtEdad);
+		
+		lblTelefono = new JLabel("Telefono :");
 		lblTelefono.setBounds(600, 75, 70, 25);
 		getContentPane().add(lblTelefono);
 		
-		JTextField txtTelefono = new JTextField();
+		txtTelefono = new JTextField();
 		txtTelefono.setBounds(690, 75, 150, 25);
 		getContentPane().add(txtTelefono);
 		
-		JLabel lblDNI = new JLabel("DNI :");
+		lblDNI = new JLabel("DNI :");
 		lblDNI.setBounds(600, 110, 70, 25);
 		getContentPane().add(lblDNI);
 		
-		JTextField txtDNI = new JTextField();
+		txtDNI = new JTextField();
 		txtDNI.setBounds(690, 110, 150, 25);
 		getContentPane().add(txtDNI);
 		
@@ -96,66 +144,138 @@ public class AlumnoGui extends JFrame {
 		panelConsulta.setBounds(25, 160, 810, 65); 
 		getContentPane().add(panelConsulta);
 		
-		JRadioButton rdbDni = new JRadioButton("DNI");
+		rdbDni = new JRadioButton("DNI");
         rdbDni.setBounds(45,25, 60, 20);
         panelConsulta.add(rdbDni);
 
-        JRadioButton rdbApellidos = new JRadioButton("Apellidos");
+        rdbApellidos = new JRadioButton("Apellidos");
         rdbApellidos.setBounds(130, 25, 100, 20);
         panelConsulta.add(rdbApellidos);
 
-        ButtonGroup grupo = new ButtonGroup();
+        grupo = new ButtonGroup();
         grupo.add(rdbDni);
         grupo.add(rdbApellidos);
         
-        JTextField txtBuscar = new JTextField();
+        txtBuscar = new JTextField();
         txtBuscar.setBounds(240, 25, 370, 25);
         panelConsulta.add(txtBuscar);
         
-        JButton btnBuscar = new JButton("Buscar 🔍");
+        btnBuscar = new JButton("Buscar 🔍");
         btnBuscar.setBounds(662, 25, 100, 25);
         panelConsulta.add(btnBuscar);
         
         //tablas:
-        String[] columnas = {"Código", "Nombre", "Apellidos", "Teléfono", "DNI", "Estado"};
-        DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
-        JTable tblAlumnos = new JTable(modelo);
-        JScrollPane scrTabla = new JScrollPane(tblAlumnos);
-        scrTabla.setBounds(30, 250, 810, 250);
-        getContentPane().add(scrTabla);
+        String[] columnas = {"Código", "Nombre", "Apellidos", "Edad", "Teléfono", "DNI", "Estado"};
+        modelo = new DefaultTableModel(columnas, 0);
         
-        JButton btnAgregar = new JButton("Agregar");
-        btnAgregar.setBounds(120, 520, 100, 25);
-        getContentPane().add(btnAgregar);
+        tblAlumnos = new JTable(modelo);
+        scrollTabla = new JScrollPane(tblAlumnos);
         
-        JButton btnRegistrar = new JButton("Registrar");
+        scrollTabla.setBounds(30, 250, 810, 250);
+        getContentPane().add(scrollTabla);
+        
+        //carga la tabla
+        cargarTabla();
+        
+        //botones        
+        btnNuevo = new JButton("Nuevo");
+        btnNuevo.setBounds(90, 520, 100, 25);
+        getContentPane().add(btnNuevo);
+        btnNuevo.addActionListener(this);
+        
+        btnRegistrar = new JButton("Registrar");
         btnRegistrar.setBounds(290, 520, 100, 25);
         getContentPane().add(btnRegistrar);
+        btnRegistrar.addActionListener(this);
         
-        JButton btnModificar = new JButton("Modificar");
-        btnModificar.setBounds(460, 520, 100, 25);
+        btnModificar = new JButton("Modificar");
+        btnModificar.setBounds(490, 520, 100, 25);
         getContentPane().add(btnModificar);
         
-        JButton btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBounds(630, 520, 100, 25);
+        btnEliminar = new JButton("Eliminar");
+        btnEliminar.setBounds(690, 520, 100, 25);
         getContentPane().add(btnEliminar);
-        
-        ArrayList<Alumno> alumnos = new ArrayList<>();
-        
-        btnAgregar.addActionListener(e -> {
-        	String nombre = txtNombre.getText();
-        	String Apellidos = txtApellidos.getText();
-        	String DNI = txtDNI.getText();
-        	int telefono = Integer.parseInt(txtTelefono.getText());
-        	
-        	Alumno a = new Alumno(22, telefono, nombre, Apellidos, DNI);
-        	txtCodigo.setText(""+a.getCodAlumno());
-        	alumnos.add(a);
-        	
-        	modelo.addRow(new Object[] {a.getCodAlumno(),a.getNombres(), a.getApellidos(), a.getCelular(), a.getDni(), a.getEstado()});
-        });
         
 	}
 	
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == btnRegistrar) {
+			doBtnRegistrarActionPerformed(e);
+		}
+		if(e.getSource() == btnNuevo) {
+			doBtnNuevoActionPerformed(e);
+		}
+	}
+	
+	protected void doBtnNuevoActionPerformed(ActionEvent e) {
+		int sizeList = alumnosList.size();
+		limpiarImputs();
+		txtCodigo.setText(""+(sizeList+202500001));
+	}
+	
+	protected void doBtnRegistrarActionPerformed(ActionEvent e) {
+		Alumno datos = leerDatos();
+    	
+    	Alumno a = new Alumno(datos.getEdad(), datos.getCelular(), datos.getNombres(), datos.getApellidos(), datos.getDni());
+    	alumnosList.add(a);
+    	
+    	imprimirDatos(a);
+    	limpiarImputs();
+	}
+	
+	//metodos de agregar:
+	private Alumno leerDatos() {
+		String nombre = txtNombre.getText();
+    	String Apellidos = txtApellidos.getText();
+    	String DNI = txtDNI.getText();
+    	int Edad  = Integer.parseInt(txtEdad.getText());
+    	int telefono = Integer.parseInt(txtTelefono.getText());
+    	
+    	return new Alumno(Edad, telefono, nombre, Apellidos, DNI, "LEER_DATOS");
+	}
+	private void imprimirDatos(Alumno a) {
+		txtCodigo.setText(""+a.getCodAlumno());
+    	modelo.addRow(new Object[] {a.getCodAlumno(),a.getNombres(), a.getApellidos(), a.getEdad(), a.getCelular(), a.getDni(), a.getEstado()});
+	}
+	private void limpiarImputs() {
+		txtNombre.setText("");
+		txtApellidos.setText("");
+		txtCodigo.setText("");
+		txtEdad.setText("");
+		txtTelefono.setText("");
+		txtDNI.setText("");
+	}
+	//precargar alumnos:
+	private static void cargarAlumnos() {
+		Alumno a1 = new Alumno(23, 963852741, "Armando", "Paredes de las Casas", "72884005");
+		alumnosList.add(a1);
+
+		Alumno a2 = new Alumno(24, 912345678, "Jorge", "Nitales Ríos", "70643219");
+		alumnosList.add(a2);
+
+		Alumno a3 = new Alumno(25, 987654321, "Carlos", "Ramírez Huamán", "71234567");
+		alumnosList.add(a3);
+
+		Alumno a4 = new Alumno(26, 954786321, "Elena", "Flores del Valle", "70829473");
+		alumnosList.add(a4);
+
+		Alumno a5 = new Alumno(27, 998877665, "Luis", "Ticona Quispe", "70123456");
+		alumnosList.add(a5);
+
+		Alumno a6 = new Alumno(28, 934561278, "Ana Lisa", "Melano Salas", "70987654");
+		alumnosList.add(a6);
+
+		Alumno a7 = new Alumno(29, 945612378, "Elba", "Zurita Castillo", "71122334");
+		alumnosList.add(a7);
+
+		Alumno a8 = new Alumno(30, 976543210, "María", "Vásquez Poma", "70445566");
+		alumnosList.add(a8);
+	}
+	
+	private void cargarTabla() {
+		for (Alumno a : alumnosList) {
+		    modelo.addRow(new Object[] {a.getCodAlumno(),a.getNombres(), a.getApellidos(), a.getEdad(), a.getCelular(), a.getDni(), a.getEstado()});
+		}
+	}
 
 }
