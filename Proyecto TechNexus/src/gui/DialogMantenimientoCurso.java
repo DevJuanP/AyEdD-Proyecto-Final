@@ -8,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Cursor;
 
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -26,7 +25,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.*;
-import java.util.ArrayList;
+
 
 public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 
@@ -58,7 +57,6 @@ public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 	private JButton btnNuevo;
 	private JRadioButton rbtnCodigo;
 	private JRadioButton rbtnAsignatura;
-	private int filaSeleccionada = -1;
 	private JButton btnGuardar;
 	
 	public static void main(String[] args) {
@@ -67,6 +65,7 @@ public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 				try {
 					DialogMantenimientoCurso frame = new DialogMantenimientoCurso();
 					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -143,7 +142,7 @@ public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 		txtCodigo.setBounds(506, 45, 100, 19);
 		contentPane.add(txtCodigo);
 		
-		cmbCiclo = new JComboBox<String>();
+		cmbCiclo = new JComboBox<String>();	
 		cmbCiclo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		cmbCiclo.setModel(new DefaultComboBoxModel<String>(new String[] {"0", "1", "2", "3", "4", "5"}));
 		cmbCiclo.setBounds(108, 73, 139, 20);
@@ -293,27 +292,23 @@ public class DialogMantenimientoCurso extends JFrame implements ActionListener {
 	protected void doBtnModificarActionPerformed(ActionEvent e) {
 		//Parametros
 		int fila, respuesta;
-		try {
-			//Llama a la fila
-			fila=table.getSelectedRow();
-			if(fila==-1) { //Cuando no se selecciona ninguna fila
-				JOptionPane.showMessageDialog(null, "Debes selecionar primero una fila.","Advertencia",JOptionPane.WARNING_MESSAGE);
-			}else {//Selecciona la fila al dar boton modificar
-				respuesta=JOptionPane.showConfirmDialog(null, "Desea modificar este registro?","Modificar",JOptionPane.YES_NO_OPTION);
-				//Cuando acepta modificar 
-				if(respuesta==JOptionPane.YES_NO_OPTION) {
-					txtCodigo.setText(String.valueOf(table.getValueAt(fila, 0)));
-					txtCodigo.setEditable(false);
-					txtAsignatura.setText(String.valueOf(table.getValueAt(fila, 1)));
-					cmbCiclo.setSelectedItem(String.valueOf(table.getValueAt(fila, 2)));
-					txtCreditos.setText(String.valueOf(table.getValueAt(fila, 3)));
-					txtHoras.setText(String.valueOf(table.getValueAt(fila, 4)));
-					DefaultTableModel model = (DefaultTableModel) table.getModel();
-					model.removeRow(fila);
-				}
+		//Llama a la fila
+		fila=table.getSelectedRow();
+		if(fila==-1) { //Cuando no se selecciona ninguna fila
+			JOptionPane.showMessageDialog(null, "Debes selecionar primero una fila.","Advertencia",JOptionPane.WARNING_MESSAGE);
+		}else {//Selecciona la fila al dar boton modificar
+			respuesta=JOptionPane.showConfirmDialog(null, "Desea modificar este registro?","Modificar",JOptionPane.YES_NO_OPTION);
+			//Cuando acepta modificar 
+			if(respuesta==JOptionPane.YES_NO_OPTION) {
+				txtCodigo.setText(String.valueOf(table.getValueAt(fila, 0)));
+				txtCodigo.setEditable(false);
+				txtAsignatura.setText(String.valueOf(table.getValueAt(fila, 1)));
+				cmbCiclo.setSelectedItem(String.valueOf(table.getValueAt(fila, 2)));
+				txtCreditos.setText(String.valueOf(table.getValueAt(fila, 3)));
+				txtHoras.setText(String.valueOf(table.getValueAt(fila, 4)));
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				model.removeRow(fila);
 			}
-		} catch (Exception e2) {
-			// TODO: handle exception
 		}
 	}
 	

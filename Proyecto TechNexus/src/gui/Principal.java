@@ -10,7 +10,8 @@ import java.awt.Image;
 import javax.swing.Icon;
 
 public class Principal extends JFrame {
-
+	
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JMenuBar menuBar;
 	private JMenu mnMatenimiento;
@@ -116,8 +117,16 @@ public class Principal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		lblFondo = new JLabel();
+		// Imagen de fondo
+		ImageIcon icono = new ImageIcon(Principal.class.getResource("/imagenes/educacion.png"));
+		Image iconoModificado = icono.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+		ImageIcon iconoRedimencionado = new ImageIcon(iconoModificado);
+
+		lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 0, 598, 370);
+		lblFondo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFondo.setIcon(iconoRedimencionado);
 		contentPane.add(lblFondo);
+		
 	}
 }
