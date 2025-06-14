@@ -62,6 +62,7 @@ public class Principal extends JFrame implements ActionListener {
 		menuBar.add(mnMatenimiento);
 		
 		mntmAlumno = new JMenuItem("Alumno");
+		mntmAlumno.addActionListener(this);
 		mntmAlumno.setFont(new Font("Tahoma", Font.BOLD, 12));
 		mnMatenimiento.add(mntmAlumno);
 		
@@ -75,10 +76,12 @@ public class Principal extends JFrame implements ActionListener {
 		menuBar.add(mnRegistro);
 		
 		mntmMatricula = new JMenuItem("Matr\u00EDcula");
+		mntmMatricula.addActionListener(this);
 		mntmMatricula.setFont(new Font("Tahoma", Font.BOLD, 12));
 		mnRegistro.add(mntmMatricula);
 		
 		mntmRetiro = new JMenuItem("Retiro");
+		mntmRetiro.addActionListener(this);
 		mntmRetiro.setFont(new Font("Tahoma", Font.BOLD, 12));
 		mnRegistro.add(mntmRetiro);
 		
@@ -144,17 +147,21 @@ public class Principal extends JFrame implements ActionListener {
 		
 	}
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == mntmSalir) {
-			doMntmSalirActionPerformed(e);
+		if (e.getSource() == mntmRetiro) {
+			doMntmRetiroActionPerformed(e);
+		}
+		if (e.getSource() == mntmMatricula) {
+			doMntmMatriculaActionPerformed(e);
+		}
+		if (e.getSource() == mntmAlumno) {
+			doMntmAlumnoActionPerformed(e);
 		}
 		if (e.getSource() == mntCurso) {
 			doMntCursoActionPerformed(e);
 		}
-	}
-	protected void doMntCursoActionPerformed(ActionEvent e) {
-		DialogMantenimientoCurso dMCurso = new DialogMantenimientoCurso();
-		dMCurso.setLocationRelativeTo(dMCurso);
-		dMCurso.setVisible(true);
+		if (e.getSource() == mntmSalir) {
+			doMntmSalirActionPerformed(e);
+		}
 	}
 	protected void doMntmSalirActionPerformed(ActionEvent e) {
         // Establece los textos de los botones en español
@@ -164,5 +171,26 @@ public class Principal extends JFrame implements ActionListener {
 		respuesta=JOptionPane.showConfirmDialog(this, "¿Estas seguro que desea salir?","IMPORTANTE",JOptionPane.YES_NO_OPTION);
 		if(respuesta == 0)
 		System.exit(0);
+	}
+	protected void doMntmAlumnoActionPerformed(ActionEvent e) {
+		DialogMantenimientoAlumno dMAlumno = new DialogMantenimientoAlumno();
+		dMAlumno.setLocationRelativeTo(dMAlumno);
+		dMAlumno.setVisible(true);
+	}
+	
+	protected void doMntCursoActionPerformed(ActionEvent e) {
+		DialogMantenimientoCurso dMCurso = new DialogMantenimientoCurso();
+		dMCurso.setLocationRelativeTo(dMCurso);
+		dMCurso.setVisible(true);
+	}
+	protected void doMntmMatriculaActionPerformed(ActionEvent e) {
+		DialogRegistroMatricula dRMatricula = new DialogRegistroMatricula();
+		dRMatricula.setLocationRelativeTo(dRMatricula);
+		dRMatricula.setVisible(true);
+	}
+	protected void doMntmRetiroActionPerformed(ActionEvent e) {
+		DialogRegistroRetiro dRRetiro = new DialogRegistroRetiro();
+		dRRetiro.setLocationRelativeTo(dRRetiro);
+		dRRetiro.setVisible(true);
 	}
 }
