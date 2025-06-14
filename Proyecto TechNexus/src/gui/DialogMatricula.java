@@ -18,7 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class matriculaGui extends JFrame {
+public class DialogMatricula extends JFrame {
 
 	private JPanel contentPane;
 	JLabel TXThora;
@@ -77,7 +77,7 @@ public class matriculaGui extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					matriculaGui frame = new matriculaGui();
+					DialogMatricula frame = new DialogMatricula();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -89,7 +89,7 @@ public class matriculaGui extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public matriculaGui() {
+	public DialogMatricula() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 707, 484);
 		contentPane = new JPanel();
@@ -98,11 +98,12 @@ public class matriculaGui extends JFrame {
 		contentPane.setLayout(null);
 		
 		TXThora = new JLabel("REGISTRO MATRICULA");
-		TXThora.setForeground(SystemColor.text);
-		TXThora.setBackground(Color.BLACK);
+		TXThora.setForeground(Color.WHITE);
+		TXThora.setBackground(new Color(0, 0, 0));
+		TXThora.setOpaque(true);
 		TXThora.setHorizontalAlignment(SwingConstants.CENTER);
 		TXThora.setFont(new Font("Tahoma", Font.BOLD, 14));
-		TXThora.setBounds(10, 0, 672, 29);
+		TXThora.setBounds(10, 0, 672, 18);
 		contentPane.add(TXThora);
 		
 		lblNewLabel_1 = new JLabel("FECHA");
