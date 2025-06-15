@@ -385,35 +385,8 @@
 		 }
 		 
 		 private void leerDatosGuardar() {
-				// Leer datos de los campos
-				int codCurso = Integer.parseInt(txtCodigo.getText());
-				String asignatura = txtAsignatura.getText();
-				int ciclo = Integer.parseInt((String) cmbCiclo.getSelectedItem());
-				int creditos = Integer.parseInt(txtCreditos.getText());
-				int horas = Integer.parseInt(txtHoras.getText());
-				
-				//Crear objeto
-				Curso c = new Curso(codCurso, asignatura,ciclo, creditos, horas);
-				
-				// Carga 
-		        DefaultTableModel model = (DefaultTableModel) table.getModel();
-		        
-		     // Agregar a la tabla datos
-				model.addRow(new Object[] {
-						c.getCodCurso(),
-						c.getAsignatura(),
-						c.getCiclo(),
-						c.getCreditos(),
-						c.getHoras(),
-				});
-				JOptionPane.showMessageDialog(null, "Se modifico correctamente el registro");
-				//Limpiar campos
-				txtCodigo.setText("");
-				txtCodigo.setEditable(true);
-				txtAsignatura.setText("");
-				cmbCiclo.setSelectedIndex(0);
-				txtCreditos.setText("");
-				txtHoras.setText("");
+			leerDatosRegistrar();
+			JOptionPane.showMessageDialog(null, "Se modifico correctamente el registro");
 		 }
 		 
 		 private void leerDatosEliminar() {
@@ -436,46 +409,39 @@
 		 
 		 private void leerDatosBuscar() {
 			 String criterio = txtBusquedaFiltrada.getText().trim();
+			 DefaultTableModel model = (DefaultTableModel) table.getModel();
+			 
 				// Si el campo de búsqueda está vacío, restaurar la tabla desde cursoLista
 				if (criterio.isEmpty()) {
-					DefaultTableModel model = (DefaultTableModel) table.getModel();
 					model.setRowCount(0); // Limpiar filas existentes
-					for (Curso c : cursoLista) {
-						model.addRow(new Object[] {
-								c.getCodCurso(),
-								c.getAsignatura(),
-								c.getCiclo(),
-								c.getCreditos(),
-								c.getHoras()
-						});
-					}
+					cargarDatosCursos();// Rellenar la tabla con todos los cursos
 					return;
-				}
-				DefaultTableModel modeloOriginal = (DefaultTableModel) table.getModel();
+					}
+		
 				//Se crea un nuevo modelo temporal para resultados
 				DefaultTableModel modeloFiltrado = new DefaultTableModel();
 				//Recorre las columnas
-				for(int i=0; i<modeloOriginal.getColumnCount(); i++) {
-					modeloFiltrado.addColumn(modeloOriginal.getColumnName(i));
+				for(int i=0; i<model.getColumnCount(); i++) {
+					modeloFiltrado.addColumn(model.getColumnName(i));
 				}
 				
-				// Busca por código o asignatura
-				for(int i=0; i<modeloOriginal.getRowCount(); i++) {
+				// Busca por código o asignatura recorriendo las filas
+				for(int i=0; i<model.getRowCount(); i++) {
 					String buscarValor= "";
 					// Si se seleccionó búsqueda por código
 					if(rbtnCodigo.isSelected()) {
-						buscarValor=modeloOriginal.getValueAt(i, 0).toString();//columna 0: codigo
+						buscarValor=model.getValueAt(i, 0).toString();//columna 0: codigo
 					}
 					// Si se seleccionó búsqueda por asignatura
 					else if (rbtnAsignatura.isSelected()){
-						buscarValor=modeloOriginal.getValueAt(i, 1).toString();//columna 1: asignatura
+						buscarValor=model.getValueAt(i, 1).toString();//columna 1: asignatura
 					}
 					
-					if (buscarValor.toLowerCase().contains(criterio.toLowerCase())) {
+					if (buscarValor.contains(criterio.toLowerCase())) {
 						//copiar toda la fila
-						Object[]fila = new Object[modeloOriginal.getColumnCount()]; 
-						for(int j=0; j<modeloOriginal.getColumnCount(); j++) {
-							fila[j] = modeloOriginal.getValueAt(i, j);
+						Object[]fila = new Object[model.getColumnCount()]; 
+						for(int j=0; j<model.getColumnCount(); j++) {
+							fila[j] = model.getValueAt(i, j);
 						}
 						modeloFiltrado.addRow(fila);
 					}
