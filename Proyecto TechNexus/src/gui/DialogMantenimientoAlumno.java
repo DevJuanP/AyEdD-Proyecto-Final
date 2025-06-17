@@ -177,6 +177,8 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
         //carga la tabla
         cargarTabla();
         
+        cargarAlumnos();
+        
         //botones        
         btnNuevo = new JButton("Nuevo");
         btnNuevo.setBounds(90, 520, 100, 25);

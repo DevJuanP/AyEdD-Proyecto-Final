@@ -179,9 +179,9 @@ public class Principal extends JFrame implements ActionListener {
 	}
 	
 	protected void doMntCursoActionPerformed(ActionEvent e) {
-		DialogMantenimientoCurso dMCurso = new DialogMantenimientoCurso();
-		dMCurso.setLocationRelativeTo(dMCurso);
-		dMCurso.setVisible(true);
+		DialogMantenimientoCursos dMCursos = new DialogMantenimientoCursos();
+		dMCursos.setLocationRelativeTo(dMCursos);
+		dMCursos.setVisible(true);
 	}
 	protected void doMntmMatriculaActionPerformed(ActionEvent e) {
 		DialogRegistroMatricula dRMatricula = new DialogRegistroMatricula();
