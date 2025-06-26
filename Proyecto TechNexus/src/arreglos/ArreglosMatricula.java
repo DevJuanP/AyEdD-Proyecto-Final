@@ -37,6 +37,17 @@ public class ArreglosMatricula {
 		return matricula001.get(i);
 	}
 	
+	public Matricula buscarMatricula(int codigo) {
+		for(Matricula m : matricula001) {
+			if(m.getNumMatricula()== codigo) return m;
+		}
+		return null;
+	}
+	
+	public int generateCod() {
+		return tamanio()+100001;
+	}
+	
 		 
 	public void Eliminar(Matricula M) {
 		matricula001.remove(M);
@@ -53,6 +64,8 @@ public class ArreglosMatricula {
 	public void setMatricula001(ArrayList<Matricula> matricula001) {
 		this.matricula001 = matricula001;
 	}
+	
+	
 	
 	
 
