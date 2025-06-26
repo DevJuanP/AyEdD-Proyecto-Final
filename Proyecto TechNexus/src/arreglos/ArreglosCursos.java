@@ -1,5 +1,9 @@
 package arreglos;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import clases.Curso;
@@ -10,18 +14,12 @@ public class ArreglosCursos {
 	
 	public ArreglosCursos() {
 		cursoLista = new ArrayList<Curso>();
-		adicionar(new Curso(3001, "Java", 3, 13, 5));
-		adicionar(new Curso(3002, "MySQL", 1, 21, 8));
-		adicionar(new Curso(3003, "Python", 0, 16, 4));
-		adicionar(new Curso(3004, "PHP", 5, 25, 9));
-		adicionar(new Curso(3005, "JavaScript", 2, 40, 12));
-		adicionar(new Curso(3006, "C++", 4, 36, 7));
-		adicionar(new Curso(3007, "React.js", 1, 42, 16));
-		adicionar(new Curso(3008, "HTML", 5, 28, 14));
+		cargarCursos();
 	}
 	
 	public void adicionar(Curso x) {
 		 cursoLista.add(x);
+		 grabarCursos();
 	}
 	 public int tamanio() {
 		 return cursoLista.size();
@@ -31,13 +29,72 @@ public class ArreglosCursos {
 		 return cursoLista.get(i);
 	 }
 	 
-		// Buscar curso por código
-	public Curso buscarPorCodigo(int codigo) {
-		for (Curso c : cursoLista) {
-			if (c.getCodCurso() == codigo) {
-				return c;
-				}
-			}
-			return null;
+	 public Curso buscarCodigo(int codigo) {
+		 for (int i = 0; i < tamanio(); i++) {
+			if(obtener(i).getCodCurso() == codigo)
+				return obtener(i);
 		}
+		return null;
+	 }
+	 
+	 public Curso buscarAsignatura(String asignatura) {
+		 for (int i = 0; i < tamanio(); i++) {
+			if(obtener(i).getAsignatura() == asignatura)
+				return obtener(i);
+		}
+		return null;
+	 }
+	 
+	 public void elimnar(Curso x) {
+		cursoLista.remove(x);
+		grabarCursos();
+	 }
+	 
+	 private void cargarCursos() {
+		try {
+			BufferedReader br;
+			String[] s;
+			String linea, asignatura;
+			int codigo, ciclo, creditos, horas;
+			
+			br = new BufferedReader(new FileReader("cursos.txt"));
+			while((linea=br.readLine())!=null) {
+				s=linea.split(";");
+				codigo=Integer.parseInt(s[0].trim());
+				asignatura=s[1].trim();
+				ciclo=Integer.parseInt(s[2].trim());
+				creditos=Integer.parseInt(s[3].trim());
+				horas=Integer.parseInt(s[4].trim());
+				adicionar(new Curso(codigo, asignatura, ciclo, creditos, horas));
+			}
+			br.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	 }
+	 
+	 private void grabarCursos() {
+		 try {
+			PrintWriter pw;
+			String linea;
+			Curso x;
+			pw = new PrintWriter(new FileWriter("cursos.txt"));
+			for (int i = 0; i < tamanio(); i++) {
+				x=obtener(i);
+				linea = x.getCodCurso()+";"+
+						x.getAsignatura()+";"+
+						x.getCiclo()+";"+
+						x.getCreditos()+";"+
+						x.getHoras();
+				pw.println(linea);
+			}
+			pw.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	 }
+	 
+	 public void actualizarArchivo() {
+		grabarCursos();
+	}
 }

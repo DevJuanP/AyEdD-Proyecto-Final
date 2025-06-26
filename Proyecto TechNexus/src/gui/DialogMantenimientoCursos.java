@@ -7,6 +7,7 @@
 	import javax.swing.border.EmptyBorder;
 	import javax.swing.JLabel;
 	import java.awt.Font;
+
 	import java.awt.Color;
 	
 	import javax.swing.SwingConstants;
@@ -72,8 +73,8 @@
 					}
 				}
 			});
-	        // Establece los textos de los botones en español
-	        UIManager.put("OptionPane.yesButtonText", "Sí");
+	        // Establece los textos de los botones en espaÃ±ol
+	        UIManager.put("OptionPane.yesButtonText", "SÃ­");
 	        UIManager.put("OptionPane.noButtonText", "No");
 		}
 		
@@ -94,11 +95,10 @@
 			lblMantenimientoCurso.setHorizontalAlignment(SwingConstants.CENTER);
 			lblMantenimientoCurso.setForeground(new Color(255, 255, 255));
 			lblMantenimientoCurso.setFont(new Font("Tahoma", Font.BOLD, 17));
-			lblMantenimientoCurso.setBounds(0, 0, 627, 26);
 			lblMantenimientoCurso.setOpaque(true); 
 			lblMantenimientoCurso.setBackground(new Color(0, 0, 0));
-			
-			
+			lblMantenimientoCurso.setOpaque(true);
+			lblMantenimientoCurso.setBounds(0, 0, 627, 26);
 			contentPane.add(lblMantenimientoCurso);
 			
 			lblAsignatura = new JLabel("Asignatura:");
@@ -161,13 +161,12 @@
 			//Agregar datos a la tabla
 			modelo = new DefaultTableModel();
 			// Se agrega Columnas
-			modelo.addColumn("Código");
+			modelo.addColumn("CÃ³digo");
 			modelo.addColumn("Asignatura");
 			modelo.addColumn("Ciclo");
-			modelo.addColumn("Créditos");	
+			modelo.addColumn("CrÃ©ditos");	
 			modelo.addColumn("Horas");
 			table.setModel(modelo); 
-			cargarDatosCursos();//Llena la tabla con los datos obtenidos de la	 lista
 	
 			btnRegistrar = new JButton("REGISTRAR");
 			btnRegistrar.addActionListener(this);
@@ -223,7 +222,7 @@
 			separator_3.setBounds(605, 111, 20, 64);
 			contentPane.add(separator_3);
 			
-			rbtnCodigo  = new JRadioButton("Código");
+			rbtnCodigo  = new JRadioButton("CÃ³digo");
 			rbtnCodigo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			rbtnCodigo.setBounds(52, 140, 85, 21);
 			rbtnCodigo.setSelected(true);
@@ -245,9 +244,12 @@
 			btnGuardar.setFont(new Font("Tahoma", Font.BOLD, 11));
 			btnGuardar.setBounds(331, 368, 107, 21);
 			contentPane.add(btnGuardar);
+			
+			listar();
 		}
 		
-		ArreglosCursos ac = new ArreglosCursos(); //Declaración global
+		//DeclaraciÃ³n global
+		ArreglosCursos ac = new ArreglosCursos(); 
 		
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == btnGuardar) {
@@ -287,50 +289,41 @@
 			leerDatosGuardar();
 		}
 		
-		//Métodos tipo void (sin parámetros)
-		
-		void cargarDatosCursos() {
-			modelo.setRowCount(0);;
-			for (int i = 0; i < ac.tamanio(); i++) {
-				Object	[] fila = {
-						ac.obtener(i).getCodCurso(),
-						ac.obtener(i).getAsignatura(),
-						ac.obtener(i).getCiclo(),
-						ac.obtener(i).getCreditos(),
-						ac.obtener(i).getHoras()};
-				modelo.addRow(fila);
-			}
-		}
-		
 		void leerDatosRegistrar() {
 			try {
-				int codCurso = Integer.parseInt(txtCodigo.getText().trim()); // Leer datos de los campos
-				if(String.valueOf(codCurso).length() !=4) {  //Validación de codigo para que sean 4 digitos
-	                JOptionPane.showMessageDialog(this, "El código del curso debe tener exactamente 4 dígitos.");
+				int codCurso = Integer.parseInt(txtCodigo.getText().trim());
+				if(String.valueOf(codCurso).length() !=4) {  //ValidaciÃ³n de codigo para que sean 4 digitos
+	                mensaje("El cÃ³digo del curso debe tener exactamente 4 dÃ­gitos.","Error",JOptionPane.ERROR_MESSAGE);
 	                return;
 	            }
-				String asignatura = txtAsignatura.getText();
-				int ciclo = Integer.parseInt((String) cmbCiclo.getSelectedItem());
-				int creditos = Integer.parseInt(txtCreditos.getText().trim());
-				int horas = Integer.parseInt(txtHoras.getText().trim());
+		        // Validar si ya existe el curso
+		        if (ac.buscarCodigo(codCurso) != null) {
+		            mensaje("Ya existe un curso con ese cÃ³digo.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+		            return;
+		        }
+		        
+				String asignatura = leerAsignatura();
+				int ciclo = leerCiclo();
+				int creditos = leerCreditos();
+				int horas = leerHoras();
 				//Crear objeto
 				ac.adicionar(new Curso(codCurso, asignatura, ciclo, creditos, horas));
-				cargarDatosCursos();
+				listar();
 				limpiar();
-				
 			} catch (Exception e2) {
-				JOptionPane.showMessageDialog(this, "Por favor, ingrese valores correctos en los campos indicados.");
+				mensaje("Por favor, ingrese valores correctos en los campos indicados.","Error",JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		
-		 void leerDatosModificar()	{
-			//Parametros
+		void leerDatosModificar()	{
+			try {
+				//Parametros
 				int fila, respuesta;
 				fila=table.getSelectedRow();//Llama a la fila
 				if(fila==-1) { //Cuando no se selecciona ninguna fila
-					JOptionPane.showMessageDialog(null, "Debes selecionar primero una fila.","Advertencia",JOptionPane.WARNING_MESSAGE);
+					mensaje("Debes selecionar primero una fila.","Advertencia",JOptionPane.WARNING_MESSAGE);
 				}else {//Selecciona la fila al dar boton modificar
-					respuesta=JOptionPane.showConfirmDialog(null, "¿	Desea modificar este registro?","Modificar",JOptionPane.YES_NO_OPTION);
+					respuesta=JOptionPane.showConfirmDialog(null, "Â¿Desea modificar este registro?","Modificar",JOptionPane.YES_NO_OPTION);
 					if(respuesta==JOptionPane.YES_NO_OPTION) {//Cuando acepta modificar 
 						txtCodigo.setText(String.valueOf(table.getValueAt(fila, 0)));
 						txtCodigo.setEditable(false);
@@ -342,52 +335,61 @@
 						modelo.removeRow(fila);
 					}
 				}
+			ac.actualizarArchivo();
+			} catch (Exception e) {
+				mensaje("OcurriÃ³ un error al intentar modificar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		 }
 		 
 		 
 		 void leerDatosGuardar() {
-				int codCurso = Integer.parseInt(txtCodigo.getText().trim()); // Leer datos de los campos
-				txtCodigo.setEditable(true);
-				String asignatura = txtAsignatura.getText();
-				int ciclo = Integer.parseInt((String) cmbCiclo.getSelectedItem());
-				int creditos = Integer.parseInt(txtCreditos.getText().trim());
-				int horas = Integer.parseInt(txtHoras.getText().trim());
-				// Buscar curso por código y modificar
-				Curso c = ac.buscarPorCodigo(codCurso);
-				if (c != null) {
-					c.setAsignatura(asignatura);
-					c.setCiclo(ciclo);
-					c.setCreditos(creditos);
-					c.setHoras(horas);
-					cargarDatosCursos();
-					limpiar();
-				limpiar();
-				}
-				JOptionPane.showMessageDialog(null, "Se modifico correctamente el registro");
+			 int fila = table.getSelectedRow();
+			 if(fila == -1) {
+			        mensaje("Selecciona una fila para modificar", "Advertencia", JOptionPane.WARNING_MESSAGE);
+			        return;
+			 }
+			 
+			 int nuevoCodigo = Integer.parseInt(table.getValueAt(fila, 0).toString());
+			 String nuevaAsignatura = txtAsignatura.getText();
+			 int nuevoCiclo = Integer.parseInt(cmbCiclo.getSelectedItem().toString());
 		 }
 		 
 		 void leerDatosEliminar() {
-				int fila, respuesta; //Parametros
-				fila=table.getSelectedRow(); //Se llama a la fila
-				if(fila==-1) {//Cuando no se selecciona ninguna fila
-					JOptionPane.showMessageDialog(null, "Selecciona primero un registro","Advertencia",JOptionPane.WARNING_MESSAGE);
-				}else {//Dar clic en boton eliminar
-					respuesta=JOptionPane.showConfirmDialog(null, "Desea eliminar este registro?","Eliminar",JOptionPane.YES_NO_OPTION);
-					if(respuesta==JOptionPane.YES_NO_OPTION) {
-						modelo = (DefaultTableModel) table.getModel();
-						modelo.removeRow(fila);
+			 try {
+				 int fila,respuesta;
+
+				 fila = table.getSelectedRow();
+				 if(fila==-1) {
+					 mensaje("Selecciona primero un registro","Advertencia",JOptionPane.WARNING_MESSAGE);
+					 return;
+				 }
+				
+				int codigo=Integer.parseInt(table.getValueAt(fila, 0).toString());
+				Curso x = ac.buscarCodigo(codigo);
+				if(x==null) {
+					 mensaje("Curso no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+				}else {
+					respuesta = JOptionPane.showConfirmDialog(null, "Â¿Deseas eliminar este curso?", "Confirmar eliminaciÃ³n", JOptionPane.YES_NO_OPTION);
+					if(respuesta == JOptionPane.YES_NO_OPTION) {
+						ac.elimnar(x);
+		                listar();
+		                mensaje("Curso eliminado correctamente", "InformaciÃ³n", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
+				limpiar();
+			} catch (Exception e) {
+				mensaje("Error al intentar eliminar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		 }
 		 
 		 void leerDatosBuscar() {
 			 String criterio = txtBusquedaFiltrada.getText().trim();
 			 modelo = (DefaultTableModel) table.getModel();
 			 
-				// Si el campo de búsqueda está vacío, restaurar la tabla desde cursoLista
+				// Si el campo de bÃºsqueda estÃ¡ vacÃ­o, restaurar la tabla desde cursoLista
 				if (criterio.isEmpty()) {
 					modelo.setRowCount(0); // Limpiar filas existentes
-					cargarDatosCursos();// Rellenar la tabla con todos los cursos
+					listar();;// Rellenar la tabla con todos los cursos
 					return;
 					}
 		
@@ -396,13 +398,12 @@
 				for(int i=0; i<modelo.getColumnCount(); i++) {
 					modeloFiltrado.addColumn(modelo.getColumnName(i));
 				}
-				
-				for(int i=0; i<modelo.getRowCount(); i++) { // Busca por código o asignatura recorriendo las filas
+				for(int i=0; i<modelo.getRowCount(); i++) { // Busca por cÃ³digo o asignatura recorriendo las filas
 					String buscarValor= "";
-					if(rbtnCodigo.isSelected()) { // Si se seleccionó búsqueda por código
+					if(rbtnCodigo.isSelected()) { // Si se seleccionÃ³ bÃºsqueda por cÃ³digo
 						buscarValor=modelo.getValueAt(i, 0).toString();//columna 0: codigo
 					}
-					else if (rbtnAsignatura.isSelected()){ // Si se seleccionó búsqueda por asignatura
+					else if (rbtnAsignatura.isSelected()){ // Si se seleccionÃ³ bÃºsqueda por asignatura
 						buscarValor=modelo.getValueAt(i, 1).toString();//columna 1: asignatura
 					}
 					
@@ -417,14 +418,54 @@
 				 table.setModel(modeloFiltrado);
 		 }
 		 
-		 void limpiar() {
-			//Limpiar campos
-				txtCodigo.setText("");
-				txtCodigo.setEditable(true);
-				txtAsignatura.setText("");
-				cmbCiclo.setSelectedIndex(0);
-				txtCreditos.setText("");
-				txtHoras.setText("");
-				txtCodigo.requestFocus();
+		
+		//MÃ©todos tipo void (sin parÃ¡metros)
+		void listar() {
+			modelo.setRowCount(0);;
+			for (int i = 0; i < ac.tamanio(); i++) {
+				Object	[] fila = {
+						ac.obtener(i).getCodCurso(),
+						ac.obtener(i).getAsignatura(),
+						ac.obtener(i).getCiclo(),
+						ac.obtener(i).getCreditos(),
+						ac.obtener(i).getHoras()};
+				modelo.addRow(fila);
+			}
+		}
+		
+		void limpiar() {
+			txtCodigo.setText("");
+			txtCodigo.setEditable(true);
+			txtAsignatura.setText("");
+			cmbCiclo.setSelectedIndex(0);
+			txtCreditos.setText("");
+			txtHoras.setText("");
+			txtCodigo.requestFocus();
 		 }
+		
+		//  Mï¿½todos tipo void (con parï¿½metros)
+		void mensaje(String s, String titulo, int tipo) {
+			JOptionPane.showMessageDialog(null, s, titulo, tipo);
+		}
+		
+		//  Metodos que retornan valor (sin parametros)
+		int leerCodigo() {
+			return Integer.parseInt(txtCodigo.getText().trim());
+		}
+		
+		String leerAsignatura() {
+			return txtAsignatura.getText().trim();
+		}
+		
+		int leerCiclo() {
+			return cmbCiclo.getSelectedIndex();
+		}
+		
+		int leerCreditos() {
+			return Integer.parseInt(txtCreditos.getText().trim());
+		}
+		
+		int leerHoras() {
+			return	Integer.parseInt(txtHoras.getText().trim());
+		}
 	}

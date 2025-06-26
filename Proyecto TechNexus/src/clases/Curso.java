@@ -4,6 +4,9 @@ public class Curso {
 	private int codCurso, ciclo, creditos, horas;
 	private String asignatura;
 	
+	public Curso() {
+	}
+	
 	public Curso(int codCurso, String asignatura, int ciclo, int creditos, int horas) {
 		this.codCurso = codCurso;
 		this.ciclo = ciclo;
