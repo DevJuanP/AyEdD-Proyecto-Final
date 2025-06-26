@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import arreglos.ArreglosAlumno;
 import clases.Alumno;
 
 import javax.swing.*;
@@ -61,7 +62,7 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
 	//otros
 	private DefaultTableModel modelo;
 	
-	private static ArrayList<Alumno> alumnosList = new ArrayList<>();
+	
 
 	public static void main(String[] args) {
 		cargarAlumnos();
@@ -200,6 +201,8 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
         
 	}
 	
+	static ArreglosAlumno alumnosList = new ArreglosAlumno();
+	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnRegistrar) {
 			doBtnRegistrarActionPerformed(e);
@@ -210,17 +213,17 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
 	}
 	
 	protected void doBtnNuevoActionPerformed(ActionEvent e) {
-		int sizeList = alumnosList.size();
+		int newcod = alumnosList.getNextCodigo();
 		limpiarImputs();
-		txtCodigo.setText(""+(sizeList+202500001));
+		txtCodigo.setText(""+newcod);
 	}
 	
 	protected void doBtnRegistrarActionPerformed(ActionEvent e) {
 		Alumno datos = leerDatos();
     	
     	Alumno a = new Alumno(datos.getEdad(), datos.getCelular(), datos.getNombres(), datos.getApellidos(), datos.getDni());
-    	alumnosList.add(a);
-    	
+    	alumnosList.adicionar(a);
+    	alumnosList.cargarALToTxtfile();//para actualizar
     	imprimirDatos(a);
     	limpiarImputs();
 	}
@@ -250,32 +253,34 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
 	//precargar alumnos:
 	private static void cargarAlumnos() {
 		Alumno a1 = new Alumno(23, 963852741, "Armando", "Paredes de las Casas", "72884005");
-		alumnosList.add(a1);
+		alumnosList.adicionar(a1);
 
 		Alumno a2 = new Alumno(24, 912345678, "Jorge", "Nitales Ríos", "70643219");
-		alumnosList.add(a2);
+		alumnosList.adicionar(a2);
 
 		Alumno a3 = new Alumno(25, 987654321, "Carlos", "Ramírez Huamán", "71234567");
-		alumnosList.add(a3);
+		alumnosList.adicionar(a3);
 
 		Alumno a4 = new Alumno(26, 954786321, "Elena", "Flores del Valle", "70829473");
-		alumnosList.add(a4);
+		alumnosList.adicionar(a4);
 
 		Alumno a5 = new Alumno(27, 998877665, "Luis", "Ticona Quispe", "70123456");
-		alumnosList.add(a5);
+		alumnosList.adicionar(a5);
 
 		Alumno a6 = new Alumno(28, 934561278, "Ana Lisa", "Melano Salas", "70987654");
-		alumnosList.add(a6);
+		alumnosList.adicionar(a6);
 
 		Alumno a7 = new Alumno(29, 945612378, "Elba", "Zurita Castillo", "71122334");
-		alumnosList.add(a7);
+		alumnosList.adicionar(a7);
 
 		Alumno a8 = new Alumno(30, 976543210, "María", "Vásquez Poma", "70445566");
-		alumnosList.add(a8);
+		alumnosList.adicionar(a8);
+		
+		alumnosList.cargarALToTxtfile();
 	}
 	
 	private void cargarTabla() {
-		for (Alumno a : alumnosList) {
+		for (Alumno a : alumnosList.getAlumnosList()) {
 		    modelo.addRow(new Object[] {a.getCodAlumno(),a.getNombres(), a.getApellidos(), a.getEdad(), a.getCelular(), a.getDni(), a.getEstado()});
 		}
 	}

@@ -6,6 +6,16 @@ public class Alumno {
 	
 	private static int genCode = 202510000;
 	
+	public Alumno(int codAlumno, String nombres, String apellidos, int edad, int celular, String dni, int estado) {
+		this.codAlumno = codAlumno;
+		this.edad = edad;
+		this.celular = celular;
+		this.estado = estado;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.dni = dni;
+	}
+	
 	public Alumno(int edad, int celular, String nombres, String apellidos, String dni) {
 		genCode++;
 		this.codAlumno = genCode;
