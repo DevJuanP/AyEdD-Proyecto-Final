@@ -21,7 +21,7 @@ public class Matricula {
 
 public Matricula(int codAlumno, int codCurso) {
 		this.numMatricula = contadorMatricula++;
-		this.estado = 1;
+		this.estado=estado;
 		this.codAlumno = codAlumno;
 		this.codCurso = codCurso;
 		this.fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -37,6 +37,22 @@ public Matricula(int codAlumno, int codCurso) {
 
 //GETTER AND SETTER
 	
+
+
+
+	public int getEstado() {
+	return estado;
+}
+
+
+
+
+
+public void setEstado(int estado) {
+	this.estado = estado;
+}
+
+
 
 
 
