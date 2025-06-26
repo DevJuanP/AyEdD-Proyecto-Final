@@ -37,14 +37,6 @@ public class ArreglosCursos {
 		return null;
 	 }
 	 
-	 public Curso buscarAsignatura(String asignatura) {
-		 for (int i = 0; i < tamanio(); i++) {
-			if(obtener(i).getAsignatura() == asignatura)
-				return obtener(i);
-		}
-		return null;
-	 }
-	 
 	 public void elimnar(Curso x) {
 		cursoLista.remove(x);
 		grabarCursos();
