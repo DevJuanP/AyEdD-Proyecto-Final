@@ -17,8 +17,10 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class DialogRegistroMatricula extends JFrame {
+public class DialogRegistroMatricula extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	JLabel TXThora;
@@ -32,7 +34,7 @@ public class DialogRegistroMatricula extends JFrame {
 	JLabel lblNewLabel_4;
 	JLabel lblNewLabel_5;
 	JTextField TXTcodigoAlum;
-	JButton ConsultarAlumn;
+	JButton btnConsultarAlumn;
 	JLabel lblNewLabel_6;
 	JTextField TXTedad;
 	JLabel lblNewLabel;
@@ -55,7 +57,7 @@ public class DialogRegistroMatricula extends JFrame {
 	JLabel lblNewLabel_11;
 	JLabel lblNewLabel_12;
 	JTextField TXTcodigoCurso;
-	JButton ConsultarCiclo;
+	JButton btnConsultarCurso;
 	JLabel lblNewLabel_13;
 	JTextField CICLO;
 	JLabel lblNewLabel_14;
@@ -155,9 +157,10 @@ public class DialogRegistroMatricula extends JFrame {
 		contentPane.add(TXTcodigoAlum);
 		TXTcodigoAlum.setColumns(10);
 		
-		ConsultarAlumn = new JButton("BUSCAR");
-		ConsultarAlumn.setBounds(173, 84, 96, 25);
-		contentPane.add(ConsultarAlumn);
+		btnConsultarAlumn = new JButton("BUSCAR");
+		btnConsultarAlumn.addActionListener(this);
+		btnConsultarAlumn.setBounds(173, 84, 96, 25);
+		contentPane.add(btnConsultarAlumn);
 		
 		lblNewLabel_6 = new JLabel("EDAD");
 		lblNewLabel_6.setBounds(508, 122, 38, 16);
@@ -261,9 +264,9 @@ public class DialogRegistroMatricula extends JFrame {
 		TXTcodigoCurso.setBounds(65, 193, 96, 19);
 		contentPane.add(TXTcodigoCurso);
 		
-		ConsultarCiclo = new JButton("BUSCAR");
-		ConsultarCiclo.setBounds(173, 190, 96, 25);
-		contentPane.add(ConsultarCiclo);
+		btnConsultarCurso = new JButton("BUSCAR🔍");
+		btnConsultarCurso.setBounds(173, 190, 96, 25);
+		contentPane.add(btnConsultarCurso);
 		
 		lblNewLabel_13 = new JLabel("CICLO");
 		lblNewLabel_13.setBounds(322, 196, 45, 13);
@@ -319,16 +322,24 @@ public class DialogRegistroMatricula extends JFrame {
 		));
 		scrollPane.setViewportView(TXTtabla);
 		
-		btnConsultar = new JButton("CONSULTAR");
-		btnConsultar.setBounds(118, 412, 96, 25);
+		btnConsultar = new JButton("NUEVO");
+		btnConsultar.setBounds(105, 412, 109, 25);
 		contentPane.add(btnConsultar);
 		
-		btnModificar = new JButton("MODIFICAR");
+		btnModificar = new JButton("REGISTRAR");
 		btnModificar.setBounds(292, 412, 109, 25);
 		contentPane.add(btnModificar);
 		
-		btnEliminar = new JButton("ELIMINAR");
+		btnEliminar = new JButton("CERRAR");
 		btnEliminar.setBounds(471, 412, 96, 25);
 		contentPane.add(btnEliminar);
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnConsultarAlumn) {
+			do_btnConsultarAlumn_actionPerformed(e);
+		}
+	}
+	protected void do_btnConsultarAlumn_actionPerformed(ActionEvent e) {
+		
 	}
 }

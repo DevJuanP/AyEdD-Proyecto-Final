@@ -55,7 +55,6 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 	private JTextField txtHora;
 	private JTextField txtCodCurso;
 	private JScrollPane scrollPane;
-	private JTable tblDeDatos;
 	private JButton btnBuscar;
 	private JButton btnRegistrar;
 	private JButton btnModificar;
@@ -64,6 +63,8 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 	private JTextField txtCodRetiro;
 	private Timer tiempo;
 	Retiro re1 = new Retiro();
+	private JTable tblDatos;
+	private DefaultTableModel model;
 	/**
 	 * Launch the application.
 	 */
@@ -192,18 +193,18 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 		scrollPane.setBounds(22, 264, 840, 249);
 		contentPane.add(scrollPane);
 		
-		tblDeDatos = new JTable();
-		//table.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		tblDeDatos.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Código Retiro", "Código Alumno", "Nombre y Apellidos", "Código curso", "Curso", "Fecha", "Hora"
-			}
-		));
-		scrollPane.setViewportView(tblDeDatos);
-		JTableHeader header = tblDeDatos.getTableHeader();
-		header.setFont(new Font("Tahoma", Font.BOLD, 11));
+		tblDatos = new JTable();
+		scrollPane.setViewportView(tblDatos);
+		model = new DefaultTableModel();
+		model.addColumn("Código retiro");
+		model.addColumn("Código alumnos");
+		model.addColumn("Nombre y apellidos");
+		model.addColumn("Código curso");
+		model.addColumn("Curso");
+		model.addColumn("Fecha");
+		model.addColumn("Hora");
+		tblDatos.setModel(model);
+		//header.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(this);
@@ -212,16 +213,19 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 		contentPane.add(btnBuscar);
 		
 		btnRegistrar = new JButton("Registrar");
+		btnRegistrar.addActionListener(this);
 		btnRegistrar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnRegistrar.setBounds(97, 524, 90, 30);
 		contentPane.add(btnRegistrar);
 		
 		btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(this);
 		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnModificar.setBounds(392, 524, 90, 30);
 		contentPane.add(btnModificar);
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(this);
 		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnEliminar.setBounds(707, 524, 90, 30);
 		contentPane.add(btnEliminar);
@@ -234,6 +238,15 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 
 }
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEliminar) {
+			actionPerformedBtnEliminar(e);
+		}
+		if (e.getSource() == btnModificar) {
+			actionPerformedBtnModificar(e);
+		}
+		if (e.getSource() == btnRegistrar) {
+			actionPerformedBtnRegistrar(e);
+		}
 		if (e.getSource() == btnBuscar) {
 			do_btnBuscar_actionPerformed(e);
 		}
@@ -242,13 +255,56 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 		
 	}
 	
+	protected void actionPerformedBtnRegistrar(ActionEvent e) {
+		
+	}
 	
+	protected void actionPerformedBtnModificar(ActionEvent e) {
+		
+	}
+	
+	protected void actionPerformedBtnEliminar(ActionEvent e) {
+		
+	}
 
+	
+	
+	
+	
+	
+	
+	//parametros de leectura
+	public int leerCodigoMatricula() {
+		return Integer.parseInt(txtCodMat.getText());
+	}
+	
+	public int leerCodigoAlumno() {
+		return Integer.parseInt(txtCodAlum.getText());
+	}
+	
+	public String leerApellidos() {
+		return txtNomApelli.getText();
+	}
+	
+	public int leerCodigoCurso() {
+		return Integer.parseInt(txtCodCurso.getText());
+	}
+	
+	public String leerCurso() {
+		return txtCurso.getText();
+	}
+	//metodo limpiar
+	void limpieza() {
+		txtCodMat.setText("");
+		txtCodAlum.setText("");
+		txtNomApelli.setText("");
+		txtCodCurso.setText("");
+		txtCurso.setText("");
+	}
 	
 	private void horaActualizada() {
 		String Hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 		txtHora.setText(Hora);
 	}
-	
-	//ultima llave
-	}
+
+}

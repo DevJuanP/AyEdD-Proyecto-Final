@@ -31,7 +31,7 @@ public class ArreglosAlumno {
 		alumnosList.add(a);
 	}
 	
-	public int tamaño() {
+	public int tamanio() {
 		return alumnosList.size();
 	}
 	
@@ -69,7 +69,7 @@ public class ArreglosAlumno {
 	}
 	
 	public int getNextCodigo() {
-		return tamaño()+202500001;
+		return tamanio()+202500001;
 	}
 	
 	public int cargarAlumnos() {
