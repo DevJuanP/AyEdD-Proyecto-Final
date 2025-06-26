@@ -343,15 +343,30 @@
 		 
 		 
 		 void leerDatosGuardar() {
-			 int fila = table.getSelectedRow();
-			 if(fila == -1) {
-			        mensaje("Selecciona una fila para modificar", "Advertencia", JOptionPane.WARNING_MESSAGE);
-			        return;
-			 }
-			 
-			 int nuevoCodigo = Integer.parseInt(table.getValueAt(fila, 0).toString());
-			 String nuevaAsignatura = txtAsignatura.getText();
-			 int nuevoCiclo = Integer.parseInt(cmbCiclo.getSelectedItem().toString());
+			 try {
+				 int codigo  = Integer.parseInt(txtCodigo.getText().trim());
+				 String asignatura  = txtAsignatura.getText();
+				 int ciclo  = Integer.parseInt(cmbCiclo.getSelectedItem().toString());
+				 int creditos  = Integer.parseInt(txtCreditos.getText().trim());
+				 int horas  = Integer.parseInt(txtHoras.getText().trim());
+				 
+				 Curso c = ac.buscarCodigo(codigo );
+				 if( c != null) {
+					 c.setAsignatura(asignatura);
+					 c.setCiclo(ciclo);
+					 c.setCreditos(creditos );
+					 c.setHoras(horas);
+					 
+					 ac.actualizarArchivo();
+					 listar();
+					 limpiar();
+					 mensaje("Se modificó correctamente el registro", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+				 }else {
+					 mensaje("No se encontró el curso con ese código", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (Exception e) {
+				mensaje("Error al modificar los datos. Verifica los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		 }
 		 
 		 void leerDatosEliminar() {
@@ -443,7 +458,7 @@
 			txtCodigo.requestFocus();
 		 }
 		
-		//  M�todos tipo void (con par�metros)
+		//  Métodos tipo void (con parametros)
 		void mensaje(String s, String titulo, int tipo) {
 			JOptionPane.showMessageDialog(null, s, titulo, tipo);
 		}
