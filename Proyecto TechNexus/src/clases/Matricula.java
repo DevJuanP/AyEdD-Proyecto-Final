@@ -16,7 +16,7 @@ public class Matricula {
 
 	
 
-		
+		//asdasd
 	
 
 public Matricula(int codAlumno, int codCurso) {
