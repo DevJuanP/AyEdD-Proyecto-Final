@@ -1,5 +1,5 @@
 package PruebasGui;
-
+import arreglos.ArreglosMatricula;
 import java.awt.EventQueue;
 import javax.swing.*;
 
@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import clases.Alumno;
+import clases.Matricula;
 
 public class Oscar extends JFrame {
 
@@ -37,19 +38,25 @@ public class Oscar extends JFrame {
 		JScrollPane scr = new JScrollPane(txtOut);
 		scr.setBounds(20, 55, 400, 200);
 		getContentPane().add(scr);
+		ArreglosMatricula mList =new ArreglosMatricula();
 		
 		btnProcesar.addActionListener(e -> {
 			//aquí la lógica
 			Imprimir("Codea pues ----→> (╯°□°）╯︵ ┻━┻");
-			Imprimir();
-			Imprimir("          (¬_¬ )");
-			Imprimir();
-			Imprimir("          (ᵔ◡ᵔ)");
+			Matricula M = new Matricula(12321, 123123123);
+			mList.AdicionarMatricula(M);
+			for (Matricula pana : mList.getMatricula001()) {
+				Imprimir("Fecha: "+pana.getFecha());
+				Imprimir("hora: "+pana.getHora());
+				Imprimir("codigo Alumno"+pana.getCodAlumno());
+				Imprimir("codigo Curso"+pana.getCodCurso());
+
+			}
 		});
 			
 	}
-	void Listar(Alumno a1) {
-		//aquí el listado de tu clase
+	void Listar(ArreglosMatricula a1) {
+		
 	}
 	void Imprimir(String s) {
 		txtOut.append(s + "\n");

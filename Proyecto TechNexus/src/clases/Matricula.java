@@ -5,7 +5,6 @@ import java.time.LocalTime;
 //DATE TIME FORM PARA AGREGAR FORMATO Y PARSEAR EL TEXTO A OBJETOS DE TIPO FECHA U HORA
 import java.time.format.DateTimeFormatter;
 
-
 public class Matricula {
 	//contador
 	static private int contadorMatricula = 100001;
