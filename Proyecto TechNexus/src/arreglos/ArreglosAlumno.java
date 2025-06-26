@@ -13,6 +13,7 @@ public class ArreglosAlumno {
 	
 	public ArreglosAlumno(){
 		alumnosList = new ArrayList <Alumno> ();
+		cargarAlumnos();
 	}
 	
 	
