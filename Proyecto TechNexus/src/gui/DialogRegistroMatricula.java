@@ -11,12 +11,18 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.SystemColor;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import arreglos.ArreglosCursos;
+import arreglos.ArreglosMatricula;
+import clases.Curso;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -67,11 +73,12 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 	JLabel lblNewLabel_16;
 	JTextField TXTcuso;
 	JScrollPane scrollPane;
-	JTable TXTtabla;
+	JTable TablaMatricula;
 	JButton btnConsultar;
 	JButton btnModificar;
 	JButton btnEliminar;
-
+	private DefaultTableModel modeloMatricula;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -265,6 +272,7 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		contentPane.add(TXTcodigoCurso);
 		
 		btnConsultarCurso = new JButton("BUSCAR🔍");
+		btnConsultarCurso.addActionListener(this);
 		btnConsultarCurso.setBounds(173, 190, 96, 25);
 		contentPane.add(btnConsultarCurso);
 		
@@ -308,38 +316,98 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		scrollPane.setBounds(10, 281, 673, 129);
 		contentPane.add(scrollPane);
 		
-		TXTtabla = new JTable();
-		TXTtabla.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"Fecha", "Hora", "Nombres", "Cod Alum", "Curso", "Cod curso", "Estado"
-			}
-		));
-		scrollPane.setViewportView(TXTtabla);
+		TablaMatricula = new JTable();
+		modeloMatricula=new DefaultTableModel();
+		modeloMatricula.addColumn("Número de Matricula");
+		modeloMatricula.addColumn("Código Alumno");
+		modeloMatricula.addColumn("Código Curso");
+		modeloMatricula.addColumn("Fecha");
+		modeloMatricula.addColumn("Hora");
+		modeloMatricula.addColumn("Estado");
+		
+		TablaMatricula.setModel(modeloMatricula);
+		scrollPane.setViewportView(TablaMatricula);
 		
 		btnConsultar = new JButton("NUEVO");
+		btnConsultar.addActionListener(this);
 		btnConsultar.setBounds(105, 412, 109, 25);
 		contentPane.add(btnConsultar);
 		
 		btnModificar = new JButton("REGISTRAR");
+		btnModificar.addActionListener(this);
 		btnModificar.setBounds(292, 412, 109, 25);
 		contentPane.add(btnModificar);
 		
 		btnEliminar = new JButton("CERRAR");
+		btnEliminar.addActionListener(this);
 		btnEliminar.setBounds(471, 412, 96, 25);
 		contentPane.add(btnEliminar);
+		
+		listar();
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnModificar) {
+			actionPerformedBtnModificar(e);
+		}
+		if (e.getSource() == btnConsultar) {
+			actionPerformedBtnConsultar(e);
+		}
+		if (e.getSource() == btnEliminar) {
+			actionPerformedBtnEliminar(e);
+		}
+		if (e.getSource() == btnConsultarCurso) {
+			actionPerformedBtnConsultarCurso(e);
+		}
 		if (e.getSource() == btnConsultarAlumn) {
 			do_btnConsultarAlumn_actionPerformed(e);
 		}
 	}
 	protected void do_btnConsultarAlumn_actionPerformed(ActionEvent e) {
+		
+	}
+	
+	public void leerBusqueda (Curso c) {
+		TXTcodigoCurso.setText(String.valueOf(c.getCodCurso()));
+        TXTcuso.setText(c.getAsignatura());
+        CICLO.setText(String.valueOf(c.getCiclo()));
+        TXTcreditos.setText(String.valueOf(c.getCreditos()));
+        TXTcHORA.setText(String.valueOf(c.getHoras()));
+
+
+        }
+	protected void actionPerformedBtnConsultarCurso(ActionEvent e) {
+		DialogBuscarCursos dialogBuscarCursos = new DialogBuscarCursos(this);
+		dialogBuscarCursos.setLocationRelativeTo(dialogBuscarCursos);
+		dialogBuscarCursos.setModal(true);
+		dialogBuscarCursos.setVisible(true);
+	}
+	
+	//Globalizacion
+	ArreglosMatricula am = new ArreglosMatricula();
+	//Metodos sin parametros
+	 void listar() {
+		 modeloMatricula.setRowCount(0);
+		 for (int i = 0; i < am.tamanio(); i++) {
+			Object[] fila = {
+					am.obtener(i).getNumMatricula(),
+					am.obtener(i).getFecha(),
+					am.obtener(i).getHora(),
+					am.obtener(i).getCodAlumno(),
+					am.obtener(i).getEstado(),};
+			modeloMatricula.addRow(fila);
+		}
+	 }
+	
+	protected void actionPerformedBtnEliminar(ActionEvent e) {
+		 Principal principal = new Principal();
+         principal.setLocationRelativeTo(principal);
+         principal.setVisible(true);
+         dispose();
+
+	}
+	protected void actionPerformedBtnConsultar(ActionEvent e) {
+	}
+	protected void actionPerformedBtnModificar(ActionEvent e) {
 		
 	}
 }

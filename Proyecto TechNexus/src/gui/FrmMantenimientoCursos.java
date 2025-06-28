@@ -61,6 +61,7 @@
 		private JButton btnGuardar;
 		private DefaultTableModel modelo;
 		
+		
 		public static void main(String[] args) {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
