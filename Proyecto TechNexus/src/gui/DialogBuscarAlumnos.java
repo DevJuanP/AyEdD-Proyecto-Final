@@ -32,28 +32,19 @@ public class DialogBuscarAlumnos extends JFrame implements ActionListener {
 	private JScrollPane scrollPane;
 	private JTable table;
 	private DefaultTableModel modeloBuscar;
-
+	private ArreglosAlumno al=new ArreglosAlumno();
+	private DialogRegistroMatricula frameDeMatricula;
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DialogBuscarAlumnos frame = new DialogBuscarAlumnos();
-					frame.setVisible(true);
-					frame.setLocationRelativeTo(null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	 * Launch the application. */
+	public DialogBuscarAlumnos(DialogRegistroMatricula frm) {
+	    this.frameDeMatricula = frm;
+	    initComponents();
 	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public DialogBuscarAlumnos() {
+	private void initComponents() {
 		setTitle("Buscar Alumnos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 607, 276);
@@ -116,7 +107,28 @@ public class DialogBuscarAlumnos extends JFrame implements ActionListener {
 		cargarTabla(alumApe);
 	}
 	protected void actionPerformedBtEnviar(ActionEvent e) {
+		int fila = table.getSelectedRow();
+		if (fila != -1) {
+			String cod = table.getValueAt(fila, 0).toString();
+			String nom = table.getValueAt(fila, 1).toString();
+			String ape = table.getValueAt(fila, 2).toString();
+			String edad = table.getValueAt(fila, 3).toString();
+			String cel = table.getValueAt(fila, 4).toString();
+			String dni = table.getValueAt(fila, 5).toString();
+			String estado = table.getValueAt(fila, 6).toString();
+
+			frameDeMatricula.TXTcodigoAlum.setText(cod);
+			frameDeMatricula.TXTnombres.setText(nom);
+			frameDeMatricula.TXTapellidos.setText(ape);
+			frameDeMatricula.TXTedad.setText(edad);
+			frameDeMatricula.TXTcelular.setText(cel);
+			frameDeMatricula.TXTdni.setText(dni);
+			frameDeMatricula.TXTestado.setText(estado);
+
+			dispose();  // Cierra la ventana después de enviar los datos
+		}
 	}
+	
 	
 	private String leerApellido() {
 		return txtBuscar.getText().trim();
@@ -130,5 +142,10 @@ public class DialogBuscarAlumnos extends JFrame implements ActionListener {
 		for (Alumno a : arrList) {
 			modeloBuscar.addRow(new Object[] {a.getCodAlumno(),a.getNombres(), a.getApellidos(), a.getEdad(), a.getCelular(), a.getDni(), a.getEstado()});
 		}
+	}
+
+	public void setModal(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 }
