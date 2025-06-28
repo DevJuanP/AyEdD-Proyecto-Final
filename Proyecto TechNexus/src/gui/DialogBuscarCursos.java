@@ -1,94 +1,145 @@
 package gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.table.DefaultTableModel;
+
+import arreglos.ArreglosCursos;
+import clases.Curso;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
-import javax.swing.JButton;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class DialogBuscarCursos extends JFrame {
+public class DialogBuscarCursos extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JLabel lblAsignatura;
 	private JTextField txtBuscar;
-	private JButton btBuscar_2;
-	private JButton btEnviar;
 	private JScrollPane scrollPane;
-	private JTable table;
+	private JTable tableBuscar;
 	private DefaultTableModel modeloBuscar;
 
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DialogBuscarCursos frame = new DialogBuscarCursos();
-					frame.setVisible(true);
-					frame.setLocationRelativeTo(null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		try {
+			DialogBuscarCursos dialog = new DialogBuscarCursos();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+			dialog.setLocationRelativeTo(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the dialog.
 	 */
 	public DialogBuscarCursos() {
-		setTitle("Buscar Cursos");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 607, 276);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		setBounds(100, 100, 607, 291);
+		getContentPane().setLayout(null);
 		
 		lblAsignatura = new JLabel("Asignatura: ");
 		lblAsignatura.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblAsignatura.setBounds(22, 11, 96, 17);
-		contentPane.add(lblAsignatura);
+		lblAsignatura.setBounds(21, 23, 96, 17);
+		getContentPane().add(lblAsignatura);
 		
 		txtBuscar = new JTextField();
-		txtBuscar.setBounds(120, 12, 223, 19);
-		contentPane.add(txtBuscar);
+		txtBuscar.addActionListener(this);
 		txtBuscar.setColumns(10);
-		
-		btBuscar_2 = new JButton("Buscar");
-		btBuscar_2.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btBuscar_2.setBounds(376, 10, 85, 21);
-		contentPane.add(btBuscar_2);
-		
-		btEnviar = new JButton("Enviar");
-		btEnviar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btEnviar.setBounds(488, 10, 85, 21);
-		contentPane.add(btEnviar);
+		txtBuscar.setBounds(119, 24, 223, 19);
+		getContentPane().add(txtBuscar);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(22, 49, 551, 171);
-		contentPane.add(scrollPane);
+		scrollPane.setBounds(21, 61, 551, 171);
+		getContentPane().add(scrollPane);
 		
-		table = new JTable();
+		tableBuscar = new JTable();
 		modeloBuscar=new DefaultTableModel();
 		modeloBuscar.addColumn("Código");
 		modeloBuscar.addColumn("Asignatura");
 		modeloBuscar.addColumn("Ciclo");
 		modeloBuscar.addColumn("Créditos");	
 		modeloBuscar.addColumn("Horas");
-		table.setModel(modeloBuscar);
+		tableBuscar.setModel(modeloBuscar);
 		
-		table.setModel(modeloBuscar);
-		scrollPane.setViewportView(table);
+		scrollPane.setViewportView(tableBuscar);
+		
+		btnEnviarDlg = new JButton("Enviar Dialogo");
+		btnEnviarDlg.addActionListener(this);
+		btnEnviarDlg.setBounds(415, 23, 130, 21);
+		getContentPane().add(btnEnviarDlg);
+		
+		// Mostrar todos los cursos al abrir
+		listarCursos("");
+
+		// Listener que detecta cuando escribes y filtra en tiempo real
+		txtBuscar.getDocument().addDocumentListener(new DocumentListener() {
+			public void insertUpdate(DocumentEvent e) {
+				listarCursos(txtBuscar.getText());
+			}
+
+			public void removeUpdate(DocumentEvent e) {
+				listarCursos(txtBuscar.getText());
+			}
+
+			public void changedUpdate(DocumentEvent e) {
+				listarCursos(txtBuscar.getText());
+			}
+		});
+	}
+	ArreglosCursos ac = new ArreglosCursos();
+	private JButton btnEnviarDlg;
+	
+	// Método para llenar o filtrar la tabla
+	private void listarCursos(String filtro) {
+		modeloBuscar.setRowCount(0); // Limpiar la tabla
+
+		for (int i = 0; i < ac.tamanio(); i++) {
+			Curso c = ac.obtener(i);
+			if (filtro.isEmpty() || c.getAsignatura().toLowerCase().contains(filtro.toLowerCase())) {
+				Object[] fila = {
+					c.getCodCurso(),
+					c.getAsignatura(),
+					c.getCiclo(),
+					c.getCreditos(),
+					c.getHoras()
+				};
+				modeloBuscar.addRow(fila);
+			}
+		}
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEnviarDlg) {
+			actionPerformedBtnEnviarDlg(e);
+		}
+	}
+	protected void actionPerformedBtnEnviarDlg(ActionEvent e) {
+		int fila = tableBuscar.getSelectedRow();
+		if (fila == -1) {
+			JOptionPane.showMessageDialog(null, "Selecciona una fila", "Advertencia", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		// Obtener curso desde fila
+		int cod = Integer.parseInt(tableBuscar.getValueAt(fila, 0).toString());
+		String asig = tableBuscar.getValueAt(fila, 1).toString();
+		int ciclo = Integer.parseInt(tableBuscar.getValueAt(fila, 2).toString());
+		int cred = Integer.parseInt(tableBuscar.getValueAt(fila, 3).toString());
+		int horas = Integer.parseInt(tableBuscar.getValueAt(fila, 4).toString());
+
+		Curso c = new Curso(cod, asig, ciclo, cred, horas);
+		//DialogRegistroMatricula.llenarCamposDesdeBusqueda(c); // Llenar campos en el otro frame
+		dispose(); // Cierra el diálogo
 	}
 }

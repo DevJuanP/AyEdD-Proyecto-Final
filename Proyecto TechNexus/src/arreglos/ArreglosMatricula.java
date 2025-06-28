@@ -40,8 +40,6 @@ public class ArreglosMatricula {
 		 
 	public void Eliminar(Matricula M) {
 		matricula001.remove(M);
-		
-	
 	 }
 	
 		

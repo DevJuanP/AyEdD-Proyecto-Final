@@ -29,7 +29,7 @@
 	import javax.swing.*;
 	
 	
-	public class DialogMantenimientoCursos extends JFrame implements ActionListener {
+	public class FrmMantenimientoCursos extends JFrame implements ActionListener {
 	
 		private static final long serialVersionUID = 1L;
 		private JPanel contentPane;
@@ -65,7 +65,7 @@
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						DialogMantenimientoCursos frame = new DialogMantenimientoCursos();
+						FrmMantenimientoCursos frame = new FrmMantenimientoCursos();
 						frame.setVisible(true);
 						frame.setLocationRelativeTo(null);
 					} catch (Exception e) {
@@ -80,7 +80,7 @@
 		
 	
 	
-		public DialogMantenimientoCursos() {
+		public FrmMantenimientoCursos() {
 			
 			setTitle("Mantenimiento de curso");
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -64,8 +64,8 @@ public class ArreglosCursos {
 			// TODO: handle exception
 		}
 	 }
-	 
-	 private void grabarCursos() {
+
+	private void grabarCursos() {
 		 try {
 			PrintWriter pw;
 			String linea;
