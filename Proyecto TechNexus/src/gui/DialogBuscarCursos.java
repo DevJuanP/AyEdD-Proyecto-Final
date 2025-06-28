@@ -139,7 +139,6 @@ public class DialogBuscarCursos extends JDialog implements ActionListener {
 		int horas = Integer.parseInt(tableBuscar.getValueAt(fila, 4).toString());
 
 		Curso c = new Curso(cod, asig, ciclo, cred, horas);
-		//DialogRegistroMatricula.llenarCamposDesdeBusqueda(c); // Llenar campos en el otro frame
 		dispose(); // Cierra el diálogo
 	}
 }
