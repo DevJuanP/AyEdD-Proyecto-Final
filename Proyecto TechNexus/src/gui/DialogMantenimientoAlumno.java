@@ -58,6 +58,7 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
 	private JButton btnRegistrar;
 	private JButton btnModificar;
 	private JButton btnEliminar;
+	public static ArreglosAlumno alumnosList = new ArreglosAlumno();
 	
 	//otros
 	private DefaultTableModel modelo;
@@ -65,7 +66,7 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
 	
 
 	public static void main(String[] args) {
-		cargarAlumnos();
+		//cargarAlumnos();
 		DialogMantenimientoAlumno frame = new DialogMantenimientoAlumno();
 		frame.setVisible(true);
 	}
@@ -80,6 +81,8 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		
 		
 		lblTitle = new JLabel("MANTENIMIENTO ALUMNO");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -176,9 +179,9 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
         getContentPane().add(scrollTabla);
         
         //carga la tabla
-        cargarTabla();
         
-        cargarAlumnos();
+        cargarTabla();
+        //cargarAlumnos();
         
         //botones        
         btnNuevo = new JButton("Nuevo");
@@ -201,7 +204,6 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
         
 	}
 	
-	static ArreglosAlumno alumnosList = new ArreglosAlumno();
 	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnRegistrar) {
@@ -251,7 +253,7 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
 		txtDNI.setText("");
 	}
 	//precargar alumnos:
-	private static void cargarAlumnos() {
+	/*private static void cargarAlumnos() {
 		Alumno a1 = new Alumno(23, 963852741, "Armando", "Paredes de las Casas", "72884005");
 		alumnosList.adicionar(a1);
 
@@ -277,7 +279,7 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
 		alumnosList.adicionar(a8);
 		
 		alumnosList.cargarALToTxtfile();
-	}
+	}*/
 	
 	private void cargarTabla() {
 		for (Alumno a : alumnosList.getAlumnosList()) {
