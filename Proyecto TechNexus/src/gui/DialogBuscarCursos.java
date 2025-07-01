@@ -15,18 +15,19 @@ public class DialogBuscarCursos extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
+	private JLabel lblAsignatura;
 	private JTextField txtBuscar;
+	private JScrollPane scrollPane;
+	private JButton btnEnviarDlg;
 	private JTable tableBuscar;
 	private DefaultTableModel modeloBuscar;
-	private JButton btnEnviarDlg;
-
-	private ArreglosCursos ac = new ArreglosCursos();
-	private DialogRegistroMatricula frmDRMatricula; // Referencia al JFrame
+	public DialogRegistroMatricula frmDRMatricula;
+	
 
 	// Constructor que recibe el formulario principal
 	public DialogBuscarCursos(DialogRegistroMatricula frm) {
 		this.frmDRMatricula = frm;
-		initComponents(); // Llama a la función que construye la interfaz
+		initComponents(); // Llama a la función que construye la inssterfaz
 	}
 
 	private void initComponents() {
@@ -35,7 +36,7 @@ public class DialogBuscarCursos extends JDialog implements ActionListener {
 		setBounds(100, 100, 607, 291);
 		setLayout(null);
 
-		JLabel lblAsignatura = new JLabel("Asignatura:");
+		lblAsignatura = new JLabel("Asignatura:");
 		lblAsignatura.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblAsignatura.setBounds(21, 23, 96, 17);
 		add(lblAsignatura);
@@ -50,7 +51,7 @@ public class DialogBuscarCursos extends JDialog implements ActionListener {
 		btnEnviarDlg.addActionListener(this);
 		add(btnEnviarDlg);
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(21, 61, 551, 171);
 		add(scrollPane);
 
@@ -79,6 +80,8 @@ public class DialogBuscarCursos extends JDialog implements ActionListener {
 			}
 		});
 	}
+	//Declaracion Global
+	ArreglosCursos ac = new ArreglosCursos();
 
 	private void listarCursos(String filtro) {
 		modeloBuscar.setRowCount(0); // Limpiar tabla
@@ -95,16 +98,15 @@ public class DialogBuscarCursos extends JDialog implements ActionListener {
 				});
 			}
 		}
-	}
+	}   
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnEnviarDlg) {
 			int fila = tableBuscar.getSelectedRow();
 			if (fila == -1) {
 				JOptionPane.showMessageDialog(this, "Selecciona una fila", "Advertencia", JOptionPane.WARNING_MESSAGE);
 				return;
-			}
+			} 
 
 			int cod = Integer.parseInt(tableBuscar.getValueAt(fila, 0).toString());
 			String asig = tableBuscar.getValueAt(fila, 1).toString();

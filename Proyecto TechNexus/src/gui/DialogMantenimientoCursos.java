@@ -2,7 +2,6 @@
 	
 	import java.awt.EventQueue;
 	
-	import javax.swing.JFrame;
 	import javax.swing.JPanel;
 	import javax.swing.border.EmptyBorder;
 	import javax.swing.JLabel;
@@ -29,7 +28,7 @@
 	import javax.swing.*;
 	
 	
-	public class FrmMantenimientoCursos extends JFrame implements ActionListener {
+	public class DialogMantenimientoCursos extends JDialog implements ActionListener {
 	
 		private static final long serialVersionUID = 1L;
 		private JPanel contentPane;
@@ -66,9 +65,9 @@
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						FrmMantenimientoCursos frame = new FrmMantenimientoCursos();
-						frame.setVisible(true);
-						frame.setLocationRelativeTo(null);
+						DialogMantenimientoCursos dialog = new DialogMantenimientoCursos();
+						dialog.setVisible(true);
+						dialog.setLocationRelativeTo(null);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -77,14 +76,14 @@
 	        // Establece los textos de los botones en español
 	        UIManager.put("OptionPane.yesButtonText", "Sí");
 	        UIManager.put("OptionPane.noButtonText", "No");
-		}
+		}	
 		
 	
 	
-		public FrmMantenimientoCursos() {
+		public DialogMantenimientoCursos() {
 			
 			setTitle("Mantenimiento de curso");
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			setBounds(100, 100, 637, 450);
 			contentPane = new JPanel();
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

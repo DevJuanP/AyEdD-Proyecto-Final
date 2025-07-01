@@ -1,13 +1,12 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=branch 'master' of https\://github.com/DevJuanP/AyEdD-Proyecto-Final
 eclipse.preferences.version=1
 encoding//src/PruebasGui/Andres.java=UTF-8
 encoding//src/PruebasGui/Jeremy.java=UTF-8
 encoding//src/PruebasGui/Jhonatan.java=UTF-8
 encoding//src/PruebasGui/Oscar.java=UTF-8
 encoding//src/gui/DialogMantenimientoAlumno.java=UTF-8
-<<<<<<< HEAD
-=======
 encoding//src/gui/DialogMantenimientoCursos.java=UTF-8
 encoding//src/gui/DialogRegistroMatricula.java=UTF-8
->>>>>>> branch 'master' of https://github.com/DevJuanP/AyEdD-Proyecto-Final
 encoding//src/gui/DialogRegistroRetiro.java=UTF-8
-encoding//src/gui/FrmMantenimientoCursos.java=UTF-8

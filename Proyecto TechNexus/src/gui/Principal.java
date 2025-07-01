@@ -179,7 +179,7 @@ public class Principal extends JFrame implements ActionListener {
 	}
 	
 	protected void doMntCursoActionPerformed(ActionEvent e) {
-		FrmMantenimientoCursos dMCursos = new FrmMantenimientoCursos();
+		DialogMantenimientoCursos dMCursos = new DialogMantenimientoCursos();
 		dMCursos.setLocationRelativeTo(dMCursos);
 		dMCursos.setVisible(true);
 	}
