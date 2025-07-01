@@ -21,19 +21,24 @@ public class ArreglosMatricula {
 	
 	public void CargarMatricula() {
 		try {
+			matricula001.clear(); 
 			BufferedReader br = new BufferedReader(new FileReader("data/matricula.txt"));
 			String[] SEPARATOR;
-			int i=0, Fecha,Hora,codigoAlum, codigoCurs,CodigoMatri,estado;
-			String linea,nombres;
+			int codigoAlum, codigoCurs,CodigoMatri,estado;
+			String linea,nombres,Fecha,Hora;
 			while((linea= br.readLine())!=null) {
 				SEPARATOR = linea.split(";");
-				Fecha= Integer.parseInt(SEPARATOR[0].trim());
-				Hora= Integer.parseInt(SEPARATOR[1].trim());
-				codigoAlum= Integer.parseInt(SEPARATOR[2].trim());
-				codigoCurs= Integer.parseInt(SEPARATOR[3].trim());
-				CodigoMatri= Integer.parseInt(SEPARATOR[4].trim());
-				estado= Integer.parseInt(SEPARATOR[5].trim());
-				AdicionarMatricula(new Matricula(codigoAlum, codigoCurs));
+				CodigoMatri = Integer.parseInt(SEPARATOR[0].trim());
+				 codigoAlum = Integer.parseInt(SEPARATOR[1].trim());
+				 codigoCurs = Integer.parseInt(SEPARATOR[2].trim());
+				 Fecha = SEPARATOR[3].trim();
+				 Hora = SEPARATOR[4].trim();
+				 estado=Integer.parseInt(SEPARATOR[5].trim());
+				Matricula m =new Matricula(codigoAlum, codigoCurs ,estado);
+				m.setNumMatricula(CodigoMatri);  // Si tienes un setter para el número de matrícula
+				m.setFecha(Fecha);
+				m.setHora(Hora);
+				AdicionarMatricula(m);
 
 				
 				
@@ -44,18 +49,18 @@ public class ArreglosMatricula {
 	}
 	
 	
-	public void cargarTxtFile() {
+	public void GrabarTXT() {
 		try {
 			
 			PrintWriter PW = new PrintWriter(new FileWriter("data/matricula.txt"));
 			String linea;
 			for(Matricula M: matricula001) {
-				linea = M.getFecha()+";"
-						+M.getHora()+";"
-						+M.getCodAlumno()+";"
-						+M.getCodCurso()+";"
-						+M.getNumMatricula()+";"
-						+M.getEstado();
+				linea = M.getNumMatricula() + ";" 
+					      + M.getCodAlumno() + ";" 
+					      + M.getCodCurso() + ";" 
+					      + M.getFecha() + ";" 
+					      + M.getHora() + ";" 
+					      + M.getEstado();
 				PW.println(linea);
 				
 			}
@@ -67,19 +72,21 @@ public class ArreglosMatricula {
 	}
 
 
+	
 	public void AdicionarMatricula(Matricula M) {
 		matricula001.add(M);
 	}
-	public void RegistrarMatricula(int CodeCurso, int CodeAlumno, ArreglosCursos curso, ArreglosAlumno alumno) {
+/*	public void RegistrarMatricula(int CodeCurso, int CodeAlumno, ArreglosCursos curso, ArreglosAlumno alumno) {
 		Curso a =curso.buscarCodigo(CodeCurso);
+		int estado= 0;
 		Alumno e =alumno.buscarCodigo(CodeAlumno);
 		if(a == null||e ==null) {
 			return;
-		}
-		
-		Matricula x= new Matricula(CodeAlumno, CodeCurso);
-		AdicionarMatricula(x);
 	}
+		
+		Matricula x= new Matricula(CodeAlumno, CodeCurso,estado);
+		AdicionarMatricula(x);
+	}*/
 	public int tamanio() {
 		return matricula001.size();
 	}
@@ -104,6 +111,9 @@ public class ArreglosMatricula {
 	 }
 	
 		
+	
+	
+	
 	public ArrayList<Matricula> getMatricula001() {
 		return matricula001;
 	}

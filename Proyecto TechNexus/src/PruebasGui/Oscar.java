@@ -43,15 +43,8 @@ public class Oscar extends JFrame {
 		btnProcesar.addActionListener(e -> {
 			//aquí la lógica
 			Imprimir("Codea pues ----→> (╯°□°）╯︵ ┻━┻");
-			Matricula M = new Matricula(12321, 123123123);
-			mList.AdicionarMatricula(M);
-			for (Matricula pana : mList.getMatricula001()) {
-				Imprimir("Fecha: "+pana.getFecha());
-				Imprimir("hora: "+pana.getHora());
-				Imprimir("codigo Alumno"+pana.getCodAlumno());
-				Imprimir("codigo Curso"+pana.getCodCurso());
-
-			}
+			
+			
 		});
 			
 	}

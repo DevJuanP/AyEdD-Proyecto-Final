@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import arreglos.ArreglosCursos;
 import arreglos.ArreglosMatricula;
 import clases.Curso;
+import clases.Matricula;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -33,7 +34,7 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 	JLabel lblNewLabel_1;
 	JTextField TXTfecha;
 	JLabel lblNewLabel_2;
-	JTextField TXThora_1;
+	JTextField txtHora;
 	JLabel lblNewLabel_3;
 	JTextField TXTcodigoMatricula;
 	JSeparator separator;
@@ -65,18 +66,18 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 	JTextField TXTcodigoCurso;
 	JButton btnConsultarCurso;
 	JLabel lblNewLabel_13;
-	JTextField CICLO;
+	JTextField txtCiclo;
 	JLabel lblNewLabel_14;
 	JTextField TXTcreditos;
 	JLabel lblNewLabel_15;
-	JTextField TXTcHORA;
+	JTextField TXTHora;
 	JLabel lblNewLabel_16;
 	JTextField TXTcuso;
 	JScrollPane scrollPane;
 	JTable TablaMatricula;
 	JButton btnConsultar;
-	JButton btnModificar;
-	JButton btnEliminar;
+	JButton btnRegistrar;
+	JButton btnCerrar;
 	private DefaultTableModel modeloMatricula;
 	
 	/**
@@ -121,6 +122,7 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		contentPane.add(lblNewLabel_1);
 		
 		TXTfecha = new JTextField();
+		TXTfecha.setEditable(false);
 		TXTfecha.setBounds(53, 22, 69, 19);
 		contentPane.add(TXTfecha);
 		TXTfecha.setColumns(10);
@@ -130,10 +132,11 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		lblNewLabel_2.setBounds(132, 21, 47, 18);
 		contentPane.add(lblNewLabel_2);
 		
-		TXThora_1 = new JTextField();
-		TXThora_1.setBounds(173, 22, 69, 19);
-		contentPane.add(TXThora_1);
-		TXThora_1.setColumns(10);
+		txtHora = new JTextField();
+		txtHora.setEditable(false);
+		txtHora.setBounds(173, 22, 69, 19);
+		contentPane.add(txtHora);
+		txtHora.setColumns(10);
 		
 		lblNewLabel_3 = new JLabel("CODIGO MATRICULA");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -141,6 +144,7 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		contentPane.add(lblNewLabel_3);
 		
 		TXTcodigoMatricula = new JTextField();
+		TXTcodigoMatricula.setEditable(false);
 		TXTcodigoMatricula.setBounds(586, 22, 96, 19);
 		contentPane.add(TXTcodigoMatricula);
 		TXTcodigoMatricula.setColumns(10);
@@ -280,10 +284,10 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		lblNewLabel_13.setBounds(322, 196, 45, 13);
 		contentPane.add(lblNewLabel_13);
 		
-		CICLO = new JTextField();
-		CICLO.setColumns(10);
-		CICLO.setBounds(363, 193, 38, 19);
-		contentPane.add(CICLO);
+		txtCiclo = new JTextField();
+		txtCiclo.setColumns(10);
+		txtCiclo.setBounds(363, 193, 38, 19);
+		contentPane.add(txtCiclo);
 		
 		lblNewLabel_14 = new JLabel("CREDITOS");
 		lblNewLabel_14.setBounds(292, 228, 69, 13);
@@ -298,10 +302,10 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		lblNewLabel_15.setBounds(433, 196, 45, 13);
 		contentPane.add(lblNewLabel_15);
 		
-		TXTcHORA = new JTextField();
-		TXTcHORA.setColumns(10);
-		TXTcHORA.setBounds(483, 192, 38, 19);
-		contentPane.add(TXTcHORA);
+		TXTHora = new JTextField();
+		TXTHora.setColumns(10);
+		TXTHora.setBounds(483, 192, 38, 19);
+		contentPane.add(TXTHora);
 		
 		lblNewLabel_16 = new JLabel("CURSO");
 		lblNewLabel_16.setBounds(10, 231, 76, 13);
@@ -328,32 +332,38 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		TablaMatricula.setModel(modeloMatricula);
 		scrollPane.setViewportView(TablaMatricula);
 		
-		btnConsultar = new JButton("NUEVO");
+		btnConsultar = new JButton("CONSULTAR");
 		btnConsultar.addActionListener(this);
-		btnConsultar.setBounds(105, 412, 109, 25);
+		btnConsultar.setBounds(65, 412, 109, 25);
 		contentPane.add(btnConsultar);
 		
-		btnModificar = new JButton("REGISTRAR");
-		btnModificar.addActionListener(this);
-		btnModificar.setBounds(292, 412, 109, 25);
-		contentPane.add(btnModificar);
+		btnRegistrar = new JButton("REGISTRAR");
+		btnRegistrar.addActionListener(this);
+		btnRegistrar.setBounds(231, 412, 109, 25);
+		contentPane.add(btnRegistrar);
 		
-		btnEliminar = new JButton("CERRAR");
-		btnEliminar.addActionListener(this);
-		btnEliminar.setBounds(471, 412, 96, 25);
+		btnCerrar = new JButton("CERRAR");
+		btnCerrar.addActionListener(this);
+		btnCerrar.setBounds(521, 412, 96, 25);
+		contentPane.add(btnCerrar);
+		
+		btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.addActionListener(this); 
+		btnEliminar.setBounds(375, 412, 96, 25);
 		contentPane.add(btnEliminar);
-		
+		setear();
 		listar();
+		
 	}
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnModificar) {
-			actionPerformedBtnModificar(e);
+		if (e.getSource() == btnRegistrar) {
+			actionPerformedBtnRegistrar(e);
 		}
 		if (e.getSource() == btnConsultar) {
 			actionPerformedBtnConsultar(e);
 		}
-		if (e.getSource() == btnEliminar) {
-			actionPerformedBtnEliminar(e);
+		if (e.getSource() == btnCerrar) {
+			actionPerformedBtnCerrar(e);
 		}
 		if (e.getSource() == btnConsultarCurso) {
 			actionPerformedBtnConsultarCurso(e);
@@ -361,20 +371,27 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		if (e.getSource() == btnConsultarAlumn) {
 			do_btnConsultarAlumn_actionPerformed(e);
 		}
-	}
-	protected void do_btnConsultarAlumn_actionPerformed(ActionEvent e) {
-		
+		if (e.getSource() == btnEliminar) {
+			do_btnEliminar_actionPerformed(e);
+		}
 	}
 	
 	public void leerBusqueda (Curso c) {
 		TXTcodigoCurso.setText(String.valueOf(c.getCodCurso()));
         TXTcuso.setText(c.getAsignatura());
-        CICLO.setText(String.valueOf(c.getCiclo()));
+        txtCiclo.setText(String.valueOf(c.getCiclo()));
         TXTcreditos.setText(String.valueOf(c.getCreditos()));
-        TXTcHORA.setText(String.valueOf(c.getHoras()));
+        TXTHora.setText(String.valueOf(c.getHoras()));
 
 
         }
+	protected void do_btnConsultarAlumn_actionPerformed(ActionEvent e) {
+		DialogBuscarAlumnos dialogBuscarAlumno = new DialogBuscarAlumnos(this);
+		dialogBuscarAlumno.setLocationRelativeTo(dialogBuscarAlumno);
+		dialogBuscarAlumno.setModal(true);
+		dialogBuscarAlumno.setVisible(true);
+		
+	}
 	protected void actionPerformedBtnConsultarCurso(ActionEvent e) {
 		DialogBuscarCursos dialogBuscarCursos = new DialogBuscarCursos(this);
 		dialogBuscarCursos.setLocationRelativeTo(dialogBuscarCursos);
@@ -384,30 +401,81 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 	
 	//Globalizacion
 	ArreglosMatricula am = new ArreglosMatricula();
+	private JButton btnEliminar;
 	//Metodos sin parametros
 	 void listar() {
 		 modeloMatricula.setRowCount(0);
 		 for (int i = 0; i < am.tamanio(); i++) {
 			Object[] fila = {
 					am.obtener(i).getNumMatricula(),
+					am.obtener(i).getCodAlumno(),
+					am.obtener(i).getCodCurso(),
 					am.obtener(i).getFecha(),
 					am.obtener(i).getHora(),
-					am.obtener(i).getCodAlumno(),
 					am.obtener(i).getEstado(),};
 			modeloMatricula.addRow(fila);
 		}
 	 }
 	
-	protected void actionPerformedBtnEliminar(ActionEvent e) {
-		 Principal principal = new Principal();
-         principal.setLocationRelativeTo(principal);
-         principal.setVisible(true);
-         dispose();
+	 protected void do_btnEliminar_actionPerformed(ActionEvent e) {
+		 am.Eliminar(null);
+	 }
+	 
+	 
+	protected void actionPerformedBtnConsultar(ActionEvent e) {
+		setear();
+		am.CargarMatricula();
+		listar();
+		
+	}
+	protected void actionPerformedBtnRegistrar(ActionEvent e) {
+		try {
+		int codigoAlumno = Integer.parseInt(TXTcodigoAlum.getText().trim());
+		int codigoCurso = Integer.parseInt(TXTcodigoCurso.getText().trim());
+		String fecha = TXTfecha.getText().trim();
+		String hora = TXTHora.getText().trim();
+		int estado = Integer.parseInt(TXTestado.getText().trim());
+		Matricula m = new Matricula(codigoAlumno,codigoCurso,estado );
+		am.AdicionarMatricula(m);
+		am.GrabarTXT();
+		setear();
+		listar();
+		javax.swing.JOptionPane.showMessageDialog(null, "Matrícula registrada correctamente.");
+		}catch(Exception x) {
+			javax.swing.JOptionPane.showMessageDialog(null, "Codigos existentes//Datos mas ingresados");
+		}
+		
+		
+		
+		
+		
+	}
+	public void setear() {
+		Matricula m = new Matricula(0, 0, 0);
+		TXTnombres.setText("");
+		TXTapellidos.setText("");
+		TXTedad.setText("");
+		TXTdni.setText("");
+		TXTcelular.setText("");
+		TXTestado.setText("");
+
+		TXTcodigoCurso.setText("");
+		TXTcuso.setText("");
+		txtCiclo.setText("");
+		TXTcreditos.setText("");
+		TXTHora.setText("");
+
+		TXTcodigoAlum.setText("");
+		TXTfecha.setText(m.getFecha());
+		txtHora.setText(m.getHora());
+		TXTcodigoMatricula.setText(String.valueOf(Matricula.getContadorMatricula()));
+		
 
 	}
-	protected void actionPerformedBtnConsultar(ActionEvent e) {
-	}
-	protected void actionPerformedBtnModificar(ActionEvent e) {
-		
+	protected void actionPerformedBtnCerrar(ActionEvent e) {
+		Principal principal = new Principal();
+		principal.setLocationRelativeTo(principal);
+		principal.setVisible(true);
+		dispose();
 	}
 }

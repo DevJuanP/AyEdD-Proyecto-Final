@@ -19,7 +19,7 @@ public class Matricula {
 		//asdasd
 	
 
-public Matricula(int codAlumno, int codCurso) {
+public Matricula(int codAlumno, int codCurso ,int estado) {
 		this.numMatricula = contadorMatricula++;
 		this.estado=estado;
 		this.codAlumno = codAlumno;
