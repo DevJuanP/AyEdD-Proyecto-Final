@@ -21,13 +21,13 @@ public class DialogBuscarCursos extends JDialog implements ActionListener {
 	private JButton btnEnviarDlg;
 	private JTable tableBuscar;
 	private DefaultTableModel modeloBuscar;
-	public DialogRegistroMatricula frmDRMatricula;
+	public DialogRegistroMatricula dlgRMatricula;
 	
 
 	// Constructor que recibe el formulario principal
-	public DialogBuscarCursos(DialogRegistroMatricula frm) {
-		this.frmDRMatricula = frm;
-		initComponents(); // Llama a la función que construye la inssterfaz
+	public DialogBuscarCursos(DialogRegistroMatricula dlg) {
+		this.dlgRMatricula = dlg;
+		initComponents(); // Llama a la función que construye la interfaz
 	}
 
 	private void initComponents() {
@@ -115,7 +115,7 @@ public class DialogBuscarCursos extends JDialog implements ActionListener {
 			int horas = Integer.parseInt(tableBuscar.getValueAt(fila, 4).toString());
 
 			Curso c = new Curso(cod, asig, ciclo, cred, horas);
-			frmDRMatricula.leerBusqueda(c); // Envía al formulario
+			dlgRMatricula.leerBusqueda(c); // Envía al formulario
 			dispose(); // Cierra este diálogo
 		}
 	}

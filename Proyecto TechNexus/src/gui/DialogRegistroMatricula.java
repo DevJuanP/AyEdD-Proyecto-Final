@@ -1,9 +1,7 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -11,15 +9,13 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.SystemColor;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import arreglos.ArreglosCursos;
 import arreglos.ArreglosMatricula;
 import clases.Curso;
 import clases.Matricula;
@@ -27,8 +23,10 @@ import clases.Matricula;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class DialogRegistroMatricula extends JFrame implements ActionListener {
+public class DialogRegistroMatricula extends JDialog implements ActionListener {
 
+	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
 	JLabel TXThora;
 	JLabel lblNewLabel_1;
@@ -54,13 +52,9 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 	JTextField TXTapellidos;
 	JLabel lblNewLabel_10;
 	JTextField TXTdni;
-	JSeparator separator_1;
 	JSeparator separator_2;
 	JSeparator separator_3;
 	JSeparator separator_4;
-	JSeparator separator_5;
-	JSeparator separator_6;
-	JSeparator separator_7;
 	JLabel lblNewLabel_11;
 	JLabel lblNewLabel_12;
 	JTextField TXTcodigoCurso;
@@ -78,6 +72,11 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 	JButton btnConsultar;
 	JButton btnRegistrar;
 	JButton btnCerrar;
+	private JSeparator separator_1;
+	private JSeparator separator_5;
+	private JSeparator separator_6;
+	private JSeparator separator_7;
+	private JButton btnEliminar;
 	private DefaultTableModel modeloMatricula;
 	
 	/**
@@ -87,8 +86,9 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DialogRegistroMatricula frame = new DialogRegistroMatricula();
-					frame.setVisible(true);
+					DialogRegistroMatricula dialog = new DialogRegistroMatricula();
+					dialog.setVisible(true);
+					dialog.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -100,8 +100,9 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public DialogRegistroMatricula() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 707, 484);
+		setTitle("Registro de Matricula");
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 746, 535);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -112,212 +113,212 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		TXThora.setBackground(new Color(0, 0, 0));
 		TXThora.setOpaque(true);
 		TXThora.setHorizontalAlignment(SwingConstants.CENTER);
-		TXThora.setFont(new Font("Tahoma", Font.BOLD, 14));
-		TXThora.setBounds(10, 0, 672, 18);
+		TXThora.setFont(new Font("Tahoma", Font.BOLD, 17));
+		TXThora.setBounds(0, 0, 732, 33);
 		contentPane.add(TXThora);
 		
-		lblNewLabel_1 = new JLabel("FECHA");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(10, 21, 47, 18);
+		lblNewLabel_1 = new JLabel("Fecha:");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_1.setBounds(20, 43, 70, 18);
 		contentPane.add(lblNewLabel_1);
 		
 		TXTfecha = new JTextField();
 		TXTfecha.setEditable(false);
-		TXTfecha.setBounds(53, 22, 69, 19);
+		TXTfecha.setBounds(85, 45, 69, 19);
 		contentPane.add(TXTfecha);
 		TXTfecha.setColumns(10);
 		
-		lblNewLabel_2 = new JLabel("HORA");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(132, 21, 47, 18);
+		lblNewLabel_2 = new JLabel("Hora:");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_2.setBounds(168, 43, 47, 18);
 		contentPane.add(lblNewLabel_2);
 		
 		txtHora = new JTextField();
 		txtHora.setEditable(false);
-		txtHora.setBounds(173, 22, 69, 19);
+		txtHora.setBounds(225, 45, 69, 19);
 		contentPane.add(txtHora);
 		txtHora.setColumns(10);
 		
-		lblNewLabel_3 = new JLabel("CODIGO MATRICULA");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_3.setBounds(465, 24, 124, 13);
+		lblNewLabel_3 = new JLabel("Código Matricula:");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_3.setBounds(470, 45, 136, 13);
 		contentPane.add(lblNewLabel_3);
 		
 		TXTcodigoMatricula = new JTextField();
 		TXTcodigoMatricula.setEditable(false);
-		TXTcodigoMatricula.setBounds(586, 22, 96, 19);
+		TXTcodigoMatricula.setBounds(616, 44, 96, 19);
 		contentPane.add(TXTcodigoMatricula);
 		TXTcodigoMatricula.setColumns(10);
 		
 		separator = new JSeparator();
+		separator.setForeground(Color.GRAY);
 		separator.setToolTipText("");
-		separator.setBounds(0, 57, 692, 2);
+		separator.setBounds(20, 71, 692, 8);
 		contentPane.add(separator);
 		
-		lblNewLabel_4 = new JLabel("DATOS DE ALUMNO");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_4.setBounds(10, 57, 134, 19);
+		lblNewLabel_4 = new JLabel("DATOS DE ALUMNOS");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_4.setBounds(30, 80, 199, 19);
 		contentPane.add(lblNewLabel_4);
 		
-		lblNewLabel_5 = new JLabel("CODIGO");
-		lblNewLabel_5.setBounds(10, 87, 50, 18);
+		lblNewLabel_5 = new JLabel("Código:");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_5.setBounds(40, 109, 61, 21);
 		contentPane.add(lblNewLabel_5);
 		
 		TXTcodigoAlum = new JTextField();
-		TXTcodigoAlum.setBounds(65, 87, 96, 19);
+		TXTcodigoAlum.setBounds(138, 111, 109, 19);
 		contentPane.add(TXTcodigoAlum);
 		TXTcodigoAlum.setColumns(10);
 		
 		btnConsultarAlumn = new JButton("BUSCAR");
+		btnConsultarAlumn.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnConsultarAlumn.addActionListener(this);
-		btnConsultarAlumn.setBounds(173, 84, 96, 25);
+		btnConsultarAlumn.setBounds(335, 109, 96, 22);
 		contentPane.add(btnConsultarAlumn);
 		
-		lblNewLabel_6 = new JLabel("EDAD");
-		lblNewLabel_6.setBounds(508, 122, 38, 16);
+		lblNewLabel_6 = new JLabel("Edad:");
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_6.setBounds(471, 109, 61, 16);
 		contentPane.add(lblNewLabel_6);
 		
 		TXTedad = new JTextField();
-		TXTedad.setBounds(544, 121, 38, 19);
+		TXTedad.setBounds(524, 110, 38, 19);
 		contentPane.add(TXTedad);
 		TXTedad.setColumns(10);
 		
-		lblNewLabel = new JLabel("CELULAR");
-		lblNewLabel.setBounds(279, 89, 62, 13);
+		lblNewLabel = new JLabel("Celular:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel.setBounds(471, 171, 62, 13);
 		contentPane.add(lblNewLabel);
 		
 		TXTcelular = new JTextField();
-		TXTcelular.setBounds(350, 86, 138, 19);
+		TXTcelular.setBounds(543, 166, 144, 19);
 		contentPane.add(TXTcelular);
 		TXTcelular.setColumns(10);
 		
-		lblNewLabel_7 = new JLabel("ESTADO");
-		lblNewLabel_7.setBounds(586, 124, 50, 13);
+		lblNewLabel_7 = new JLabel("Estado:");
+		lblNewLabel_7.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_7.setBounds(579, 111, 69, 13);
 		contentPane.add(lblNewLabel_7);
 		
 		TXTestado = new JTextField();
-		TXTestado.setBounds(640, 121, 42, 19);
+		TXTestado.setBounds(645, 110, 42, 19);
 		contentPane.add(TXTestado);
 		TXTestado.setColumns(10);
 		
-		lblNewLabel_8 = new JLabel("NOMBRES");
-		lblNewLabel_8.setBounds(10, 124, 69, 13);
+		lblNewLabel_8 = new JLabel("Nombres:");
+		lblNewLabel_8.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_8.setBounds(39, 140, 80, 18);
 		contentPane.add(lblNewLabel_8);
 		
 		TXTnombres = new JTextField();
-		TXTnombres.setBounds(75, 121, 167, 19);
+		TXTnombres.setBounds(138, 137, 293, 19);
 		contentPane.add(TXTnombres);
 		TXTnombres.setColumns(10);
 		
-		lblNewLabel_9 = new JLabel("APELLIDOS");
-		lblNewLabel_9.setBounds(242, 124, 69, 13);
+		lblNewLabel_9 = new JLabel("Apellidos:");
+		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_9.setBounds(40, 167, 88, 18);
 		contentPane.add(lblNewLabel_9);
 		
 		TXTapellidos = new JTextField();
-		TXTapellidos.setBounds(311, 121, 177, 19);
+		TXTapellidos.setBounds(138, 165, 293, 19);
 		contentPane.add(TXTapellidos);
 		TXTapellidos.setColumns(10);
 		
-		lblNewLabel_10 = new JLabel("DNI");
-		lblNewLabel_10.setBounds(556, 89, 28, 13);
+		lblNewLabel_10 = new JLabel("DNI:");
+		lblNewLabel_10.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_10.setBounds(471, 139, 53, 18);
 		contentPane.add(lblNewLabel_10);
 		
 		TXTdni = new JTextField();
 		TXTdni.setText("");
-		TXTdni.setBounds(586, 86, 96, 19);
+		TXTdni.setBounds(543, 141, 144, 19);
 		contentPane.add(TXTdni);
 		TXTdni.setColumns(10);
 		
-		separator_1 = new JSeparator();
-		separator_1.setBounds(0, 157, 692, 2);
-		contentPane.add(separator_1);
-		
 		separator_2 = new JSeparator();
+		separator_2.setForeground(Color.GRAY);
 		separator_2.setOrientation(SwingConstants.VERTICAL);
-		separator_2.setBounds(0, 59, 2, 101);
+		separator_2.setBounds(20, 71, 2, 126);
 		contentPane.add(separator_2);
 		
 		separator_3 = new JSeparator();
+		separator_3.setForeground(Color.GRAY);
 		separator_3.setOrientation(SwingConstants.VERTICAL);
-		separator_3.setBounds(690, 57, 2, 101);
+		separator_3.setBounds(710, 71, 2, 126);
 		contentPane.add(separator_3);
 		
 		separator_4 = new JSeparator();
+		separator_4.setForeground(Color.GRAY);
 		separator_4.setToolTipText("");
-		separator_4.setBounds(0, 169, 692, 2);
+		separator_4.setBounds(20, 195, 692, 2);
 		contentPane.add(separator_4);
 		
-		separator_5 = new JSeparator();
-		separator_5.setBounds(0, 269, 692, 2);
-		contentPane.add(separator_5);
-		
-		separator_6 = new JSeparator();
-		separator_6.setOrientation(SwingConstants.VERTICAL);
-		separator_6.setBounds(0, 171, 2, 101);
-		contentPane.add(separator_6);
-		
-		separator_7 = new JSeparator();
-		separator_7.setOrientation(SwingConstants.VERTICAL);
-		separator_7.setBounds(690, 169, 2, 101);
-		contentPane.add(separator_7);
-		
 		lblNewLabel_11 = new JLabel("DATOS DE CURSO");
-		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_11.setBounds(10, 169, 134, 19);
+		lblNewLabel_11.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_11.setBounds(30, 214, 151, 19);
 		contentPane.add(lblNewLabel_11);
 		
-		lblNewLabel_12 = new JLabel("CODIGO");
-		lblNewLabel_12.setBounds(10, 193, 50, 18);
+		lblNewLabel_12 = new JLabel("Código:");
+		lblNewLabel_12.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_12.setBounds(40, 244, 79, 18);
 		contentPane.add(lblNewLabel_12);
 		
 		TXTcodigoCurso = new JTextField();
 		TXTcodigoCurso.setColumns(10);
-		TXTcodigoCurso.setBounds(65, 193, 96, 19);
+		TXTcodigoCurso.setBounds(138, 246, 109, 19);
 		contentPane.add(TXTcodigoCurso);
 		
-		btnConsultarCurso = new JButton("BUSCAR🔍");
+		btnConsultarCurso = new JButton("BUSCAR");
+		btnConsultarCurso.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnConsultarCurso.addActionListener(this);
-		btnConsultarCurso.setBounds(173, 190, 96, 25);
+		btnConsultarCurso.setBounds(335, 243, 96, 25);
 		contentPane.add(btnConsultarCurso);
 		
-		lblNewLabel_13 = new JLabel("CICLO");
-		lblNewLabel_13.setBounds(322, 196, 45, 13);
+		lblNewLabel_13 = new JLabel("Ciclo:");
+		lblNewLabel_13.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_13.setBounds(470, 247, 45, 13);
 		contentPane.add(lblNewLabel_13);
 		
 		txtCiclo = new JTextField();
 		txtCiclo.setColumns(10);
-		txtCiclo.setBounds(363, 193, 38, 19);
+		txtCiclo.setBounds(524, 246, 38, 19);
 		contentPane.add(txtCiclo);
 		
-		lblNewLabel_14 = new JLabel("CREDITOS");
-		lblNewLabel_14.setBounds(292, 228, 69, 13);
+		lblNewLabel_14 = new JLabel("Créditos:");
+		lblNewLabel_14.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_14.setBounds(471, 282, 69, 13);
 		contentPane.add(lblNewLabel_14);
 		
 		TXTcreditos = new JTextField();
 		TXTcreditos.setColumns(10);
-		TXTcreditos.setBounds(363, 225, 38, 19);
+		TXTcreditos.setBounds(550, 281, 137, 19);
 		contentPane.add(TXTcreditos);
 		
-		lblNewLabel_15 = new JLabel("HORAS");
-		lblNewLabel_15.setBounds(433, 196, 45, 13);
+		lblNewLabel_15 = new JLabel("Horas:");
+		lblNewLabel_15.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_15.setBounds(579, 247, 65, 13);
 		contentPane.add(lblNewLabel_15);
 		
 		TXTHora = new JTextField();
 		TXTHora.setColumns(10);
-		TXTHora.setBounds(483, 192, 38, 19);
+		TXTHora.setBounds(645, 246, 42, 19);
 		contentPane.add(TXTHora);
 		
-		lblNewLabel_16 = new JLabel("CURSO");
-		lblNewLabel_16.setBounds(10, 231, 76, 13);
+		lblNewLabel_16 = new JLabel("Asignatura:");
+		lblNewLabel_16.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_16.setBounds(40, 271, 88, 18);
 		contentPane.add(lblNewLabel_16);
 		
 		TXTcuso = new JTextField();
 		TXTcuso.setColumns(10);
-		TXTcuso.setBounds(65, 228, 204, 19);
+		TXTcuso.setBounds(138, 278, 293, 19);
 		contentPane.add(TXTcuso);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 281, 673, 129);
+		scrollPane.setBounds(20, 324, 692, 129);
 		contentPane.add(scrollPane);
 		
 		TablaMatricula = new JTable();
@@ -333,28 +334,57 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		scrollPane.setViewportView(TablaMatricula);
 		
 		btnConsultar = new JButton("CONSULTAR");
+		btnConsultar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnConsultar.addActionListener(this);
-		btnConsultar.setBounds(65, 412, 109, 25);
+		btnConsultar.setBounds(58, 463, 118, 25);
 		contentPane.add(btnConsultar);
 		
 		btnRegistrar = new JButton("REGISTRAR");
+		btnRegistrar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnRegistrar.addActionListener(this);
-		btnRegistrar.setBounds(231, 412, 109, 25);
+		btnRegistrar.setBounds(234, 463, 118, 25);
 		contentPane.add(btnRegistrar);
 		
 		btnCerrar = new JButton("CERRAR");
+		btnCerrar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnCerrar.addActionListener(this);
-		btnCerrar.setBounds(521, 412, 96, 25);
+		btnCerrar.setBounds(577, 463, 96, 25);
 		contentPane.add(btnCerrar);
 		
 		btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnEliminar.addActionListener(this); 
-		btnEliminar.setBounds(375, 412, 96, 25);
+		btnEliminar.setBounds(410, 463, 109, 25);
 		contentPane.add(btnEliminar);
+		
+		separator_1 = new JSeparator();
+		separator_1.setToolTipText("");
+		separator_1.setForeground(Color.GRAY);
+		separator_1.setBounds(20, 207, 692, 8);
+		contentPane.add(separator_1);
+		
+		separator_5 = new JSeparator();
+		separator_5.setOrientation(SwingConstants.VERTICAL);
+		separator_5.setForeground(Color.GRAY);
+		separator_5.setBounds(20, 209, 2, 99);
+		contentPane.add(separator_5);
+		
+		separator_6 = new JSeparator();
+		separator_6.setToolTipText("");
+		separator_6.setForeground(Color.GRAY);
+		separator_6.setBounds(20, 309, 692, 13);
+		contentPane.add(separator_6);
+		
+		separator_7 = new JSeparator();
+		separator_7.setOrientation(SwingConstants.VERTICAL);
+		separator_7.setForeground(Color.GRAY);
+		separator_7.setBounds(710, 209, 2, 99);
+		contentPane.add(separator_7);
 		setear();
 		listar();
 		
 	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnRegistrar) {
 			actionPerformedBtnRegistrar(e);
@@ -382,16 +412,15 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
         txtCiclo.setText(String.valueOf(c.getCiclo()));
         TXTcreditos.setText(String.valueOf(c.getCreditos()));
         TXTHora.setText(String.valueOf(c.getHoras()));
-
-
         }
+	
 	protected void do_btnConsultarAlumn_actionPerformed(ActionEvent e) {
 		DialogBuscarAlumnos dialogBuscarAlumno = new DialogBuscarAlumnos(this);
 		dialogBuscarAlumno.setLocationRelativeTo(dialogBuscarAlumno);
 		dialogBuscarAlumno.setModal(true);
 		dialogBuscarAlumno.setVisible(true);
-		
 	}
+	
 	protected void actionPerformedBtnConsultarCurso(ActionEvent e) {
 		DialogBuscarCursos dialogBuscarCursos = new DialogBuscarCursos(this);
 		dialogBuscarCursos.setLocationRelativeTo(dialogBuscarCursos);
@@ -401,7 +430,7 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 	
 	//Globalizacion
 	ArreglosMatricula am = new ArreglosMatricula();
-	private JButton btnEliminar;
+	
 	//Metodos sin parametros
 	 void listar() {
 		 modeloMatricula.setRowCount(0);
@@ -417,17 +446,16 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		}
 	 }
 	
-	 protected void do_btnEliminar_actionPerformed(ActionEvent e) {
+	protected void do_btnEliminar_actionPerformed(ActionEvent e) {
 		 am.Eliminar(null);
-	 }
-	 
+	}
 	 
 	protected void actionPerformedBtnConsultar(ActionEvent e) {
 		setear();
 		am.CargarMatricula();
 		listar();
-		
 	}
+	
 	protected void actionPerformedBtnRegistrar(ActionEvent e) {
 		try {
 		int codigoAlumno = Integer.parseInt(TXTcodigoAlum.getText().trim());
@@ -444,12 +472,8 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		}catch(Exception x) {
 			javax.swing.JOptionPane.showMessageDialog(null, "Codigos existentes//Datos mas ingresados");
 		}
-		
-		
-		
-		
-		
 	}
+	
 	public void setear() {
 		Matricula m = new Matricula(0, 0, 0);
 		TXTnombres.setText("");
@@ -469,9 +493,8 @@ public class DialogRegistroMatricula extends JFrame implements ActionListener {
 		TXTfecha.setText(m.getFecha());
 		txtHora.setText(m.getHora());
 		TXTcodigoMatricula.setText(String.valueOf(Matricula.getContadorMatricula()));
-		
-
 	}
+	
 	protected void actionPerformedBtnCerrar(ActionEvent e) {
 		Principal principal = new Principal();
 		principal.setLocationRelativeTo(principal);
