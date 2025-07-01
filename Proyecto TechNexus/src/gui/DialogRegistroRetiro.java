@@ -297,7 +297,6 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		
 
 }
-	Retiro r = new Retiro(1,123456,"Zeus", 123, "phuthon", "12/10/2025", "13:00");
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnEliminar) {
 			actionPerformedBtnEliminar(e);
@@ -320,6 +319,8 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	}
 
 	protected void actionPerformedBtnAdicionar(ActionEvent e) {
+		Retiro r = new Retiro(1, leerCodigoMatricula(), leerApellidos(), leerCodigoCurso(), leerCurso(), leerFecha(), leerHora());
+		ar.adicionar(r);
 		listar();
 	}
 	protected void actionPerformedBtnModificar(ActionEvent e) {
@@ -351,9 +352,6 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		return Integer.parseInt(txtCodMat.getText());
 	}
 	
-	public int leerCodigoAlumno() {
-		return Integer.parseInt(txtCodAlum.getText());
-	}
 	
 	public String leerApellidos() {
 		return txtNomApelli.getText();
@@ -365,6 +363,14 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	
 	public String leerCurso() {
 		return txtCurso.getText();
+	}
+	
+	public String leerFecha() {
+		return txtFecha.getText();
+	}
+	
+	public String leerHora() {
+		return txtHora.getText();
 	}
 	//metodo limpiar
 	void limpieza() {
