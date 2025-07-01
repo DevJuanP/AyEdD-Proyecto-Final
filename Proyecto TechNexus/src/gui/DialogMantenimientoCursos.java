@@ -1,31 +1,24 @@
 	package gui;
 	
 	import java.awt.EventQueue;
-	
-	import javax.swing.JPanel;
-	import javax.swing.border.EmptyBorder;
-	import javax.swing.JLabel;
-	import java.awt.Font;
+
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+
+import java.awt.Font;
 
 	import java.awt.Color;
-	
-	import javax.swing.SwingConstants;
-	import javax.swing.JTextField;
-	import javax.swing.JComboBox;
-	import javax.swing.JButton;
-	import javax.swing.JScrollPane;
-	import javax.swing.JTable;
-	import javax.swing.table.DefaultTableModel;
+
+import javax.swing.table.DefaultTableModel;
 
 	import arreglos.ArreglosCursos;
 	import clases.Curso;
-	
-	import javax.swing.DefaultComboBoxModel;
-	import java.awt.event.ActionListener;
+
+import java.awt.event.ActionListener;
 	import java.awt.event.ActionEvent;
-	import javax.swing.JRadioButton;
-	import javax.swing.JSeparator;
-	import javax.swing.*;
+
+import javax.swing.*;
 	
 	
 	public class DialogMantenimientoCursos extends JDialog implements ActionListener {
@@ -48,17 +41,14 @@
 		private JButton btnEliminar;
 		private JScrollPane scrollPane;
 		private JTable table;
-		private JLabel lblConsultar;
 		private JTextField txtBusquedaFiltrada;
 		private JButton btnBuscar;
-		private JSeparator separator;
-		private JSeparator separator_1;
-		private JSeparator separator_2;
-		private JSeparator separator_3;
 		private JRadioButton rbtnCodigo;
 		private JRadioButton rbtnAsignatura;
 		private JButton btnGuardar;
 		private DefaultTableModel modelo;
+		private JPanel panelConsulta;
+		private ButtonGroup grupoBusqueda;
 		
 		
 		public static void main(String[] args) {
@@ -116,7 +106,7 @@
 			contentPane.add(lblCreditos);
 			
 			lblHoras = new JLabel("Horas:");
-			lblHoras.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			lblHoras.setFont(new Font("Tahoma", Font.BOLD, 12));
 			lblHoras.setBounds(437, 73, 58, 20);
 			contentPane.add(lblHoras);
 			
@@ -152,7 +142,7 @@
 			contentPane.add(cmbCiclo);
 			
 			scrollPane = new JScrollPane();
-			scrollPane.setBounds(23, 202, 583, 141);
+			scrollPane.setBounds(23, 195, 583, 148);
 			contentPane.add(scrollPane);
 			//Agregar tabla
 			table = new JTable();
@@ -166,6 +156,42 @@
 			modelo.addColumn("Créditos");	
 			modelo.addColumn("Horas");
 			table.setModel(modelo); 
+			
+			panelConsulta = new JPanel();
+			panelConsulta.setLayout(null); 
+			panelConsulta.setBorder(new TitledBorder(new LineBorder(Color.GRAY), "CONSULTAR"));
+			panelConsulta.setBounds(23, 103, 583, 82); 
+			getContentPane().add(panelConsulta);
+			
+			rbtnCodigo  = new JRadioButton("Código");
+			rbtnCodigo.setBounds(30, 32, 85, 21);
+			panelConsulta.add(rbtnCodigo);
+			rbtnCodigo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			rbtnCodigo.setSelected(true);
+			panelConsulta.add(rbtnCodigo);
+			
+			
+			rbtnAsignatura = new JRadioButton("Asignatura");
+			rbtnAsignatura.setBounds(131, 32, 103, 21);
+			panelConsulta.add(rbtnAsignatura);
+			rbtnAsignatura.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			panelConsulta.add(rbtnAsignatura);
+			
+			//Agrupo botones
+			grupoBusqueda = new ButtonGroup();
+			grupoBusqueda.add(rbtnCodigo);
+			grupoBusqueda.add(rbtnAsignatura);
+			
+			txtBusquedaFiltrada = new JTextField();
+			txtBusquedaFiltrada.setBounds(240, 34, 216, 19);
+			panelConsulta.add(txtBusquedaFiltrada);
+			txtBusquedaFiltrada.setColumns(10);
+			
+			btnBuscar = new JButton("BUSCAR");
+			btnBuscar.setBounds(466, 33, 85, 21);
+			panelConsulta.add(btnBuscar);
+			btnBuscar.addActionListener(this);
+			btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 11));
 	
 			btnRegistrar = new JButton("REGISTRAR");
 			btnRegistrar.addActionListener(this);
@@ -184,59 +210,6 @@
 			btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 11));
 			btnEliminar.setBounds(477, 368, 107, 21);
 			contentPane.add(btnEliminar);
-			
-			lblConsultar = new JLabel("CONSULTAR:");
-			lblConsultar.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lblConsultar.setBounds(53, 114, 102, 20);
-			contentPane.add(lblConsultar);
-			
-			txtBusquedaFiltrada = new JTextField();
-			txtBusquedaFiltrada.setColumns(10);
-			txtBusquedaFiltrada.setBounds(278, 142, 216, 19);
-			contentPane.add(txtBusquedaFiltrada);
-			
-			btnBuscar = new JButton("BUSCAR");
-			btnBuscar.addActionListener(this);
-			btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 11));
-			btnBuscar.setBounds(505, 141, 85, 21);
-			contentPane.add(btnBuscar);
-			
-			separator = new JSeparator();
-			separator.setForeground(Color.GRAY);
-			separator.setBounds(23, 111, 583, 33);
-			contentPane.add(separator);
-			
-			separator_1 = new JSeparator(SwingConstants.VERTICAL);
-			separator_1.setForeground(Color.GRAY);
-			separator_1.setBounds(23, 111, 20, 64);
-			contentPane.add(separator_1);
-			
-			separator_2 = new JSeparator();
-			separator_2.setForeground(Color.GRAY);
-			separator_2.setBounds(23, 171, 583, 33);
-			contentPane.add(separator_2);
-			
-			separator_3 = new JSeparator(SwingConstants.VERTICAL);
-			separator_3.setForeground(Color.GRAY);
-			separator_3.setBounds(605, 111, 20, 64);
-			contentPane.add(separator_3);
-			
-			rbtnCodigo  = new JRadioButton("Código");
-			rbtnCodigo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			rbtnCodigo.setBounds(52, 140, 85, 21);
-			rbtnCodigo.setSelected(true);
-			contentPane.add(rbtnCodigo);
-			
-			
-			rbtnAsignatura = new JRadioButton("Asignatura");
-			rbtnAsignatura.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			rbtnAsignatura.setBounds(144, 141, 103, 21);
-			contentPane.add(rbtnAsignatura);
-			
-			//Agrupo botones
-			ButtonGroup grupoBusqueda = new ButtonGroup();
-			grupoBusqueda.add(rbtnCodigo);
-			grupoBusqueda.add(rbtnAsignatura);
 			
 			btnGuardar = new JButton("GUARDAR");
 			btnGuardar.addActionListener(this);

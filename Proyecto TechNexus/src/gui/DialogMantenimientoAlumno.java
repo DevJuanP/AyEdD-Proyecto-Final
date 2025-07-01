@@ -19,8 +19,10 @@ import java.util.ArrayList;
 import java.awt.event.ActionListener;
 
 
-public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
+public class DialogMantenimientoAlumno extends JDialog implements ActionListener{
 
+
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel panelConsulta;
 	
@@ -67,13 +69,13 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
 
 	public static void main(String[] args) {
 		//cargarAlumnos();
-		DialogMantenimientoAlumno frame = new DialogMantenimientoAlumno();
-		frame.setVisible(true);
+		DialogMantenimientoAlumno dialog = new DialogMantenimientoAlumno();
+		dialog.setVisible(true);
 	}
 
 	public DialogMantenimientoAlumno() {
 		setTitle("Mantenimiento de Alumno");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setSize(900, 600);
 		setLocationRelativeTo(null);
 		

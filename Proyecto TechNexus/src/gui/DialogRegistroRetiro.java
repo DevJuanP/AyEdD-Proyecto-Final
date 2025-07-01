@@ -15,6 +15,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 //import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -63,11 +65,6 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	Retiro re1 = new Retiro();
 	private JTable tblDatos;
 	private DefaultTableModel model;
-	private JLabel lblNewLabel;
-	private JSeparator separator;
-	private JSeparator separator_1;
-	private JSeparator separator_2;
-	private JSeparator separator_3;
 	private JLabel lblFecha_1;
 	private JTextField txtFecha;
 	private JLabel lblHora_1;
@@ -77,6 +74,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	private JButton btnAdicionar;
 	private JButton btnModificar;
 	private JButton btnEliminar;
+	private JPanel panelConsulta;
 	/**
 	 * Launch the application.
 	 */
@@ -98,9 +96,9 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	 * Create the frame.
 	 */
 	public DialogRegistroRetiro() {
-		setTitle("Retiro");
+		setTitle("Registro de Retiro");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 734, 482);
+		setBounds(100, 100, 730, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -115,61 +113,6 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		lblTitle.setBackground(Color.BLACK);
 		lblTitle.setBounds(0, 0, 720, 31);
 		contentPane.add(lblTitle);
-		
-		lblCdigoMaticula = new JLabel("Código Matricula:");
-		lblCdigoMaticula.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblCdigoMaticula.setBounds(34, 94, 135, 25);
-		contentPane.add(lblCdigoMaticula);
-		
-		lblCdigoAlumno = new JLabel("Código Alumno:");
-		lblCdigoAlumno.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblCdigoAlumno.setBounds(34, 128, 123, 25);
-		contentPane.add(lblCdigoAlumno);
-		
-		lblNombreDelAlumno = new JLabel("Nombre y Apellidos:");
-		lblNombreDelAlumno.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNombreDelAlumno.setBounds(34, 164, 147, 25);
-		contentPane.add(lblNombreDelAlumno);
-		
-		txtCodAlum = new JTextField();
-		txtCodAlum.setBounds(189, 134, 91, 19);
-		contentPane.add(txtCodAlum);
-		
-		txtNomApelli = new JTextField();
-		txtNomApelli.setBounds(189, 169, 245, 19);
-		contentPane.add(txtNomApelli);
-		
-		lblCdigoCurso = new JLabel("Código curso");
-		lblCdigoCurso.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblCdigoCurso.setBounds(447, 129, 102, 25);
-		contentPane.add(lblCdigoCurso);
-		
-		txtCodMat = new JTextField();
-		txtCodMat.setBounds(189, 99, 91, 19);
-		contentPane.add(txtCodMat);
-		
-		lblAsignatura = new JLabel("Asignatura:");
-		lblAsignatura.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblAsignatura.setBounds(447, 164, 102, 25);
-		contentPane.add(lblAsignatura);
-		
-		txtCurso = new JTextField();
-		txtCurso.setBounds(549, 169, 135, 19);
-		contentPane.add(txtCurso);
-		
-		lblFecha = new JLabel("Fecha:");
-		lblFecha.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblFecha.setBounds(34, 199, 57, 25);
-		contentPane.add(lblFecha);
-		
-		lblHora = new JLabel("Hora:");
-		lblHora.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblHora.setBounds(211, 199, 44, 25);
-		contentPane.add(lblHora);
-		
-		txtCodCurso = new JTextField();
-		txtCodCurso.setBounds(549, 134, 135, 19);
-		contentPane.add(txtCodCurso);
 		
 		lblCdigoRetiro = new JLabel("Código retiro:");
 		lblCdigoRetiro.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -186,7 +129,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(22, 244, 675, 159);
+		scrollPane.setBounds(21, 264, 675, 159);
 		contentPane.add(scrollPane);
 		
 		tblDatos = new JTable();
@@ -202,38 +145,83 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		tblDatos.setModel(model);
 		//header.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
+		panelConsulta = new JPanel();
+		panelConsulta.setLayout(null); 
+		panelConsulta.setBorder(new TitledBorder(new LineBorder(Color.GRAY), "MATRICULA"));
+		panelConsulta.setBounds(22, 71, 675, 183); 
+		getContentPane().add(panelConsulta);
+		
+		lblCdigoMaticula = new JLabel("Código Matricula:");
+		lblCdigoMaticula.setBounds(15, 27, 135, 25);
+		panelConsulta.add(lblCdigoMaticula);
+		lblCdigoMaticula.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		lblCdigoAlumno = new JLabel("Código Alumno:");
+		lblCdigoAlumno.setBounds(15, 61, 123, 25);
+		panelConsulta.add(lblCdigoAlumno);
+		lblCdigoAlumno.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		lblNombreDelAlumno = new JLabel("Nombre y Apellidos:");
+		lblNombreDelAlumno.setBounds(15, 97, 147, 25);
+		panelConsulta.add(lblNombreDelAlumno);
+		lblNombreDelAlumno.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		txtCodAlum = new JTextField();
+		txtCodAlum.setBounds(170, 67, 91, 19);
+		panelConsulta.add(txtCodAlum);
+		
+		txtNomApelli = new JTextField();
+		txtNomApelli.setBounds(170, 102, 245, 19);
+		panelConsulta.add(txtNomApelli);
+		
+		lblCdigoCurso = new JLabel("Código curso");
+		lblCdigoCurso.setBounds(428, 62, 102, 25);
+		panelConsulta.add(lblCdigoCurso);
+		lblCdigoCurso.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		txtCodMat = new JTextField();
+		txtCodMat.setBounds(170, 32, 91, 19);
+		panelConsulta.add(txtCodMat);
+		
+		lblAsignatura = new JLabel("Asignatura:");
+		lblAsignatura.setBounds(428, 97, 102, 25);
+		panelConsulta.add(lblAsignatura);
+		lblAsignatura.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		txtCurso = new JTextField();
+		txtCurso.setBounds(530, 102, 135, 19);
+		panelConsulta.add(txtCurso);
+		
+		lblFecha = new JLabel("Fecha:");
+		lblFecha.setBounds(15, 132, 57, 25);
+		panelConsulta.add(lblFecha);
+		lblFecha.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		lblHora = new JLabel("Hora:");
+		lblHora.setBounds(192, 132, 44, 25);
+		panelConsulta.add(lblHora);
+		lblHora.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		txtCodCurso = new JTextField();
+		txtCodCurso.setBounds(530, 67, 135, 19);
+		panelConsulta.add(txtCodCurso);
+		
+		
 		btnBuscar = new JButton("Buscar");
+		btnBuscar.setBounds(281, 29, 90, 23);
+		panelConsulta.add(btnBuscar);
 		btnBuscar.addActionListener(this);
 		btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnBuscar.setBounds(300, 96, 90, 23);
-		contentPane.add(btnBuscar);
 		
-		lblNewLabel = new JLabel("Matricula:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel.setBounds(34, 77, 102, 13);
-		contentPane.add(lblNewLabel);
+		txtFecha2 = new JTextField();
+		txtFecha2.setBounds(78, 137, 102, 19);
+		panelConsulta.add(txtFecha2);
+		txtFecha2.setColumns(10);
 		
-		separator = new JSeparator();
-		separator.setForeground(Color.GRAY);
-		separator.setBounds(22, 233, 675, 19);
-		contentPane.add(separator);
-		
-		separator_1 = new JSeparator();
-		separator_1.setForeground(Color.GRAY);
-		separator_1.setBounds(22, 71, 675, 19);
-		contentPane.add(separator_1);
-		
-		separator_2 = new JSeparator();
-		separator_2.setOrientation(SwingConstants.VERTICAL);
-		separator_2.setForeground(Color.GRAY);
-		separator_2.setBounds(695, 71, 13, 163);
-		contentPane.add(separator_2);
-		
-		separator_3 = new JSeparator();
-		separator_3.setOrientation(SwingConstants.VERTICAL);
-		separator_3.setForeground(Color.GRAY);
-		separator_3.setBounds(22, 71, 13, 163);
-		contentPane.add(separator_3);
+		txtHora2 = new JTextField();
+		txtHora2.setBounds(246, 137, 105, 19);
+		panelConsulta.add(txtHora2);
+		txtHora2.setColumns(10);
 		
 		lblFecha_1 = new JLabel("Fecha:");
 		lblFecha_1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -259,29 +247,19 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		txtHora.setBounds(265, 41, 114, 19);
 		contentPane.add(txtHora);
 		
-		txtFecha2 = new JTextField();
-		txtFecha2.setBounds(97, 204, 102, 19);
-		contentPane.add(txtFecha2);
-		txtFecha2.setColumns(10);
-		
-		txtHora2 = new JTextField();
-		txtHora2.setBounds(265, 204, 105, 19);
-		contentPane.add(txtHora2);
-		txtHora2.setColumns(10);
-		
 		btnAdicionar = new JButton("ADICIONAR");
 		btnAdicionar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnAdicionar.setBounds(94, 414, 114, 21);
+		btnAdicionar.setBounds(87, 434, 114, 21);
 		contentPane.add(btnAdicionar);
 		
 		btnModificar = new JButton("MODIFICAR");
 		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnModificar.setBounds(302, 413, 114, 21);
+		btnModificar.setBounds(295, 433, 114, 21);
 		contentPane.add(btnModificar);
 		
 		btnEliminar = new JButton("ELIMINAR");
 		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnEliminar.setBounds(510, 413, 114, 21);
+		btnEliminar.setBounds(503, 433, 114, 21);
 		contentPane.add(btnEliminar);
 		
 		
