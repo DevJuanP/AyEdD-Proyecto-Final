@@ -60,7 +60,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	private JLabel lblCdigoRetiro;
 	private JTextField txtCodRetiro;
 	private Timer tiempo;
-	Retiro re1 = new Retiro();
+	//Retiro re1 = new Retiro();
 	private JTable tblDatos;
 	private DefaultTableModel model;
 	private JLabel lblNewLabel;
@@ -193,7 +193,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		scrollPane.setViewportView(tblDatos);
 		model = new DefaultTableModel();
 		model.addColumn("Código retiro");
-		model.addColumn("Código alumnos");
+		model.addColumn("Código matricula");
 		model.addColumn("Nombre y apellidos");
 		model.addColumn("Código curso");
 		model.addColumn("Curso");

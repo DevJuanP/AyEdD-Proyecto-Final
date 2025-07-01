@@ -37,7 +37,7 @@ public class Andres extends JFrame {
 	        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	        contentPane.setLayout(null);
 	        setContentPane(contentPane);
-	        Retiro reee = new Retiro();
+	       // Retiro reee = new Retiro();
 	        
 	        timer = new Timer(1000, e -> actualizarHora());
 	        timer.start();
@@ -61,7 +61,7 @@ public class Andres extends JFrame {
 
 	        // Mostrar fecha y hora inicial
 	       // textHoraPrueba.setText(reee.getHora());
-	        txtOut.setText("Fecha: " + reee.getFecha() + "\n");
+	     //   txtOut.setText("Fecha: " + reee.getFecha() + "\n");
 	       // txtOut.append("Contador sin matrícula: " + Retiro.getNumMatricula() + "\n");
 
 	        // Iniciar reloj en tiempo real (actualiza hora cada segundo)
@@ -74,11 +74,11 @@ public class Andres extends JFrame {
 	        
 	        // Acción botón procesar
 	        btnProcesar.addActionListener(e -> {
-	            Retiro re = new Retiro(123);
+	          //  Retiro re = new Retiro(123);
 	           // txtNumRetiro.setText(String.valueOf(re.getNumRetiro()));
 	            
 	         
-	            Imprimir("Nuevo retiro generado: " + re.getNumRetiro());
+	            //Imprimir("Nuevo retiro generado: " + re.getNumRetiro());
 	           // Imprimir("Hora: " + re.getHora());
 	           // Imprimir("Fecha: " + re.getFecha());
 	            Imprimir(); // línea en blanco
