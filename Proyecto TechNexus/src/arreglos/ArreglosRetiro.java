@@ -12,10 +12,12 @@ public class ArreglosRetiro {
 	
 	public ArreglosRetiro() {
 		listaRetiros = new ArrayList<Retiro>();
+		cargarRetiros();
 	}
 	
 	public void adicionar(Retiro x) {
 		listaRetiros.add(x);
+		grabarArchivo();
 	}
 	
 	public int tamanio() {
@@ -35,6 +37,10 @@ public class ArreglosRetiro {
 		return null;
 	}
 	
+	public void eliminar(Retiro x) {
+		listaRetiros.remove(x);
+		grabarArchivo();
+	}
 	
 	private int cargarRetiros() {
 		try {

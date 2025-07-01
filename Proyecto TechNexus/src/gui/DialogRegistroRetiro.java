@@ -18,6 +18,9 @@ import javax.swing.border.EmptyBorder;
 //import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
+import arreglos.ArreglosRetiro;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import clases.Retiro;
@@ -270,16 +273,19 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		txtHora2.setColumns(10);
 		
 		btnAdicionar = new JButton("ADICIONAR");
+		btnAdicionar.addActionListener(this);
 		btnAdicionar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnAdicionar.setBounds(94, 414, 114, 21);
 		contentPane.add(btnAdicionar);
 		
 		btnModificar = new JButton("MODIFICAR");
+		btnModificar.addActionListener(this);
 		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnModificar.setBounds(302, 413, 114, 21);
 		contentPane.add(btnModificar);
 		
 		btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.addActionListener(this);
 		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnEliminar.setBounds(510, 413, 114, 21);
 		contentPane.add(btnEliminar);
@@ -291,20 +297,55 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		
 
 }
+	Retiro r = new Retiro(1,123456,"Zeus", 123, "phuthon", "12/10/2025", "13:00");
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEliminar) {
+			actionPerformedBtnEliminar(e);
+		}
+		if (e.getSource() == btnModificar) {
+			actionPerformedBtnModificar(e);
+		}
+		if (e.getSource() == btnAdicionar) {
+			actionPerformedBtnAdicionar(e);
+		}
 		if (e.getSource() == btnBuscar) {
 			do_btnBuscar_actionPerformed(e);
 		}
 	}
+	
+	ArreglosRetiro ar = new ArreglosRetiro();
 	protected void do_btnBuscar_actionPerformed(ActionEvent e) {	
+		DialogBuscarRetiro frame = new DialogBuscarRetiro();
+		frame.setVisible(true);
 	}
 
+	protected void actionPerformedBtnAdicionar(ActionEvent e) {
+		listar();
+	}
+	protected void actionPerformedBtnModificar(ActionEvent e) {
+	}
+	protected void actionPerformedBtnEliminar(ActionEvent e) {
+	}
 	
 	
 	
 	
-	
-	
+	//Listar
+	public void listar() {
+		model.setRowCount(0);
+		for (int i = 0; i < ar.tamanio(); i++) {
+			Object[] fila = {
+					ar.obtener(i).getCodRetiro(),
+					ar.obtener(i).getCodMatricula(),
+					ar.obtener(i).getNombresApellidos(),
+					ar.obtener(i).getCodCurso(),
+					ar.obtener(i).getCurso(),
+					ar.obtener(i).getFecha(),
+					ar.obtener(i).getHora()
+			};
+			model.addRow(fila);
+		}
+	}
 	//parametros de leectura
 	public int leerCodigoMatricula() {
 		return Integer.parseInt(txtCodMat.getText());
@@ -337,4 +378,5 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	private void horaActualizada() {
 		String Hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 	}
+
 }
