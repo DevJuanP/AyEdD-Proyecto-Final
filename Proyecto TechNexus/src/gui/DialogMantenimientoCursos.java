@@ -81,7 +81,6 @@
 	
 	
 		public DialogMantenimientoCursos() {
-			
 			setTitle("Mantenimiento de curso");
 			setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			setBounds(100, 100, 637, 450);

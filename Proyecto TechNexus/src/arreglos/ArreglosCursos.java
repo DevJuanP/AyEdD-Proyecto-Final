@@ -49,7 +49,7 @@ public class ArreglosCursos {
 			String linea, asignatura;
 			int codigo, ciclo, creditos, horas;
 			
-			br = new BufferedReader(new FileReader("cursos.txt"));
+			br = new BufferedReader(new FileReader("data/cursos.txt"));
 			while((linea=br.readLine())!=null) {
 				s=linea.split(";");
 				codigo=Integer.parseInt(s[0].trim());
@@ -70,7 +70,7 @@ public class ArreglosCursos {
 			PrintWriter pw;
 			String linea;
 			Curso x;
-			pw = new PrintWriter(new FileWriter("cursos.txt"));
+			pw = new PrintWriter(new FileWriter("data/cursos.txt"));
 			for (int i = 0; i < tamanio(); i++) {
 				x=obtener(i);
 				linea = x.getCodCurso()+";"+
