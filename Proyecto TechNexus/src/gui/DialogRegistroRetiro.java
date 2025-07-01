@@ -23,16 +23,19 @@ import java.time.format.DateTimeFormatter;
 import clases.Retiro;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 //import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
+import javax.swing.JSeparator;
 
 
 
 //import java.awt.Component;
 
-public class DialogRegistroRetiro extends JFrame implements ActionListener {
+public class DialogRegistroRetiro extends JDialog implements ActionListener {
 
 	/**
 	 * 
@@ -47,24 +50,33 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 	private JTextField txtNomApelli;
 	private JLabel lblCdigoCurso;
 	private JTextField txtCodMat;
-	private JLabel lblCurso;
+	private JLabel lblAsignatura;
 	private JTextField txtCurso;
 	private JLabel lblFecha;
-	private JTextField txtFecha;
 	private JLabel lblHora;
-	private JTextField txtHora;
 	private JTextField txtCodCurso;
 	private JScrollPane scrollPane;
 	private JButton btnBuscar;
-	private JButton btnRegistrar;
-	private JButton btnModificar;
-	private JButton btnEliminar;
 	private JLabel lblCdigoRetiro;
 	private JTextField txtCodRetiro;
 	private Timer tiempo;
 	Retiro re1 = new Retiro();
 	private JTable tblDatos;
 	private DefaultTableModel model;
+	private JLabel lblNewLabel;
+	private JSeparator separator;
+	private JSeparator separator_1;
+	private JSeparator separator_2;
+	private JSeparator separator_3;
+	private JLabel lblFecha_1;
+	private JTextField txtFecha;
+	private JLabel lblHora_1;
+	private JTextField txtHora;
+	private JTextField txtFecha2;
+	private JTextField txtHora2;
+	private JButton btnAdicionar;
+	private JButton btnModificar;
+	private JButton btnEliminar;
 	/**
 	 * Launch the application.
 	 */
@@ -72,8 +84,9 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DialogRegistroRetiro frame = new DialogRegistroRetiro();
-					frame.setVisible(true);
+					DialogRegistroRetiro dialog = new DialogRegistroRetiro();
+					dialog.setVisible(true);
+					dialog.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -86,9 +99,8 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 	 */
 	public DialogRegistroRetiro() {
 		setTitle("Retiro");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 600);
-		setSize(900, 608);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 734, 482);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -101,87 +113,71 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 		lblTitle.setForeground(Color.WHITE);
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblTitle.setBackground(Color.BLACK);
-		lblTitle.setBounds(0, 0, 884, 26);
+		lblTitle.setBounds(0, 0, 720, 31);
 		contentPane.add(lblTitle);
 		
-		lblCdigoMaticula = new JLabel("Código Matricula");
-		lblCdigoMaticula.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCdigoMaticula.setBounds(22, 71, 123, 25);
+		lblCdigoMaticula = new JLabel("Código Matricula:");
+		lblCdigoMaticula.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCdigoMaticula.setBounds(34, 94, 135, 25);
 		contentPane.add(lblCdigoMaticula);
 		
-		lblCdigoAlumno = new JLabel("Código Alumno");
-		lblCdigoAlumno.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCdigoAlumno.setBounds(22, 106, 123, 25);
+		lblCdigoAlumno = new JLabel("Código Alumno:");
+		lblCdigoAlumno.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCdigoAlumno.setBounds(34, 128, 123, 25);
 		contentPane.add(lblCdigoAlumno);
 		
-		lblNombreDelAlumno = new JLabel("Nombre y Apellidos");
-		lblNombreDelAlumno.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNombreDelAlumno.setBounds(22, 141, 123, 25);
+		lblNombreDelAlumno = new JLabel("Nombre y Apellidos:");
+		lblNombreDelAlumno.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNombreDelAlumno.setBounds(34, 164, 147, 25);
 		contentPane.add(lblNombreDelAlumno);
 		
 		txtCodAlum = new JTextField();
-		txtCodAlum.setBounds(161, 106, 109, 25);
+		txtCodAlum.setBounds(189, 134, 91, 19);
 		contentPane.add(txtCodAlum);
 		
 		txtNomApelli = new JTextField();
-		txtNomApelli.setBounds(161, 141, 396, 25);
+		txtNomApelli.setBounds(189, 169, 245, 19);
 		contentPane.add(txtNomApelli);
 		
 		lblCdigoCurso = new JLabel("Código curso");
-		lblCdigoCurso.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCdigoCurso.setBounds(617, 106, 91, 25);
+		lblCdigoCurso.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCdigoCurso.setBounds(447, 129, 102, 25);
 		contentPane.add(lblCdigoCurso);
 		
 		txtCodMat = new JTextField();
-		txtCodMat.setBounds(161, 70, 109, 25);
+		txtCodMat.setBounds(189, 99, 91, 19);
 		contentPane.add(txtCodMat);
 		
-		lblCurso = new JLabel("Curso");
-		lblCurso.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCurso.setBounds(617, 141, 52, 25);
-		contentPane.add(lblCurso);
+		lblAsignatura = new JLabel("Asignatura:");
+		lblAsignatura.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblAsignatura.setBounds(447, 164, 102, 25);
+		contentPane.add(lblAsignatura);
 		
 		txtCurso = new JTextField();
-		txtCurso.setBounds(707, 141, 150, 25);
+		txtCurso.setBounds(549, 169, 135, 19);
 		contentPane.add(txtCurso);
 		
-		lblFecha = new JLabel("Fecha");
-		lblFecha.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblFecha.setBounds(42, 198, 44, 25);
+		lblFecha = new JLabel("Fecha:");
+		lblFecha.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblFecha.setBounds(34, 199, 57, 25);
 		contentPane.add(lblFecha);
 		
-		txtFecha = new JTextField();
-		txtFecha.setBounds(87, 202, 114, 25);
-		txtFecha.setText(re1.getFecha());
-		txtFecha.setEditable(false);
-		txtFecha.setFocusable(false);
-		txtFecha.setCursor(null);
-		contentPane.add(txtFecha);
-		
-		lblHora = new JLabel("Hora");
-		lblHora.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblHora.setBounds(274, 198, 44, 25);
+		lblHora = new JLabel("Hora:");
+		lblHora.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblHora.setBounds(211, 199, 44, 25);
 		contentPane.add(lblHora);
 		
-		txtHora = new JTextField();
-		txtHora.setBounds(328, 200, 114, 25);
-		txtHora.setText(re1.getHora());
-		txtHora.setEditable(false);
-		txtHora.setFocusable(false);
-		txtHora.setCursor(null);
-		contentPane.add(txtHora);
-		
 		txtCodCurso = new JTextField();
-		txtCodCurso.setBounds(707, 106, 150, 25);
+		txtCodCurso.setBounds(549, 134, 135, 19);
 		contentPane.add(txtCodCurso);
 		
-		lblCdigoRetiro = new JLabel("Código retiro");
-		lblCdigoRetiro.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCdigoRetiro.setBounds(617, 71, 91, 25);
+		lblCdigoRetiro = new JLabel("Código retiro:");
+		lblCdigoRetiro.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCdigoRetiro.setBounds(482, 36, 102, 25);
 		contentPane.add(lblCdigoRetiro);
 		
 		txtCodRetiro = new JTextField();
-		txtCodRetiro.setBounds(707, 71, 150, 25);
+		txtCodRetiro.setBounds(594, 36, 102, 19);
 		txtCodRetiro.setText("200001");
 		txtCodRetiro.setEditable(false);
 		txtCodRetiro.setFocusable(false);
@@ -190,7 +186,7 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 		
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(22, 264, 840, 249);
+		scrollPane.setBounds(22, 244, 675, 159);
 		contentPane.add(scrollPane);
 		
 		tblDatos = new JTable();
@@ -209,25 +205,83 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(this);
 		btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnBuscar.setBounds(297, 69, 90, 30);
+		btnBuscar.setBounds(300, 96, 90, 23);
 		contentPane.add(btnBuscar);
 		
-		btnRegistrar = new JButton("Registrar");
-		btnRegistrar.addActionListener(this);
-		btnRegistrar.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnRegistrar.setBounds(97, 524, 90, 30);
-		contentPane.add(btnRegistrar);
+		lblNewLabel = new JLabel("Matricula:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel.setBounds(34, 77, 102, 13);
+		contentPane.add(lblNewLabel);
 		
-		btnModificar = new JButton("Modificar");
-		btnModificar.addActionListener(this);
-		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnModificar.setBounds(392, 524, 90, 30);
+		separator = new JSeparator();
+		separator.setForeground(Color.GRAY);
+		separator.setBounds(22, 233, 675, 19);
+		contentPane.add(separator);
+		
+		separator_1 = new JSeparator();
+		separator_1.setForeground(Color.GRAY);
+		separator_1.setBounds(22, 71, 675, 19);
+		contentPane.add(separator_1);
+		
+		separator_2 = new JSeparator();
+		separator_2.setOrientation(SwingConstants.VERTICAL);
+		separator_2.setForeground(Color.GRAY);
+		separator_2.setBounds(695, 71, 13, 163);
+		contentPane.add(separator_2);
+		
+		separator_3 = new JSeparator();
+		separator_3.setOrientation(SwingConstants.VERTICAL);
+		separator_3.setForeground(Color.GRAY);
+		separator_3.setBounds(22, 71, 13, 163);
+		contentPane.add(separator_3);
+		
+		lblFecha_1 = new JLabel("Fecha:");
+		lblFecha_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblFecha_1.setBounds(22, 36, 57, 25);
+		contentPane.add(lblFecha_1);
+		
+		txtFecha = new JTextField();
+		txtFecha.setText("01/07/2025");
+		txtFecha.setFocusable(false);
+		txtFecha.setEditable(false);
+		txtFecha.setBounds(87, 41, 114, 19);
+		contentPane.add(txtFecha);
+		
+		lblHora_1 = new JLabel("Hora:");
+		lblHora_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblHora_1.setBounds(211, 36, 44, 25);
+		contentPane.add(lblHora_1);
+		
+		txtHora = new JTextField();
+		txtHora.setText("00:05:41");
+		txtHora.setFocusable(false);
+		txtHora.setEditable(false);
+		txtHora.setBounds(265, 41, 114, 19);
+		contentPane.add(txtHora);
+		
+		txtFecha2 = new JTextField();
+		txtFecha2.setBounds(97, 204, 102, 19);
+		contentPane.add(txtFecha2);
+		txtFecha2.setColumns(10);
+		
+		txtHora2 = new JTextField();
+		txtHora2.setBounds(265, 204, 105, 19);
+		contentPane.add(txtHora2);
+		txtHora2.setColumns(10);
+		
+		btnAdicionar = new JButton("ADICIONAR");
+		btnAdicionar.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnAdicionar.setBounds(94, 414, 114, 21);
+		contentPane.add(btnAdicionar);
+		
+		btnModificar = new JButton("MODIFICAR");
+		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnModificar.setBounds(302, 413, 114, 21);
 		contentPane.add(btnModificar);
 		
-		btnEliminar = new JButton("Eliminar");
-		btnEliminar.addActionListener(this);
-		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnEliminar.setBounds(707, 524, 90, 30);
+		btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnEliminar.setBounds(510, 413, 114, 21);
 		contentPane.add(btnEliminar);
 		
 		
@@ -238,33 +292,11 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 
 }
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnEliminar) {
-			actionPerformedBtnEliminar(e);
-		}
-		if (e.getSource() == btnModificar) {
-			actionPerformedBtnModificar(e);
-		}
-		if (e.getSource() == btnRegistrar) {
-			actionPerformedBtnRegistrar(e);
-		}
 		if (e.getSource() == btnBuscar) {
 			do_btnBuscar_actionPerformed(e);
 		}
 	}
-	protected void do_btnBuscar_actionPerformed(ActionEvent e) {
-		
-	}
-	
-	protected void actionPerformedBtnRegistrar(ActionEvent e) {
-		
-	}
-	
-	protected void actionPerformedBtnModificar(ActionEvent e) {
-		
-	}
-	
-	protected void actionPerformedBtnEliminar(ActionEvent e) {
-		
+	protected void do_btnBuscar_actionPerformed(ActionEvent e) {	
 	}
 
 	
@@ -304,7 +336,5 @@ public class DialogRegistroRetiro extends JFrame implements ActionListener {
 	
 	private void horaActualizada() {
 		String Hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-		txtHora.setText(Hora);
 	}
-
 }

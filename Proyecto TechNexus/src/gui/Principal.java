@@ -52,7 +52,7 @@ public class Principal extends JFrame implements ActionListener {
 	public Principal() {
 		setTitle("Sistema Insituci\u00F3n Educativa");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 612, 428);
+		setBounds(100, 100, 581, 372);
 		
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -140,7 +140,7 @@ public class Principal extends JFrame implements ActionListener {
 		ImageIcon iconoRedimencionado = new ImageIcon(iconoModificado);
 
 		lblFondo = new JLabel("");
-		lblFondo.setBounds(0, 0, 598, 370);
+		lblFondo.setBounds(-20, -19, 598, 370);
 		lblFondo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFondo.setIcon(iconoRedimencionado);
 		contentPane.add(lblFondo);
