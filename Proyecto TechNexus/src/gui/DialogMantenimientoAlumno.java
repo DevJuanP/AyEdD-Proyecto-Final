@@ -73,7 +73,6 @@ public class DialogMantenimientoAlumno extends JFrame implements ActionListener{
 
 	public DialogMantenimientoAlumno() {
 		setTitle("Mantenimiento de Alumno");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 600);
 		setLocationRelativeTo(null);
 		
