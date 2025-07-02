@@ -16,14 +16,18 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import arreglos.ArreglosMatricula;
+import arreglos.ArreglosRetiro;
 import clases.Matricula;
+import clases.Retiro;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-public class DialogBuscarRetiro extends JFrame implements ActionListener {
+
+public class DialogBuscarRetiro extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -33,30 +37,14 @@ public class DialogBuscarRetiro extends JFrame implements ActionListener {
 	private JScrollPane scrollPane;
 	private JTable table;
 	private DefaultTableModel modeloBuscar;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ArreglosMatricula am = new ArreglosMatricula(); // crear instancia
-					DialogBuscarRetiro frame = new DialogBuscarRetiro(null, am);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public DialogRegistroRetiro dlgRegistroRetiro;
+	
+	public DialogBuscarRetiro(DialogRegistroRetiro dlg) {
+		this.dlgRegistroRetiro = dlg;
+		initComponents();
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	 private ArreglosMatricula am;
-	public DialogBuscarRetiro(Frame owner, ArreglosMatricula amCompartido) {
-		super();
-        this.am = amCompartido; 
+	private void initComponents() {
 		setTitle("Buscar Cursos");
 		setBounds(100, 100, 607, 276);
 		contentPane = new JPanel();
@@ -89,7 +77,8 @@ public class DialogBuscarRetiro extends JFrame implements ActionListener {
 		modeloBuscar=new DefaultTableModel();
 		modeloBuscar.addColumn("Cod Mat");
 		modeloBuscar.addColumn("Cod Alum");
-		modeloBuscar.addColumn("Nombres y apellidos");
+		modeloBuscar.addColumn("Nombres");
+		modeloBuscar.addColumn("Apellidos");
 		modeloBuscar.addColumn("Cod curso");	
 		modeloBuscar.addColumn("Curso");
 		modeloBuscar.addColumn("Fecha");
@@ -102,13 +91,16 @@ public class DialogBuscarRetiro extends JFrame implements ActionListener {
 		listaDatos();
 	}
 	
+	//Declaracion Global
+	ArreglosRetiro ar = new ArreglosRetiro();
+	
 	private void listaDatos() {
 		modeloBuscar.setRowCount(0);
-        for (int i = 0; i < am.tamanio(); i++) {
-            Matricula m = am.obtener(i);
+        for (int i = 0; i < ar.tamanio(); i++) {
+            Retiro m = ar.obtener(i);
             Object[] fila = {
-                m.getNumMatricula(),
-                m.getCodAlumno(),
+                m.getCodMatricula(),
+                m.getCodCurso(),
                 m.getCodCurso(),
                 m.getFecha(),
                 m.getHora(),
@@ -129,11 +121,13 @@ public class DialogBuscarRetiro extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(this,"Selecciona una fila" + "Advertencia" + JOptionPane.WARNING_MESSAGE);
 			return;
 		}
-		int numMatricula = Integer.parseInt((String) table.getValueAt(fila,0));
-		int numCodAlumno = Integer.parseInt((String) table.getValueAt(fila, 1));
-		int codCurso = Integer.parseInt((String) table.getValueAt(fila, 2));
-		int fecha = Integer.parseInt((String) table.getValueAt(fila, 3));
-		int hora = Integer.parseInt((String) table.getValueAt(fila, 4));
-		//mmmmm
+		
+		int numMatricula = Integer.parseInt(table.getValueAt(fila, 0).toString());
+		int numCodAlumno = Integer.parseInt(table.getValueAt(fila, 1).toString());
+		int codCurso = Integer.parseInt(table.getValueAt(fila, 2).toString());
+		String nombres = table.getValueAt(fila, 3).toString();
+		String apellidos = table.getValueAt(fila, 4).toString();  // ← Error corregido
+		String fecha = table.getValueAt(fila, 5).toString();       // ← Mantener como String
+		String hora = table.getValueAt(fila, 6).toString();
 	}
 }

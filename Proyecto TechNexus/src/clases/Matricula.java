@@ -7,137 +7,119 @@ import java.time.format.DateTimeFormatter;
 
 public class Matricula {
 	//contador
-	static private int contadorMatricula = 100001;
+	static private int contadorMatricula = 100000;
 
-	private int numMatricula,codAlumno,codCurso,estado;
+	private int numMatricula,codAlumno,codCurso, asignatura,estado;
+	private String nombres;
+	private String apellidos;
 	private String fecha;
 	private String hora;
 	
-
-	
-
-		//asdasd
-	
-
-public Matricula(int codAlumno, int codCurso ,int estado) {
-		this.numMatricula = contadorMatricula++;
-		this.estado=estado;
+	//constructor
+	public Matricula(int numMatricula, int codAlumno, int codCurso, int asignatura, int estado, String nombres,
+			String apellidos, String fecha, String hora) {
+		super();
+		this.numMatricula = numMatricula;
 		this.codAlumno = codAlumno;
 		this.codCurso = codCurso;
+		this.asignatura = asignatura;
+		this.estado = estado;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
 		this.fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		this.hora  = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        this.hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 	}
 
-
-
-
-
-//desde aqui generado con java
-
-
-//GETTER AND SETTER
-	
-
-
-
-	public int getEstado() {
-	return estado;
-}
-
-
-
-
-
-public void setEstado(int estado) {
-	this.estado = estado;
-}
-
-
-
-
-
+	//get y set
 	public static int getContadorMatricula() {
 		return contadorMatricula;
 	}
-
 
 	public static void setContadorMatricula(int contadorMatricula) {
 		Matricula.contadorMatricula = contadorMatricula;
 	}
 
-
 	public int getNumMatricula() {
 		return numMatricula;
 	}
-
 
 	public void setNumMatricula(int numMatricula) {
 		this.numMatricula = numMatricula;
 	}
 
-
 	public int getCodAlumno() {
 		return codAlumno;
 	}
-
 
 	public void setCodAlumno(int codAlumno) {
 		this.codAlumno = codAlumno;
 	}
 
-
 	public int getCodCurso() {
 		return codCurso;
 	}
-
 
 	public void setCodCurso(int codCurso) {
 		this.codCurso = codCurso;
 	}
 
+	public int getAsignatura() {
+		return asignatura;
+	}
 
+	public void setAsignatura(int asignatura) {
+		this.asignatura = asignatura;
+	}
 
+	public int getEstado() {
+		return estado;
+	}
 
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
+	public String getNombres() {
+		return nombres;
+	}
+
+	public void setNombres(String nombres) {
+		this.nombres = nombres;
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
 
 	public String getFecha() {
 		return fecha;
 	}
 
-
-
-
-
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-
-
-
-
 
 	public String getHora() {
 		return hora;
 	}
 
-
-
-
-
 	public void setHora(String hora) {
 		this.hora = hora;
 	}
-
-
-	//metodo toostring para mostrar la informacion... metodo modificado
-	@Override
-	public String toString() {
-		return    "Numero de matricula: " + numMatricula +"\n"+
-				  "Codigo de alumno: " + codAlumno +"\n"+ 
-				  "Codigo de curso" + codCurso+"\n"+
-				  "Fecha: " + fecha +"\n"+
-				  "Hora: " + hora;
-	}
-	
 	
 	
 }
+
+
+//metodo toostring para mostrar la informacion... metodo modificado
+/*public String toString() {
+	return    "Numero de matricula: " + numMatricula +"\n"+
+			  "Codigo de alumno: " + codAlumno +"\n"+ 
+			  "Codigo de curso" + codCurso+"\n"+
+			  "Fecha: " + fecha +"\n"+
+			  "Hora: " + hora;
+}*/

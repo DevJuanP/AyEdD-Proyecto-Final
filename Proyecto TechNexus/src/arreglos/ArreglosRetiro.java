@@ -74,7 +74,8 @@ public class ArreglosRetiro {
 			for(Retiro r: listaRetiros) {
 				linea = r.getCodRetiro()+";"
 						+r.getCodMatricula()+";"
-						+r.getNombresApellidos()+";"
+						+r.getNombres()+";"
+						+r.getApellidos()+";"
 						+r.getCodCurso()+";"
 						+r.getCurso()+";"
 						+r.getFecha()+";"

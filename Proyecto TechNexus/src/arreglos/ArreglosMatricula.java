@@ -20,7 +20,7 @@ public class ArreglosMatricula {
 	}
 	
 	public void CargarMatricula() {
-		try {
+		/*try {
 			matricula001.clear(); 
 			BufferedReader br = new BufferedReader(new FileReader("data/matricula.txt"));
 			String[] SEPARATOR;
@@ -31,10 +31,12 @@ public class ArreglosMatricula {
 				CodigoMatri = Integer.parseInt(SEPARATOR[0].trim());
 				 codigoAlum = Integer.parseInt(SEPARATOR[1].trim());
 				 codigoCurs = Integer.parseInt(SEPARATOR[2].trim());
-				 Fecha = SEPARATOR[3].trim();
-				 Hora = SEPARATOR[4].trim();
+				 nombres = SEPARATOR[3].trim();
+				 apellidos = SEPARATOR[4].trim();
+				 Fecha = SEPARATOR[5].trim();
+				 Hora = SEPARATOR[6].trim();
 				 estado=Integer.parseInt(SEPARATOR[5].trim());
-				Matricula m =new Matricula(codigoAlum, codigoCurs ,estado);
+				Matricula m =new Matricula(estado, codigoAlum, codigoCurs, CodigoMatri, estado, nombres, apellidos, Fecha, Hora);
 				m.setNumMatricula(CodigoMatri);  // Si tienes un setter para el n�mero de matr�cula
 				m.setFecha(Fecha);
 				m.setHora(Hora);
@@ -45,7 +47,7 @@ public class ArreglosMatricula {
 			}
 		}catch(Exception e) {
 			
-		} 
+		}*/
 	}
 	
 	

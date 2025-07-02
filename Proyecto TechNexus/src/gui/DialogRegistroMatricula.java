@@ -62,7 +62,7 @@ public class DialogRegistroMatricula extends JDialog implements ActionListener {
 	JLabel lblNewLabel_15;
 	JTextField TXTHora;
 	JLabel lblNewLabel_16;
-	JTextField TXTcuso;
+	JTextField txtAsignatura;
 	JScrollPane scrollPane;
 	JTable TablaMatricula;
 	JButton btnConsultar;
@@ -155,6 +155,9 @@ public class DialogRegistroMatricula extends JDialog implements ActionListener {
 		modeloMatricula.addColumn("Número de Matricula");
 		modeloMatricula.addColumn("Código Alumno");
 		modeloMatricula.addColumn("Código Curso");
+		modeloMatricula.addColumn("Nombres");
+		modeloMatricula.addColumn("Apellidos");
+		modeloMatricula.addColumn("Asignatura");
 		modeloMatricula.addColumn("Fecha");
 		modeloMatricula.addColumn("Hora");
 		modeloMatricula.addColumn("Estado");
@@ -225,10 +228,10 @@ public class DialogRegistroMatricula extends JDialog implements ActionListener {
 		panelConsulta_1.add(lblNewLabel_16);
 		lblNewLabel_16.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
-		TXTcuso = new JTextField();
-		TXTcuso.setBounds(119, 55, 293, 19);
-		panelConsulta_1.add(TXTcuso);
-		TXTcuso.setColumns(10);
+		txtAsignatura = new JTextField();
+		txtAsignatura.setBounds(119, 55, 293, 19);
+		panelConsulta_1.add(txtAsignatura);
+		txtAsignatura.setColumns(10);
 		btnConsultarCurso.addActionListener(this);
 		
 		lblNewLabel_5 = new JLabel("Código:");
@@ -331,7 +334,6 @@ public class DialogRegistroMatricula extends JDialog implements ActionListener {
 		btnEliminar.addActionListener(this); 
 		btnEliminar.setBounds(410, 449, 109, 25);
 		contentPane.add(btnEliminar);
-		setear();
 		listar();
 		
 	}
@@ -359,7 +361,7 @@ public class DialogRegistroMatricula extends JDialog implements ActionListener {
 	
 	public void leerBusqueda (Curso c) {
 		TXTcodigoCurso.setText(String.valueOf(c.getCodCurso()));
-        TXTcuso.setText(c.getAsignatura());
+        txtAsignatura.setText(c.getAsignatura());
         txtCiclo.setText(String.valueOf(c.getCiclo()));
         TXTcreditos.setText(String.valueOf(c.getCreditos()));
         TXTHora.setText(String.valueOf(c.getHoras()));
@@ -390,25 +392,40 @@ public class DialogRegistroMatricula extends JDialog implements ActionListener {
 					am.obtener(i).getNumMatricula(),
 					am.obtener(i).getCodAlumno(),
 					am.obtener(i).getCodCurso(),
+					am.obtener(i).getNombres(),
+					am.obtener(i).getApellidos(),
+					am.obtener(i).getAsignatura(),
 					am.obtener(i).getFecha(),
 					am.obtener(i).getHora(),
 					am.obtener(i).getEstado(),};
 			modeloMatricula.addRow(fila);
 		}
 	 }
-	
+	 void limpiar() {
+		 TXTcodigoMatricula.setText("");
+		 TXTcodigoAlum.setText("");
+		 TXTcodigoCurso.setText("");
+		 TXTnombres.setText("");
+		 TXTapellidos.setText("");
+		 TXTedad.setText("");
+		 TXTestado.setText("");
+		 TXTdni.setText("");
+		 TXTcelular.setText("");
+		 txtAsignatura.setText("");
+		 
+		 
+	 }
 	protected void do_btnEliminar_actionPerformed(ActionEvent e) {
 		 am.Eliminar(null);
 	}
 	 
 	protected void actionPerformedBtnConsultar(ActionEvent e) {
-		setear();
 		am.CargarMatricula();
 		listar();
 	}
 	
 	protected void actionPerformedBtnRegistrar(ActionEvent e) {
-		try {
+		/*try {
 		int codigoAlumno = Integer.parseInt(TXTcodigoAlum.getText().trim());
 		int codigoCurso = Integer.parseInt(TXTcodigoCurso.getText().trim());
 		String fecha = TXTfecha.getText().trim();
@@ -422,28 +439,7 @@ public class DialogRegistroMatricula extends JDialog implements ActionListener {
 		javax.swing.JOptionPane.showMessageDialog(null, "Matrícula registrada correctamente.");
 		}catch(Exception x) {
 			javax.swing.JOptionPane.showMessageDialog(null, "Codigos existentes//Datos mas ingresados");
-		}
-	}
-	
-	public void setear() {
-		Matricula m = new Matricula(0, 0, 0);
-		TXTnombres.setText("");
-		TXTapellidos.setText("");
-		TXTedad.setText("");
-		TXTdni.setText("");
-		TXTcelular.setText("");
-		TXTestado.setText("");
-
-		TXTcodigoCurso.setText("");
-		TXTcuso.setText("");
-		txtCiclo.setText("");
-		TXTcreditos.setText("");
-		TXTHora.setText("");
-
-		TXTcodigoAlum.setText("");
-		TXTfecha.setText(m.getFecha());
-		txtHora.setText(m.getHora());
-		TXTcodigoMatricula.setText(String.valueOf(Matricula.getContadorMatricula()));
+		}*/
 	}
 	
 	protected void actionPerformedBtnCerrar(ActionEvent e) {
@@ -452,5 +448,4 @@ public class DialogRegistroMatricula extends JDialog implements ActionListener {
 		principal.setVisible(true);
 		dispose();
 	}
-
 }

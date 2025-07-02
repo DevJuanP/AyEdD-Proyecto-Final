@@ -9,7 +9,7 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-//import javax.swing.JRadioButton;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-//import javax.swing.border.TitledBorder;
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -33,53 +33,47 @@ import javax.swing.JDialog;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-//import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 import javax.swing.JSeparator;
 
 
 
-//import java.awt.Component;
+
 
 public class DialogRegistroRetiro extends JDialog implements ActionListener {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
 	private JLabel lblTitle;
 	private JLabel lblCdigoMaticula;
 	private JLabel lblCdigoAlumno;
 	private JLabel lblNombreDelAlumno;
 	private JTextField txtCodAlum;
-	private JTextField txtNomApelli;
+	private JTextField txtNombres;
 	private JLabel lblCdigoCurso;
 	private JTextField txtCodMat;
 	private JLabel lblAsignatura;
-	private JTextField txtCurso;
-	private JLabel lblFecha;
-	private JLabel lblHora;
+	private JTextField txtAsignatura;
 	private JTextField txtCodCurso;
 	private JScrollPane scrollPane;
 	private JButton btnBuscar;
 	private JLabel lblCdigoRetiro;
 	private JTextField txtCodRetiro;
 	private Timer tiempo;
-	//Retiro re1 = new Retiro();
 	private JTable tblDatos;
 	private DefaultTableModel model;
 	private JLabel lblFecha_1;
 	private JTextField txtFecha;
 	private JLabel lblHora_1;
 	private JTextField txtHora;
-	private JTextField txtFecha2;
-	private JTextField txtHora2;
 	private JButton btnAdicionar;
 	private JButton btnModificar;
 	private JButton btnEliminar;
 	private JPanel panelConsulta;
-	private ArreglosMatricula am = new ArreglosMatricula();
+	private JTextField txtApellidos;
+	private JLabel lblApellidos;
+	
+
 	/**
 	 * Launch the application.
 	 */
@@ -166,7 +160,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		panelConsulta.add(lblCdigoAlumno);
 		lblCdigoAlumno.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
-		lblNombreDelAlumno = new JLabel("Nombre y Apellidos:");
+		lblNombreDelAlumno = new JLabel("Nombres:");
 		lblNombreDelAlumno.setBounds(15, 97, 147, 25);
 		panelConsulta.add(lblNombreDelAlumno);
 		lblNombreDelAlumno.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -175,9 +169,9 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		txtCodAlum.setBounds(170, 67, 91, 19);
 		panelConsulta.add(txtCodAlum);
 		
-		txtNomApelli = new JTextField();
-		txtNomApelli.setBounds(170, 102, 245, 19);
-		panelConsulta.add(txtNomApelli);
+		txtNombres = new JTextField();
+		txtNombres.setBounds(170, 102, 245, 19);
+		panelConsulta.add(txtNombres);
 		
 		lblCdigoCurso = new JLabel("Código curso");
 		lblCdigoCurso.setBounds(428, 62, 102, 25);
@@ -193,19 +187,9 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		panelConsulta.add(lblAsignatura);
 		lblAsignatura.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
-		txtCurso = new JTextField();
-		txtCurso.setBounds(530, 102, 135, 19);
-		panelConsulta.add(txtCurso);
-		
-		lblFecha = new JLabel("Fecha:");
-		lblFecha.setBounds(15, 132, 57, 25);
-		panelConsulta.add(lblFecha);
-		lblFecha.setFont(new Font("Tahoma", Font.BOLD, 14));
-		
-		lblHora = new JLabel("Hora:");
-		lblHora.setBounds(192, 132, 44, 25);
-		panelConsulta.add(lblHora);
-		lblHora.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtAsignatura = new JTextField();
+		txtAsignatura.setBounds(530, 102, 135, 19);
+		panelConsulta.add(txtAsignatura);
 		
 		txtCodCurso = new JTextField();
 		txtCodCurso.setBounds(530, 67, 135, 19);
@@ -218,15 +202,14 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		btnBuscar.addActionListener(this);
 		btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
-		txtFecha2 = new JTextField();
-		txtFecha2.setBounds(78, 137, 102, 19);
-		panelConsulta.add(txtFecha2);
-		txtFecha2.setColumns(10);
+		txtApellidos = new JTextField();
+		txtApellidos.setBounds(170, 135, 245, 19);
+		panelConsulta.add(txtApellidos);
 		
-		txtHora2 = new JTextField();
-		txtHora2.setBounds(246, 137, 105, 19);
-		panelConsulta.add(txtHora2);
-		txtHora2.setColumns(10);
+		lblApellidos = new JLabel("Apellidos:");
+		lblApellidos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblApellidos.setBounds(15, 132, 147, 25);
+		panelConsulta.add(lblApellidos);
 		
 		lblFecha_1 = new JLabel("Fecha:");
 		lblFecha_1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -291,36 +274,41 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 			do_btnBuscar_actionPerformed(e);
 		}
 	}
-	
+	//Declaracion global
 	ArreglosRetiro ar = new ArreglosRetiro();
+	
 	protected void do_btnBuscar_actionPerformed(ActionEvent e) {	
-		DialogBuscarRetiro buscarRetiro = new DialogBuscarRetiro(null, am);
+		/*DialogBuscarRetiro buscarRetiro = new DialogBuscarRetiro(null, am);
 		buscarRetiro.setLocationRelativeTo(null);
-		buscarRetiro.setVisible(true);
+		buscarRetiro.setVisible(true);*/
 	}
 
 	protected void actionPerformedBtnAdicionar(ActionEvent e) {
-		Retiro r = new Retiro(1, leerCodigoMatricula(), leerApellidos(), leerCodigoCurso(), leerCurso(), leerFecha(), leerHora());
+		/*Retiro r = new Retiro(1, leerCodigoMatricula(), leerApellidos(), leerCodigoCurso(), leerCurso(), leerFecha(), leerHora());
 		ar.adicionar(r);
-		listar();
+		listar();*/
 	}
 	protected void actionPerformedBtnModificar(ActionEvent e) {
 	}
+
 	protected void actionPerformedBtnEliminar(ActionEvent e) {
 	}
 	
+	public void leerBusquedaRetiro(Retiro r) {
+		txtCodMat.setText(String.valueOf(r.getCodMatricula()));
+	}
 	
 	
-	
-	//Listar
+	//Métodos tipo void (sin parámetros)
 	public void listar() {
 		model.setRowCount(0);
 		for (int i = 0; i < ar.tamanio(); i++) {
 			Object[] fila = {
 					ar.obtener(i).getCodRetiro(),
 					ar.obtener(i).getCodMatricula(),
-					ar.obtener(i).getNombresApellidos(),
 					ar.obtener(i).getCodCurso(),
+					ar.obtener(i).getNombres(),
+					ar.obtener(i).getApellidos(),
 					ar.obtener(i).getCurso(),
 					ar.obtener(i).getFecha(),
 					ar.obtener(i).getHora()
@@ -328,43 +316,45 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 			model.addRow(fila);
 		}
 	}
-	//parametros de leectura
-	public int leerCodigoMatricula() {
+	
+	void limpieza() {
+		txtCodMat.setText("");
+		txtCodAlum.setText("");
+		txtNombres.setText("");
+		txtCodCurso.setText("");
+		txtAsignatura.setText("");
+		txtAsignatura.setText("");
+		txtCodMat.requestFocus();
+	}
+	
+	//  Métodos tipo void (con parametros)
+	 int leerCodigoMatricula() {
 		return Integer.parseInt(txtCodMat.getText());
 	}
 	
 	
-	public String leerApellidos() {
-		return txtNomApelli.getText();
+	String leerApellidos() {
+		return txtNombres.getText();
 	}
 	
-	public int leerCodigoCurso() {
+	int leerCodigoCurso() {
 		return Integer.parseInt(txtCodCurso.getText());
 	}
 	
-	public String leerCurso() {
-		return txtCurso.getText();
+	String leerCurso() {
+		return txtAsignatura.getText();
 	}
 	
-	public String leerFecha() {
+	String leerFecha() {
 		return txtFecha.getText();
 	}
 	
-	public String leerHora() {
+	String leerHora() {
 		return txtHora.getText();
 	}
-	//metodo limpiar
-	void limpieza() {
-		txtCodMat.setText("");
-		txtCodAlum.setText("");
-		txtNomApelli.setText("");
-		txtCodCurso.setText("");
-		txtCurso.setText("");
-	}
+	
 	/*wenas*/
 	private void horaActualizada() {
 		String Hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-		//mm
 	}
-
 }

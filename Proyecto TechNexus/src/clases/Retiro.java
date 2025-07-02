@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 
 public class Retiro {
 
-	private int codRetiro, codMatricula, codCurso;
-	private String nombresApellidos, curso, fecha, hora;
+	private int codRetiro, codMatricula, codAlum, codCurso;
+	private String nombres, apellidos, curso, fecha, hora;
 	private static int contador;
 	//public static int prueba, conta;
 	
@@ -15,17 +15,20 @@ public class Retiro {
 		contador = 200001;
 	}
 
-	public Retiro(int codRetiro, int codMatricula, String nombresApellidos, int codCurso,  String curso, String fecha,
-			String hora) {
-		this.codRetiro = contador++;
+	public Retiro(int codRetiro, int codMatricula, int codAlum, int codCurso, String nombres, String apellidos,
+			String curso, String fecha, String hora) {
+		contador++;
+		this.codRetiro = codRetiro;
 		this.codMatricula = codMatricula;
-		this.nombresApellidos = nombresApellidos;
+		this.codAlum = codAlum;
 		this.codCurso = codCurso;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
 		this.curso = curso;
 		this.fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		this.hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        this.hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 	}
-
+	
 	public int getCodRetiro() {
 		return codRetiro;
 	}
@@ -42,6 +45,14 @@ public class Retiro {
 		this.codMatricula = codMatricula;
 	}
 
+	public int getCodAlum() {
+		return codAlum;
+	}
+
+	public void setCodAlum(int codAlum) {
+		this.codAlum = codAlum;
+	}
+
 	public int getCodCurso() {
 		return codCurso;
 	}
@@ -50,12 +61,21 @@ public class Retiro {
 		this.codCurso = codCurso;
 	}
 
-	public String getNombresApellidos() {
-		return nombresApellidos;
+	public String getNombres() {
+		return nombres;
 	}
 
-	public void setNombresApellidos(String nombresApellidos) {
-		this.nombresApellidos = nombresApellidos;
+	public void setNombres(String nombres) {
+		this.nombres = nombres;
+	}
+
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
 	}
 
 	public String getCurso() {
@@ -81,63 +101,17 @@ public class Retiro {
 	public void setHora(String hora) {
 		this.hora = hora;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	public Retiro(int numMatricula) {
-		this.numRetiro = contador++;
-		this.numMatricula = numMatricula;
-		this.fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		this.hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+	public static int getContador() {
+		return contador;
 	}
 
-
-	public Retiro() {
-		super();
-		this.fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		this.hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-		//this.conta++;
-	}
-	
-
-	//get and set
-
-	public int getNumRetiro() {
-		return numRetiro;
+	public static void setContador(int contador) {
+		Retiro.contador = contador;
 	}
 
-	public void setNumRetiro(int numRetiro) {
-		this.numRetiro = numRetiro;
+	public Object getEstado() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
-	public int getNumMatricula() {
-		return numMatricula;
-	}
-
-	public void setNumMatricula(int numMatricula) {
-		this.numMatricula = numMatricula;
-	}
-
-	public String getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
-	}
-
-	public String getHora() {
-		return hora;
-	}
-
-	public void setHora(String hora) {
-		this.hora = hora;
-	}
-	*/
 }
