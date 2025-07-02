@@ -9,26 +9,28 @@ public class Matricula {
 	//contador
 	static private int contadorMatricula = 100000;
 
-	private int numMatricula,codAlumno,codCurso, asignatura,estado;
+	private int numMatricula,codAlumno,codCurso;
 	private String nombres;
 	private String apellidos;
+	private String asignatura;
 	private String fecha;
 	private String hora;
+	private int estado;
 	
 	//constructor
-	public Matricula(int numMatricula, int codAlumno, int codCurso, int asignatura, int estado, String nombres,
-			String apellidos, String fecha, String hora) {
-		super();
+	public Matricula(int numMatricula, int codAlumno, int codCurso, String nombres, String apellidos, String asignatura,String fecha, String hora, int estado) {
 		this.numMatricula = numMatricula;
 		this.codAlumno = codAlumno;
 		this.codCurso = codCurso;
-		this.asignatura = asignatura;
-		this.estado = estado;
 		this.nombres = nombres;
 		this.apellidos = apellidos;
+		this.asignatura = asignatura;
+		this.fecha = fecha;
 		this.fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         this.hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+    	this.estado = estado;
 	}
+
 
 	//get y set
 	public static int getContadorMatricula() {
@@ -63,22 +65,6 @@ public class Matricula {
 		this.codCurso = codCurso;
 	}
 
-	public int getAsignatura() {
-		return asignatura;
-	}
-
-	public void setAsignatura(int asignatura) {
-		this.asignatura = asignatura;
-	}
-
-	public int getEstado() {
-		return estado;
-	}
-
-	public void setEstado(int estado) {
-		this.estado = estado;
-	}
-
 	public String getNombres() {
 		return nombres;
 	}
@@ -95,6 +81,14 @@ public class Matricula {
 		this.apellidos = apellidos;
 	}
 
+	public String getAsignatura() {
+		return asignatura;
+	}
+
+	public void setAsignatura(String asignatura) {
+		this.asignatura = asignatura;
+	}
+
 	public String getFecha() {
 		return fecha;
 	}
@@ -109,6 +103,14 @@ public class Matricula {
 
 	public void setHora(String hora) {
 		this.hora = hora;
+	}
+
+	public int getEstado() {
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
 	}
 	
 	

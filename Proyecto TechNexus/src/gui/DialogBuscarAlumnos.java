@@ -1,13 +1,17 @@
 package gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
+import arreglos.ArreglosAlumno;
+import arreglos.ArreglosMatricula;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,35 +19,32 @@ import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import arreglos.ArreglosAlumno;
 import clases.Alumno;
+import clases.Curso;
 
-public class DialogBuscarAlumnos extends JFrame implements ActionListener {
+public class DialogBuscarAlumnos extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
 	private JLabel lblAsignatura;
 	private JTextField txtBuscar;
-	private JButton btBuscar_2;
 	private JButton btEnviar;
 	private JScrollPane scrollPane;
 	private JTable table;
 	private DefaultTableModel modeloBuscar;
-	private ArreglosAlumno al=new ArreglosAlumno();
-	private DialogRegistroMatricula frameDeMatricula;
-	/**
-	 * Launch the application. */
-	public DialogBuscarAlumnos(DialogRegistroMatricula frm) {
-	    this.frameDeMatricula = frm;
-	    initComponents();
+	public DialogRegistroMatricula dlgRMatricula;
+
+	// Constructor que recibe el formulario principal
+	public DialogBuscarAlumnos(DialogRegistroMatricula dlg) {
+	    this.dlgRMatricula = dlg;
+	    initComponents();// Llama a la función que construye la interfaz
 	}
 	
-	/**
-	 * Create the frame.
-	 */
 	private void initComponents() {
 		setTitle("Buscar Alumnos");
 		setBounds(100, 100, 607, 276);
@@ -63,12 +64,6 @@ public class DialogBuscarAlumnos extends JFrame implements ActionListener {
 		contentPane.add(txtBuscar);
 		txtBuscar.setColumns(10);
 		
-		btBuscar_2 = new JButton("Buscar");
-		btBuscar_2.addActionListener(this);
-		btBuscar_2.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btBuscar_2.setBounds(376, 10, 85, 21);
-		contentPane.add(btBuscar_2);
-		
 		btEnviar = new JButton("Enviar");
 		btEnviar.addActionListener(this);
 		btEnviar.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -87,59 +82,68 @@ public class DialogBuscarAlumnos extends JFrame implements ActionListener {
 		table.setModel(modeloBuscar);
 		scrollPane.setViewportView(table);
 		
-		cargarTabla(DialogMantenimientoAlumno.alumnosList.getAlumnosList());
+		cargarTabla("");
+		
+		// Filtrado en tiempo real
+				txtBuscar.getDocument().addDocumentListener(new DocumentListener() {
+					public void insertUpdate(DocumentEvent e) {
+						cargarTabla(txtBuscar.getText());
+					}
+					public void removeUpdate(DocumentEvent e) {
+						cargarTabla(txtBuscar.getText());
+					}
+					public void changedUpdate(DocumentEvent e) {
+						cargarTabla(txtBuscar.getText());
+					}
+				});
 	}
 
-	@Override
+	// Declaracion global
+	ArreglosAlumno aa = new ArreglosAlumno();
+	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btEnviar) {
 			actionPerformedBtEnviar(e);
 		}
-		if (e.getSource() == btBuscar_2) {
-			actionPerformedBtBuscar_2(e);
-		}
-		// TODO Auto-generated method stub
 		
-	}
-	protected void actionPerformedBtBuscar_2(ActionEvent e) {
-		ArrayList <Alumno> alumApe = DialogMantenimientoAlumno.alumnosList.buscarApellido(leerApellido());
-		cargarTabla(alumApe);
 	}
 	protected void actionPerformedBtEnviar(ActionEvent e) {
 		int fila = table.getSelectedRow();
-		if (fila != -1) {
-			String cod = table.getValueAt(fila, 0).toString();
-			String nom = table.getValueAt(fila, 1).toString();
-			String ape = table.getValueAt(fila, 2).toString();
-			String edad = table.getValueAt(fila, 3).toString();
-			String cel = table.getValueAt(fila, 4).toString();
-			String dni = table.getValueAt(fila, 5).toString();
-			String estado = table.getValueAt(fila, 6).toString();
-
-			frameDeMatricula.TXTcodigoAlum.setText(cod);
-			frameDeMatricula.TXTnombres.setText(nom);
-			frameDeMatricula.TXTapellidos.setText(ape);
-			frameDeMatricula.TXTedad.setText(edad);
-			frameDeMatricula.TXTcelular.setText(cel);
-			frameDeMatricula.TXTdni.setText(dni);
-			frameDeMatricula.TXTestado.setText(estado);
-
-			dispose();  // Cierra la ventana despuï¿½s de enviar los datos
+		if (fila == -1) {
+			JOptionPane.showMessageDialog(this, "Selecciona una fila", "Advertencia", JOptionPane.WARNING_MESSAGE);
+			return;
 		}
-	}
-	
-	
-	private String leerApellido() {
-		return txtBuscar.getText().trim();
-	}
-	
-	/*private ArrayList <Alumno> leetAlumnosTXT() {
 		
+		int cod = Integer.parseInt(table.getValueAt(fila, 0).toString());
+		String nom = table.getValueAt(fila, 1).toString();
+		String ape = table.getValueAt(fila, 2).toString();
+		int edad = Integer.parseInt(table.getValueAt(fila, 3).toString());
+		int cel = Integer.parseInt(table.getValueAt(fila, 4).toString());
+		String dni = table.getValueAt(fila, 5).toString();
+		int estado = Integer.parseInt(table.getValueAt(fila, 6).toString());
+	
+		Alumno a = new Alumno(cod, nom, ape, edad, cel, dni, estado);
+		dlgRMatricula.leerBusqueda_2(a);
+		dispose();
 	}
-	*/
-	private void cargarTabla(ArrayList <Alumno> arrList) {
-		for (Alumno a : arrList) {
-			modeloBuscar.addRow(new Object[] {a.getCodAlumno(),a.getNombres(), a.getApellidos(), a.getEdad(), a.getCelular(), a.getDni(), a.getEstado()});
+	
+	
+	private void cargarTabla(String filtro) {
+		modeloBuscar.setRowCount(0);
+		
+		for (int i = 0; i < aa.tamanio(); i++) {
+			Alumno a = aa.obtener(i);
+			if(filtro.isEmpty() || a.getApellidos().toLowerCase().contains(filtro.toLowerCase())) {
+				modeloBuscar.addRow(new Object[] {
+					a.getCodAlumno(),
+					a.getNombres(),
+					a.getApellidos(),
+					a.getEdad(),
+					a.getCelular(),
+					a.getDni(),
+					a.getEstado()
+				});
+			}
 		}
 	}
 
