@@ -135,7 +135,7 @@ public class Principal extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		
 		// Imagen de fondo
-		ImageIcon icono = new ImageIcon(Principal.class.getResource("/imagenes/educacion.png"));
+		ImageIcon icono = new ImageIcon("imagenes/educacion.png");
 		Image iconoModificado = icono.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
 		ImageIcon iconoRedimencionado = new ImageIcon(iconoModificado);
 
