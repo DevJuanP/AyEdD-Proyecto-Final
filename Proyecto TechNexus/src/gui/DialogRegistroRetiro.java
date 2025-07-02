@@ -361,7 +361,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		txtCodCurso.setText("");
 		txtCurso.setText("");
 	}
-	
+	/*wenas*/
 	private void horaActualizada() {
 		String Hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 		//mm
