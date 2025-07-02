@@ -35,7 +35,7 @@ public class ArreglosMatricula {
 				 Hora = SEPARATOR[4].trim();
 				 estado=Integer.parseInt(SEPARATOR[5].trim());
 				Matricula m =new Matricula(codigoAlum, codigoCurs ,estado);
-				m.setNumMatricula(CodigoMatri);  // Si tienes un setter para el número de matrícula
+				m.setNumMatricula(CodigoMatri);  // Si tienes un setter para el nï¿½mero de matrï¿½cula
 				m.setFecha(Fecha);
 				m.setHora(Hora);
 				AdicionarMatricula(m);
@@ -122,7 +122,6 @@ public class ArreglosMatricula {
 	public void setMatricula001(ArrayList<Matricula> matricula001) {
 		this.matricula001 = matricula001;
 	}
-	
 	
 	
 	

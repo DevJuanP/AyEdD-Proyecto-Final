@@ -452,4 +452,5 @@ public class DialogRegistroMatricula extends JDialog implements ActionListener {
 		principal.setVisible(true);
 		dispose();
 	}
+
 }

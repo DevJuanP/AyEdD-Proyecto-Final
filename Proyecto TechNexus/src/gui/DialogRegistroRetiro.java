@@ -21,6 +21,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import arreglos.ArreglosMatricula;
 import arreglos.ArreglosRetiro;
 
 import java.time.LocalTime;
@@ -78,6 +79,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	private JButton btnModificar;
 	private JButton btnEliminar;
 	private JPanel panelConsulta;
+	private ArreglosMatricula am = new ArreglosMatricula();
 	/**
 	 * Launch the application.
 	 */
@@ -292,8 +294,9 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	
 	ArreglosRetiro ar = new ArreglosRetiro();
 	protected void do_btnBuscar_actionPerformed(ActionEvent e) {	
-		DialogBuscarRetiro frame = new DialogBuscarRetiro();
-		frame.setVisible(true);
+		DialogBuscarRetiro buscarRetiro = new DialogBuscarRetiro(null, am);
+		buscarRetiro.setLocationRelativeTo(null);
+		buscarRetiro.setVisible(true);
 	}
 
 	protected void actionPerformedBtnAdicionar(ActionEvent e) {
