@@ -15,7 +15,7 @@ public class Retiro {
 		contador = 200001;
 	}
 
-	public Retiro(int codRetiro, int codMatricula, int codAlum, int codCurso, String nombres, String apellidos,
+	public Retiro(int codRetiro, int codMatricula, int codAlum, String nombres, String apellidos,int codCurso,
 			String curso, String fecha, String hora) {
 		contador++;
 		this.codRetiro = codRetiro;

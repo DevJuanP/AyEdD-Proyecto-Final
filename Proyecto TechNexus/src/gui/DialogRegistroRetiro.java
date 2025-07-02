@@ -8,6 +8,7 @@ import java.awt.Font;
 //import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import javax.swing.JScrollPane;
@@ -96,7 +97,6 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	 */
 	public DialogRegistroRetiro() {
 		setTitle("Registro de Retiro");
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 730, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -134,10 +134,11 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		tblDatos = new JTable();
 		scrollPane.setViewportView(tblDatos);
 		model = new DefaultTableModel();
-		model.addColumn("Código retiro");
-		model.addColumn("Código matricula");
-		model.addColumn("Nombre y apellidos");
-		model.addColumn("Código curso");
+		model.addColumn("Cod Reti");
+		model.addColumn("Cod Mat");
+		model.addColumn("Nombre");
+		model.addColumn("Apellidos");
+		model.addColumn("Cod Curso");
 		model.addColumn("Curso");
 		model.addColumn("Fecha");
 		model.addColumn("Hora");
@@ -284,21 +285,28 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	}
 
 	protected void actionPerformedBtnAdicionar(ActionEvent e) {
-		/*Retiro r = new Retiro(1, leerCodigoMatricula(), leerApellidos(), leerCodigoCurso(), leerCurso(), leerFecha(), leerHora());
+		Retiro r = new Retiro(2, leerCodigoMatricula(), leerCodigoAlum(), leerNombres(),leerApellidos(),leerCodigoCurso(),leerCurso(),leerFecha(),leerHora());
 		ar.adicionar(r);
-		listar();*/
+		listar();
+		limpieza();
 	}
 	protected void actionPerformedBtnModificar(ActionEvent e) {
+		if (btnModificar.getText().equals("MODIFICAR")) {
+			modificarDatos();
+		} else {
+			guardarCambios();
+		}
 	}
 
 	protected void actionPerformedBtnEliminar(ActionEvent e) {
+		eliminarDatos();
 	}
 	
 	public void leerBusquedaRetiro(Retiro r) {
 		txtCodMat.setText(String.valueOf(r.getCodMatricula()));
 	}
 	
-	
+	private Retiro retiroSeleccionado;
 	//Métodos tipo void (sin parámetros)
 	public void listar() {
 		model.setRowCount(0);
@@ -306,9 +314,9 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 			Object[] fila = {
 					ar.obtener(i).getCodRetiro(),
 					ar.obtener(i).getCodMatricula(),
-					ar.obtener(i).getCodCurso(),
 					ar.obtener(i).getNombres(),
 					ar.obtener(i).getApellidos(),
+					ar.obtener(i).getCodCurso(),
 					ar.obtener(i).getCurso(),
 					ar.obtener(i).getFecha(),
 					ar.obtener(i).getHora()
@@ -317,6 +325,75 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		}
 	}
 	
+	void modificarDatos() {
+		int fila = tblDatos.getSelectedRow();
+		
+		if (fila == -1) {
+			JOptionPane.showMessageDialog(this, "Debe seleccionar un registro para modificar", "", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		int codRetiro = (int) tblDatos.getValueAt(fila, 0);
+		retiroSeleccionado = ar.busRetiro(codRetiro);
+		
+
+		if (retiroSeleccionado==null) {
+			JOptionPane.showMessageDialog(this, "Registro no encontrado","",JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		 	txtCodMat.setText(String.valueOf(retiroSeleccionado.getCodMatricula()));
+		    txtCodAlum.setText(String.valueOf(retiroSeleccionado.getCodAlum())); // Asumiendo que existe
+		    txtNombres.setText(retiroSeleccionado.getNombres());
+		    txtApellidos.setText(retiroSeleccionado.getApellidos());
+		    txtCodCurso.setText(String.valueOf(retiroSeleccionado.getCodCurso()));
+		    txtAsignatura.setText(retiroSeleccionado.getCurso());
+		    txtFecha.setText(retiroSeleccionado.getFecha());
+		    txtHora.setText(retiroSeleccionado.getHora());
+		    txtCodRetiro.setText(String.valueOf(retiroSeleccionado.getCodRetiro()));
+		    
+		    btnModificar.setText("Guardar");
+		//JOptionPane.showMessageDialog(this, "Registro modifcado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
+	}
+	void guardarCambios() {
+	   if (retiroSeleccionado == null) {
+		return;
+	   }
+	   
+	   int confirmacion = JOptionPane.showConfirmDialog(this, "¿Desea guardar los cambios realizados?","",JOptionPane.YES_NO_OPTION);
+	   if (confirmacion != JOptionPane.YES_OPTION) {
+		limpieza();
+		btnModificar.setText("MODIFICAR");
+		return;
+	   }
+	   retiroSeleccionado.setCodMatricula(Integer.parseInt(txtCodMat.getText()));
+	   retiroSeleccionado.setNombres(txtNombres.getText());
+	   retiroSeleccionado.setApellidos(leerApellidos());
+	   retiroSeleccionado.setCodCurso(leerCodigoCurso());
+	   //retiroSeleccionado.setFecha(leerFecha());
+	   //retiroSeleccionado.setHora(leerHora());
+	   ar.grabarArchivo();
+	   listar();
+	   limpieza();
+	   
+	   btnModificar.setText("MODIFICAR");
+	   JOptionPane.showMessageDialog(this, "Cambios guardados correctamente","",JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	void eliminarDatos() {
+			   int fila = tblDatos.getSelectedRow();
+			    if (fila == -1) {
+			    	JOptionPane.showMessageDialog(null, "Deber seleccionar la fila a eliminar");
+			    	return;
+			    } else {
+			    	int  respuesta = JOptionPane.showConfirmDialog(null, "¿Deseas eliminar este registro?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+			        if (respuesta == JOptionPane.YES_OPTION) {
+			        	((DefaultTableModel) tblDatos.getModel()).removeRow(fila);
+					}
+			    }
+			    	
+	}
+		
+	
 	void limpieza() {
 		txtCodMat.setText("");
 		txtCodAlum.setText("");
@@ -324,6 +401,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		txtCodCurso.setText("");
 		txtAsignatura.setText("");
 		txtAsignatura.setText("");
+		txtApellidos.setText("");
 		txtCodMat.requestFocus();
 	}
 	
@@ -332,9 +410,14 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		return Integer.parseInt(txtCodMat.getText());
 	}
 	
-	
-	String leerApellidos() {
+	int leerCodigoAlum() {
+		return Integer.parseInt(txtCodAlum.getText());
+	}
+	String leerNombres() {
 		return txtNombres.getText();
+	}
+	String leerApellidos() {
+		return txtApellidos.getText();
 	}
 	
 	int leerCodigoCurso() {
