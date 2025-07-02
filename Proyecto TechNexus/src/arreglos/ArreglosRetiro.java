@@ -28,9 +28,9 @@ public class ArreglosRetiro {
 		return listaRetiros.get(i);
 	}
 	
-	public Retiro busRetiro(int retiro) {
-		for(int i = 0; i < tamanio(); i++) {
-			if (obtener(i).getCodRetiro() == retiro) {
+	public Retiro buscar(int codBus) {
+		for(int i = 0; i< tamanio(); i++) {
+			if (obtener(i).getCodMatricula()==codBus) {
 				return obtener(i);
 			}
 		}
@@ -89,5 +89,7 @@ public class ArreglosRetiro {
 			return 0;
 		}
 	}
-	
+	public void actualizarArchivo() {
+		grabarArchivo();
+	}
 }

@@ -22,6 +22,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import com.sun.jdi.Value;
+
 import arreglos.ArreglosMatricula;
 import arreglos.ArreglosRetiro;
 
@@ -136,6 +138,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		model = new DefaultTableModel();
 		model.addColumn("Cod Reti");
 		model.addColumn("Cod Mat");
+		model.addColumn("Cod Alumn");
 		model.addColumn("Nombre");
 		model.addColumn("Apellidos");
 		model.addColumn("Cod Curso");
@@ -239,19 +242,19 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		btnAdicionar = new JButton("ADICIONAR");
 		btnAdicionar.addActionListener(this);
 		btnAdicionar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnAdicionar.setBounds(87, 434, 114, 21);
+		btnAdicionar.setBounds(21, 433, 114, 21);
 		contentPane.add(btnAdicionar);
 		
 		btnModificar = new JButton("MODIFICAR");
 		btnModificar.addActionListener(this);
 		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnModificar.setBounds(295, 433, 114, 21);
+		btnModificar.setBounds(313, 433, 114, 21);
 		contentPane.add(btnModificar);
 		
 		btnEliminar = new JButton("ELIMINAR");
 		btnEliminar.addActionListener(this);
 		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnEliminar.setBounds(503, 433, 114, 21);
+		btnEliminar.setBounds(582, 433, 114, 21);
 		contentPane.add(btnEliminar);
 		
 		
@@ -291,11 +294,52 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		limpieza();
 	}
 	protected void actionPerformedBtnModificar(ActionEvent e) {
-		if (btnModificar.getText().equals("MODIFICAR")) {
-			modificarDatos();
-		} else {
-			guardarCambios();
+		try {
+			int codMatricula = leerCodigoMatricula();
+			Retiro r = ar.buscar(codMatricula);
+			if (r != null) {
+				String codAlum = String.valueOf(leerCodigoAlum());
+				if (codAlum.length()>0) {
+					try {
+						String nombre = leerNombres();
+						try {
+							String apellidos = leerApellidos();
+							try {
+								int codCurso = leerCodigoCurso(); 
+								try {
+									String curso = leerCurso();
+									r.setCodMatricula(codMatricula);
+									r.setCodAlum(Integer.parseInt(codAlum));
+									r.setNombres(nombre);
+									r.setApellidos(apellidos);
+									r.setCodCurso(codCurso);
+									r.setCurso(curso);
+									ar.actualizarArchivo();
+									listar();
+									limpieza();
+								} catch (Exception e2) {
+									error("Ingrese la asignatura", txtAsignatura);
+								}
+							} catch (Exception e2) {
+								error("Ingrese codigo de curso", txtCodCurso);
+							}
+						} catch (Exception e2) {
+							error("Ingrese apellido", txtApellidos);
+						}
+					} catch (Exception e2) {
+						error("Ingeese nombre",  txtNombres);
+					}
+				}else {
+					error("Ingrese codigo de alumno", txtCodAlum);
+				}
+			}else {
+				error("El codigo ingresado no existe", txtCodMat);
+			}
+		} catch (Exception e2) {
+			error("Ingrese un codigo de matricula", txtCodMat);
 		}
+		
+
 	}
 
 	protected void actionPerformedBtnEliminar(ActionEvent e) {
@@ -314,6 +358,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 			Object[] fila = {
 					ar.obtener(i).getCodRetiro(),
 					ar.obtener(i).getCodMatricula(),
+					ar.obtener(i).getCodAlum(),
 					ar.obtener(i).getNombres(),
 					ar.obtener(i).getApellidos(),
 					ar.obtener(i).getCodCurso(),
@@ -324,60 +369,9 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 			model.addRow(fila);
 		}
 	}
-	
-	void modificarDatos() {
-		int fila = tblDatos.getSelectedRow();
-		
-		if (fila == -1) {
-			JOptionPane.showMessageDialog(this, "Debe seleccionar un registro para modificar", "", JOptionPane.WARNING_MESSAGE);
-			return;
-		}
-		
-		int codRetiro = (int) tblDatos.getValueAt(fila, 0);
-		retiroSeleccionado = ar.busRetiro(codRetiro);
-		
 
-		if (retiroSeleccionado==null) {
-			JOptionPane.showMessageDialog(this, "Registro no encontrado","",JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		 	txtCodMat.setText(String.valueOf(retiroSeleccionado.getCodMatricula()));
-		    txtCodAlum.setText(String.valueOf(retiroSeleccionado.getCodAlum())); // Asumiendo que existe
-		    txtNombres.setText(retiroSeleccionado.getNombres());
-		    txtApellidos.setText(retiroSeleccionado.getApellidos());
-		    txtCodCurso.setText(String.valueOf(retiroSeleccionado.getCodCurso()));
-		    txtAsignatura.setText(retiroSeleccionado.getCurso());
-		    txtFecha.setText(retiroSeleccionado.getFecha());
-		    txtHora.setText(retiroSeleccionado.getHora());
-		    txtCodRetiro.setText(String.valueOf(retiroSeleccionado.getCodRetiro()));
-		    
-		    btnModificar.setText("Guardar");
-		//JOptionPane.showMessageDialog(this, "Registro modifcado correctamente", "", JOptionPane.INFORMATION_MESSAGE);
-	}
-	void guardarCambios() {
-	   if (retiroSeleccionado == null) {
-		return;
-	   }
-	   
-	   int confirmacion = JOptionPane.showConfirmDialog(this, "¿Desea guardar los cambios realizados?","",JOptionPane.YES_NO_OPTION);
-	   if (confirmacion != JOptionPane.YES_OPTION) {
-		limpieza();
-		btnModificar.setText("MODIFICAR");
-		return;
-	   }
-	   retiroSeleccionado.setCodMatricula(Integer.parseInt(txtCodMat.getText()));
-	   retiroSeleccionado.setNombres(txtNombres.getText());
-	   retiroSeleccionado.setApellidos(leerApellidos());
-	   retiroSeleccionado.setCodCurso(leerCodigoCurso());
-	   //retiroSeleccionado.setFecha(leerFecha());
-	   //retiroSeleccionado.setHora(leerHora());
-	   ar.grabarArchivo();
-	   listar();
-	   limpieza();
-	   
-	   btnModificar.setText("MODIFICAR");
-	   JOptionPane.showMessageDialog(this, "Cambios guardados correctamente","",JOptionPane.INFORMATION_MESSAGE);
-	}
+
+	
 	
 	void eliminarDatos() {
 			   int fila = tblDatos.getSelectedRow();
@@ -394,6 +388,15 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	}
 		
 	
+	void mensaje(String s) {
+		JOptionPane.showMessageDialog(this, s);
+	}
+	
+	void error(String s, JTextField txt) {
+		mensaje(s);
+		txt.setText("");
+		txt.requestFocus();
+	}
 	void limpieza() {
 		txtCodMat.setText("");
 		txtCodAlum.setText("");
