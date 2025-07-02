@@ -30,15 +30,10 @@ public class Principal extends JFrame implements ActionListener {
 	private JMenuItem mntCurso;
 	private JMenuItem mntmMatricula;
 	private JMenuItem mntmRetiro;
-	private JMenuItem mntmBuscarAlumno;
-	private JMenuItem mntmBuscarCurso;
-	private JMenuItem mntmBuscarMatricula;
-	private JMenuItem mntmBuscarRetiro;
-	private JMenuItem mntmMatriculaPendiente;
-	private JMenuItem mntmMatriculaVigente;
-	private JMenuItem mntmMatriculaPorCurso;
 	private JMenuItem mntmSalir;
 	private JLabel lblFondo;
+	private JMenuItem mntmNewMenuItem;
+	private JMenuItem mntmNewMenuItem_1;
 
 	public static void main(String[] args) {
 		Principal frame = new Principal();
@@ -89,37 +84,15 @@ public class Principal extends JFrame implements ActionListener {
 		mnConsulta.setFont(new Font("Tahoma", Font.BOLD, 12));
 		menuBar.add(mnConsulta);
 		
-		mntmBuscarAlumno = new JMenuItem("Buscar Alumno");
-		mntmBuscarAlumno.setFont(new Font("Tahoma", Font.BOLD, 12));
-		mnConsulta.add(mntmBuscarAlumno);
-		
-		mntmBuscarCurso = new JMenuItem("Buscar Curso");
-		mntmBuscarCurso.setFont(new Font("Tahoma", Font.BOLD, 12));
-		mnConsulta.add(mntmBuscarCurso);
-		
-		mntmBuscarMatricula = new JMenuItem("Buscar Matricula");
-		mntmBuscarMatricula.setFont(new Font("Tahoma", Font.BOLD, 12));
-		mnConsulta.add(mntmBuscarMatricula);
-		
-		mntmBuscarRetiro = new JMenuItem("Buscar Retiro");
-		mntmBuscarRetiro.setFont(new Font("Tahoma", Font.BOLD, 12));
-		mnConsulta.add(mntmBuscarRetiro);
+		mntmNewMenuItem = new JMenuItem("Nueva Consulta");
+		mnConsulta.add(mntmNewMenuItem);
 		
 		mnReporte = new JMenu("Reporte");
 		mnReporte.setFont(new Font("Tahoma", Font.BOLD, 12));
 		menuBar.add(mnReporte);
 		
-		mntmMatriculaPendiente = new JMenuItem("Matr\u00EDcula pendiente");
-		mntmMatriculaPendiente.setFont(new Font("Tahoma", Font.BOLD, 12));
-		mnReporte.add(mntmMatriculaPendiente);
-		
-		mntmMatriculaVigente = new JMenuItem("Matr\u00EDcula vigente");
-		mntmMatriculaVigente.setFont(new Font("Tahoma", Font.BOLD, 12));
-		mnReporte.add(mntmMatriculaVigente);
-		
-		mntmMatriculaPorCurso = new JMenuItem("Matriculados por curso");
-		mntmMatriculaPorCurso.setFont(new Font("Tahoma", Font.BOLD, 12));
-		mnReporte.add(mntmMatriculaPorCurso);
+		mntmNewMenuItem_1 = new JMenuItem("Nuevo Reporte");
+		mnReporte.add(mntmNewMenuItem_1);
 		
 		mnArchivo = new JMenu("Archivo");
 		mnArchivo.addActionListener(this);
