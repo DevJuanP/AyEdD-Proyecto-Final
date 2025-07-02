@@ -134,5 +134,6 @@ public class DialogBuscarRetiro extends JFrame implements ActionListener {
 		int codCurso = Integer.parseInt((String) table.getValueAt(fila, 2));
 		int fecha = Integer.parseInt((String) table.getValueAt(fila, 3));
 		int hora = Integer.parseInt((String) table.getValueAt(fila, 4));
+		//mmmmm
 	}
 }
