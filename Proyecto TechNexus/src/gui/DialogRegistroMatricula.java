@@ -162,6 +162,7 @@
 			
 			TablaMatricula.setModel(modeloMatricula);
 			scrollPane.setViewportView(TablaMatricula);
+			listar();
 			
 			panelConsulta = new JPanel();
 			panelConsulta.setLayout(null); 
@@ -338,7 +339,7 @@
 			btnGuardar.setBounds(450, 449, 110, 21);
 			contentPane.add(btnGuardar);
 			btnConsultarAlumn.addActionListener(this);
-			listar();
+			
 			mostrarFechaHoraActual();
 			
 		}
@@ -405,13 +406,13 @@
 		private JButton btnGuardar;
 		
 	
-		 
+		
 		protected void actionPerformedBtnNuevo(ActionEvent e) {
 			limpiar();
 			TXTcodigoMatricula.setText("" + am.generateCod()); 
 			mostrarFechaHoraActual();
+			
 		}
-		
 		protected void actionPerformedBtnAdicionar(ActionEvent e) {
 			try {
 				if (TXTcodigoMatricula.getText().trim().isEmpty()) {
@@ -431,7 +432,7 @@
 				int estado = 1;
 				TXTestado.getText().trim().toLowerCase();
 				
-				am.AdicionarMatricula(new Matricula(numMatricula, codAlumno, codCurso, nombres, apellidos, asignatura, fecha, hora, estado));
+				am.adicionarMatricula(new Matricula(numMatricula, codAlumno, codCurso, nombres, apellidos, asignatura, fecha, hora, estado));
 				listar();
 				limpiar();
 
@@ -442,7 +443,7 @@
 			} catch (Exception e2) {
 				JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos correctamente.\nDetalles: " + e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				e2.printStackTrace();
-			}
+			} 
 		}
 
 		
