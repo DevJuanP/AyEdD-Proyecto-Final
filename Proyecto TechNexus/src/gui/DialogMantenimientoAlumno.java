@@ -77,9 +77,7 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
 	public DialogMantenimientoAlumno() {
 		setTitle("Mantenimiento de Alumno");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setSize(695, 446);
-		setSize(900, 600);
-		setLocationRelativeTo(null);
+		setBounds(100, 100, 697, 445);
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -87,12 +85,11 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
 		contentPane.setLayout(null);
 		
 		
-		
 		lblTitle = new JLabel("MANTENIMIENTO ALUMNO");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(255, 255, 255));
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblTitle.setBounds(0, 0, 681, 34);
+		lblTitle.setBounds(0, 0, 686, 34);
 		lblTitle.setOpaque(true); 
 		lblTitle.setBackground(new Color(0, 0, 0));
 		getContentPane().add(lblTitle);
