@@ -27,8 +27,11 @@ import com.sun.jdi.Value;
 import arreglos.ArreglosMatricula;
 import arreglos.ArreglosRetiro;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 import clases.Retiro;
 
 import javax.swing.JButton;
@@ -105,7 +108,6 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
 		lblTitle = new JLabel("REGISTRO DE RETIRO");
 		lblTitle.setOpaque(true);
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -120,9 +122,10 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		lblCdigoRetiro.setBounds(482, 36, 102, 25);
 		contentPane.add(lblCdigoRetiro);
 		
+		
 		txtCodRetiro = new JTextField();
 		txtCodRetiro.setBounds(594, 36, 102, 19);
-		txtCodRetiro.setText("200001");
+		txtCodRetiro.setText(codR());
 		txtCodRetiro.setEditable(false);
 		txtCodRetiro.setFocusable(false);
 		txtCodRetiro.setCursor(null);
@@ -146,6 +149,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		model.addColumn("Fecha");
 		model.addColumn("Hora");
 		tblDatos.setModel(model);
+		listar();
 		//header.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		panelConsulta = new JPanel();
@@ -221,7 +225,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		contentPane.add(lblFecha_1);
 		
 		txtFecha = new JTextField();
-		txtFecha.setText("01/07/2025");
+		txtFecha.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yy")));
 		txtFecha.setFocusable(false);
 		txtFecha.setEditable(false);
 		txtFecha.setBounds(87, 41, 114, 19);
@@ -233,7 +237,6 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		contentPane.add(lblHora_1);
 		
 		txtHora = new JTextField();
-		txtHora.setText("00:05:41");
 		txtHora.setFocusable(false);
 		txtHora.setEditable(false);
 		txtHora.setBounds(265, 41, 114, 19);
@@ -288,7 +291,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	}
 
 	protected void actionPerformedBtnAdicionar(ActionEvent e) {
-		Retiro r = new Retiro(2, leerCodigoMatricula(), leerCodigoAlum(), leerNombres(),leerApellidos(),leerCodigoCurso(),leerCurso(),leerFecha(),leerHora());
+		Retiro r = new Retiro(0, leerCodigoMatricula(), leerCodigoAlum(), leerNombres(),leerApellidos(),leerCodigoCurso(),leerCurso(),leerFecha(),leerHora());
 		ar.adicionar(r);
 		listar();
 		limpieza();
@@ -350,9 +353,9 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		txtCodMat.setText(String.valueOf(r.getCodMatricula()));
 	}
 	
-	private Retiro retiroSeleccionado;
+	//private Retiro retiroSeleccionado;
 	//Métodos tipo void (sin parámetros)
-	public void listar() {
+	void listar() {
 		model.setRowCount(0);
 		for (int i = 0; i < ar.tamanio(); i++) {
 			Object[] fila = {
@@ -382,12 +385,17 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 			    	int  respuesta = JOptionPane.showConfirmDialog(null, "¿Deseas eliminar este registro?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
 			        if (respuesta == JOptionPane.YES_OPTION) {
 			        	((DefaultTableModel) tblDatos.getModel()).removeRow(fila);
+			        	int reducir = -1;
+			        	//return Integer.valueOf(codR()) - reducir;
 					}
 			    }
 			    	
 	}
-		
-	
+	Retiro rr = new Retiro();
+	String codR() {
+		 return  String.valueOf(rr.getCodRetiro());
+	}
+
 	void mensaje(String s) {
 		JOptionPane.showMessageDialog(this, s);
 	}
@@ -442,5 +450,6 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	/*wenas*/
 	private void horaActualizada() {
 		String Hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+		txtHora.setText(Hora);
 	}
 }

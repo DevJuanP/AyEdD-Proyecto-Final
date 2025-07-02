@@ -9,16 +9,13 @@ public class Retiro {
 	private int codRetiro, codMatricula, codAlum, codCurso;
 	private String nombres, apellidos, curso, fecha, hora;
 	private static int contador;
-	//public static int prueba, conta;
-	
 	static {
 		contador = 200001;
 	}
 
 	public Retiro(int codRetiro, int codMatricula, int codAlum, String nombres, String apellidos,int codCurso,
 			String curso, String fecha, String hora) {
-		contador++;
-		this.codRetiro = codRetiro;
+		this.codRetiro = contador++;
 		this.codMatricula = codMatricula;
 		this.codAlum = codAlum;
 		this.codCurso = codCurso;
@@ -27,6 +24,10 @@ public class Retiro {
 		this.curso = curso;
 		this.fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         this.hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+	}
+	
+	public Retiro() {
+		this.codRetiro = contador++;
 	}
 	
 	public int getCodRetiro() {
