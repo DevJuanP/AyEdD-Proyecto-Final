@@ -46,7 +46,6 @@ public class DialogBuscarRetiro extends JFrame {
 	 */
 	public DialogBuscarRetiro() {
 		setTitle("Buscar Cursos");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 607, 276);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

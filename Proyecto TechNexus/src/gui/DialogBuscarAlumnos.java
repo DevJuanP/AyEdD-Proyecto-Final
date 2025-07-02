@@ -46,7 +46,6 @@ public class DialogBuscarAlumnos extends JFrame implements ActionListener {
 	 */
 	private void initComponents() {
 		setTitle("Buscar Alumnos");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 607, 276);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -81,7 +80,7 @@ public class DialogBuscarAlumnos extends JFrame implements ActionListener {
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
-		String[] columnas = {"Código", "Nombre", "Apellidos", "Edad", "Teléfono", "DNI", "Estado"};
+		String[] columnas = {"Cï¿½digo", "Nombre", "Apellidos", "Edad", "Telï¿½fono", "DNI", "Estado"};
 		modeloBuscar = new DefaultTableModel(columnas, 0);
 		table.setModel(modeloBuscar);
 		
@@ -125,7 +124,7 @@ public class DialogBuscarAlumnos extends JFrame implements ActionListener {
 			frameDeMatricula.TXTdni.setText(dni);
 			frameDeMatricula.TXTestado.setText(estado);
 
-			dispose();  // Cierra la ventana después de enviar los datos
+			dispose();  // Cierra la ventana despuï¿½s de enviar los datos
 		}
 	}
 	

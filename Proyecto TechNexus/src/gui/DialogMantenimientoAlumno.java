@@ -78,6 +78,7 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
 		setTitle("Mantenimiento de Alumno");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setSize(695, 446);
+		setSize(900, 600);
 		setLocationRelativeTo(null);
 		
 		contentPane = new JPanel();

@@ -20,6 +20,9 @@ import javax.swing.border.TitledBorder;
 //import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
+import arreglos.ArreglosRetiro;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import clases.Retiro;
@@ -62,7 +65,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	private JLabel lblCdigoRetiro;
 	private JTextField txtCodRetiro;
 	private Timer tiempo;
-	Retiro re1 = new Retiro();
+	//Retiro re1 = new Retiro();
 	private JTable tblDatos;
 	private DefaultTableModel model;
 	private JLabel lblFecha_1;
@@ -136,7 +139,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		scrollPane.setViewportView(tblDatos);
 		model = new DefaultTableModel();
 		model.addColumn("Código retiro");
-		model.addColumn("Código alumnos");
+		model.addColumn("Código matricula");
 		model.addColumn("Nombre y apellidos");
 		model.addColumn("Código curso");
 		model.addColumn("Curso");
@@ -248,16 +251,19 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		contentPane.add(txtHora);
 		
 		btnAdicionar = new JButton("ADICIONAR");
+		btnAdicionar.addActionListener(this);
 		btnAdicionar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnAdicionar.setBounds(87, 434, 114, 21);
 		contentPane.add(btnAdicionar);
 		
 		btnModificar = new JButton("MODIFICAR");
+		btnModificar.addActionListener(this);
 		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnModificar.setBounds(295, 433, 114, 21);
 		contentPane.add(btnModificar);
 		
 		btnEliminar = new JButton("ELIMINAR");
+		btnEliminar.addActionListener(this);
 		btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnEliminar.setBounds(503, 433, 114, 21);
 		contentPane.add(btnEliminar);
@@ -270,27 +276,60 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 
 }
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEliminar) {
+			actionPerformedBtnEliminar(e);
+		}
+		if (e.getSource() == btnModificar) {
+			actionPerformedBtnModificar(e);
+		}
+		if (e.getSource() == btnAdicionar) {
+			actionPerformedBtnAdicionar(e);
+		}
 		if (e.getSource() == btnBuscar) {
 			do_btnBuscar_actionPerformed(e);
 		}
 	}
+	
+	ArreglosRetiro ar = new ArreglosRetiro();
 	protected void do_btnBuscar_actionPerformed(ActionEvent e) {	
+		DialogBuscarRetiro frame = new DialogBuscarRetiro();
+		frame.setVisible(true);
 	}
 
+	protected void actionPerformedBtnAdicionar(ActionEvent e) {
+		Retiro r = new Retiro(1, leerCodigoMatricula(), leerApellidos(), leerCodigoCurso(), leerCurso(), leerFecha(), leerHora());
+		ar.adicionar(r);
+		listar();
+	}
+	protected void actionPerformedBtnModificar(ActionEvent e) {
+	}
+	protected void actionPerformedBtnEliminar(ActionEvent e) {
+	}
 	
 	
 	
 	
-	
-	
+	//Listar
+	public void listar() {
+		model.setRowCount(0);
+		for (int i = 0; i < ar.tamanio(); i++) {
+			Object[] fila = {
+					ar.obtener(i).getCodRetiro(),
+					ar.obtener(i).getCodMatricula(),
+					ar.obtener(i).getNombresApellidos(),
+					ar.obtener(i).getCodCurso(),
+					ar.obtener(i).getCurso(),
+					ar.obtener(i).getFecha(),
+					ar.obtener(i).getHora()
+			};
+			model.addRow(fila);
+		}
+	}
 	//parametros de leectura
 	public int leerCodigoMatricula() {
 		return Integer.parseInt(txtCodMat.getText());
 	}
 	
-	public int leerCodigoAlumno() {
-		return Integer.parseInt(txtCodAlum.getText());
-	}
 	
 	public String leerApellidos() {
 		return txtNomApelli.getText();
@@ -302,6 +341,14 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	
 	public String leerCurso() {
 		return txtCurso.getText();
+	}
+	
+	public String leerFecha() {
+		return txtFecha.getText();
+	}
+	
+	public String leerHora() {
+		return txtHora.getText();
 	}
 	//metodo limpiar
 	void limpieza() {
@@ -315,4 +362,5 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	private void horaActualizada() {
 		String Hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 	}
+
 }
