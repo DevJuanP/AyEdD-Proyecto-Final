@@ -126,7 +126,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		
 		txtCodRetiro = new JTextField();
 		txtCodRetiro.setBounds(594, 36, 102, 19);
-		txtCodRetiro.setText(codR());
+		txtCodRetiro.setText(String.valueOf(codR()));
 		txtCodRetiro.setEditable(false);
 		txtCodRetiro.setFocusable(false);
 		txtCodRetiro.setCursor(null);
@@ -266,7 +266,6 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		tiempo = new Timer(1000, e -> horaActualizada());
 		tiempo.start();
 		
-
 }
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnEliminar) {
@@ -292,10 +291,11 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	}
 
 	protected void actionPerformedBtnAdicionar(ActionEvent e) {
-		Retiro r = new Retiro(0, leerCodigoMatricula(), leerCodigoAlum(), leerNombres(),leerApellidos(),leerCodigoCurso(),leerCurso(),leerFecha(),leerHora());
+		Retiro r = new Retiro(codR(), leerCodigoMatricula(), leerCodigoAlum(), leerNombres(),leerApellidos(),leerCodigoCurso(),leerCurso(),leerFecha(),leerHora());
 		ar.adicionar(r);
 		listar();
 		limpieza();
+		txtCodRetiro.setText(String.valueOf(codR()));
 	}
 	protected void actionPerformedBtnModificar(ActionEvent e) {
 		try {
@@ -398,8 +398,8 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 			    	
 	}
 	Retiro rr = new Retiro();
-	String codR() {
-		 return  String.valueOf(rr.getCodRetiro());
+	int codR() {
+		 return  rr.getCodRetiro();
 	}
 
 	void mensaje(String s) {
