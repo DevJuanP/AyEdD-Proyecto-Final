@@ -50,6 +50,7 @@ public class ArreglosMatricula {
 		grabarMatricula();
 	 }
 	
+	/*
 	public ArrayList<Matricula> getMatricula001() {
 		return matricula001;
 	}
@@ -57,11 +58,38 @@ public class ArreglosMatricula {
 	
 	public void setMatricula001(ArrayList<Matricula> matricula001) {
 		this.matricula001 = matricula001;
-	}
+	} */
 	
 	
 	public void cargarMatricula() {
-		try {
+		
+	    try {
+	        matricula001.clear(); // Limpiar antes de cargar
+	        BufferedReader br = new BufferedReader(new FileReader("data/matricula.txt"));
+	        
+	        String[] separador;
+			int codigoAlum, codigoCurs,CodigoMatri,estado;
+			String linea,nombres,apellidos,Fecha,Hora;
+			while((linea= br.readLine())!=null) {
+				separador = linea.split(";");
+				CodigoMatri = Integer.parseInt(separador[0].trim());
+				codigoAlum = Integer.parseInt(separador[1].trim());
+				codigoCurs = Integer.parseInt(separador[2].trim());
+				nombres = separador[3].trim();
+				apellidos = separador[4].trim();
+				String asignatura = separador[5].trim();
+				Fecha = separador[6].trim();
+				Hora = separador[7].trim();
+				estado = Integer.parseInt(separador[8].trim());
+				adicionarMatricula(new Matricula(CodigoMatri, codigoAlum, codigoCurs, nombres, apellidos, asignatura, Fecha, Hora, estado));
+				 }
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	    }
+		
+		
+		//codigo incial
+		/*try {
 			//matricula001.clear(); 
 			BufferedReader br = new BufferedReader(new FileReader("data/matricula.txt"));
 			String[] separador;
@@ -79,23 +107,34 @@ public class ArreglosMatricula {
 				 estado=Integer.parseInt(separador[7].trim());
 				//Matricula m =new Matricula(codigoAlum, codigoCurs, CodigoMatri, nombres, apellidos, apellidos, Fecha, Hora, estado);
 				//AdicionarMatricula(m);
-				 adicionarMatricula(new Matricula(codigoAlum, codigoCurs, CodigoMatri, nombres, apellidos,"", Fecha, Hora, estado));
+				 adicionarMatricula(new Matricula(codigoAlum, codigoCurs, CodigoMatri, nombres, apellidos, apellidos, Fecha, Hora, estado));
 			}
 			br.close();
 		}catch(Exception e) {
 			//
-		}
+		}*/
 	}
 	
 	
 	public void grabarMatricula() {
 		try {
-			PrintWriter pw = new PrintWriter(new FileWriter("data/matricula.txt"));
+			PrintWriter pw = new PrintWriter("data/matricula.txt");
 			String linea;
 			Matricula m;
 			for(int i = 0; i < tamanio(); i++) {
 				m=obtener(i);
 				linea = m.getNumMatricula() + ";" +
+				        m.getCodAlumno() + ";" +
+				        m.getCodCurso() + ";" +
+				        m.getNombres() + ";" +
+				        m.getApellidos() + ";" +
+				        m.getAsignatura() + ";" +
+				        m.getFecha() + ";" +
+				        m.getHora() + ";" +
+				        m.getEstado();
+						
+						//cod inicial
+						/*m.getNumMatricula() + ";" +
 					    m.getCodAlumno() + ";" +
 					    m.getNombres() + ";" +
 					    m.getApellidos() + ";" +
@@ -103,7 +142,7 @@ public class ArreglosMatricula {
 					    m.getAsignatura() + ";" +
 					    m.getFecha() + ";" +
 					    m.getHora() + ";" +
-					    m.getEstado();
+					    m.getEstado();*/
 				pw.println(linea);
 			}
 			pw.close();
