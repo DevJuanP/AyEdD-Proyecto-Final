@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import arreglos.ArreglosMatricula;
@@ -89,7 +91,30 @@ public class DialogBuscarRetiro extends JDialog implements ActionListener {
 		scrollPane.setViewportView(table);
 		
 		listaDatos();
+		
+		/*txtBuscar.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				listaDatos(txtBuscar.getText());				
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});*/
+		
 	}
+	
+	
 	
 	//Declaracion Global
 	ArreglosMatricula ar = new ArreglosMatricula();
@@ -118,7 +143,7 @@ public class DialogBuscarRetiro extends JDialog implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtEnviar(ActionEvent e) {
-		int fila = table.getSelectedRow();
+		/*int fila = table.getSelectedRow();
 		if (fila == -1) {
 			JOptionPane.showMessageDialog(this,"Selecciona una fila" + "Advertencia" + JOptionPane.WARNING_MESSAGE);
 			return;
@@ -130,6 +155,41 @@ public class DialogBuscarRetiro extends JDialog implements ActionListener {
 		String nombres = table.getValueAt(fila, 3).toString();
 		String apellidos = table.getValueAt(fila, 4).toString();  // ← Error corregido
 		String fecha = table.getValueAt(fila, 5).toString();       // ← Mantener como String
-		String hora = table.getValueAt(fila, 6).toString();
+		String hora = table.getValueAt(fila, 6).toString();*/
+		
+		 int fila = table.getSelectedRow();
+		    if (fila == -1) {
+		        JOptionPane.showMessageDialog(this, "Selecciona una fila", "Advertencia", JOptionPane.WARNING_MESSAGE);
+		        return;
+		    }
+		    
+		    try {
+		        int numMatricula = Integer.parseInt(table.getValueAt(fila, 0).toString());
+		        int numCodAlumno = Integer.parseInt(table.getValueAt(fila, 1).toString());
+		        String nombre = table.getValueAt(fila, 2).toString();
+		        String apellido = table.getValueAt(fila, 3).toString();
+		        int codCurso = Integer.parseInt(table.getValueAt(fila, 4).toString());
+		        String asignatura = table.getValueAt(fila, 5).toString();
+		        String fecha = table.getValueAt(fila, 6).toString();
+		        String hora = table.getValueAt(fila, 7).toString();
+		        // Aquí puedes usar los valores numéricos obtenidos
+		        // Por ejemplo, pasarlos al diálogo de registro:
+		        //dlgRegistroRetiro.setDatosRetiro(numMatricula, numCodAlumno, codCurso);
+		        Matricula m = new Matricula(numMatricula,numCodAlumno,codCurso,nombre,apellido,asignatura,fecha,hora, codCurso);
+		       dlgRegistroRetiro.leerBusquedaRetiro(m);
+		        this.dispose();
+		        
+		    } catch (NumberFormatException ex) {
+		        JOptionPane.showMessageDialog(this, 
+		            "Error al obtener datos numéricos de la tabla", 
+		            "Error de formato", 
+		            JOptionPane.ERROR_MESSAGE);
+		    } catch (Exception ex) {
+		        JOptionPane.showMessageDialog(this, 
+		            "Error inesperado: " + ex.getMessage(), 
+		            "Error", 
+		            JOptionPane.ERROR_MESSAGE);
+		    }
+		
 	}
 }

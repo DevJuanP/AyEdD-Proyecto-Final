@@ -1,1 +1,2 @@
-200001;111;andrews;chi;111;lil;03/07/2025;11:19:16
+200002;100001;Armando;Paredes de las Casas;3003;Python;03/07/2025;13:11:36
+200003;100002;Jorge;Nitales Ríos;3004;PHP;03/07/2025;13:11:42

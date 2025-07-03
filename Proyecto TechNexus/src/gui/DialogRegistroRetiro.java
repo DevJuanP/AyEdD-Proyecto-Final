@@ -32,6 +32,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import clases.Matricula;
 import clases.Retiro;
 
 import javax.swing.JButton;
@@ -349,8 +350,13 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		eliminarDatos();
 	}
 	
-	public void leerBusquedaRetiro(Retiro r) {
-		txtCodMat.setText(String.valueOf(r.getCodMatricula()));
+	public void leerBusquedaRetiro(Matricula m) {
+		txtCodMat.setText(String.valueOf(m.getNumMatricula()));
+		txtCodAlum.setText(String.valueOf(m.getCodAlumno()));
+		txtNombres.setText(m.getNombres());
+		txtApellidos.setText(m.getApellidos());
+		txtCodCurso.setText(String.valueOf(m.getCodCurso()));
+		txtAsignatura.setText(m.getAsignatura());
 	}
 	
 	//private Retiro retiroSeleccionado;
@@ -452,4 +458,5 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		String Hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 		txtHora.setText(Hora);
 	}
+
 }
