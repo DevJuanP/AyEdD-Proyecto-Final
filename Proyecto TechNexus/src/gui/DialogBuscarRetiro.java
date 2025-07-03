@@ -92,19 +92,21 @@ public class DialogBuscarRetiro extends JDialog implements ActionListener {
 	}
 	
 	//Declaracion Global
-	ArreglosRetiro ar = new ArreglosRetiro();
+	ArreglosMatricula ar = new ArreglosMatricula();
 	
 	private void listaDatos() {
 		modeloBuscar.setRowCount(0);
         for (int i = 0; i < ar.tamanio(); i++) {
-            Retiro m = ar.obtener(i);
+            Matricula m = ar.obtener(i);
             Object[] fila = {
-                m.getCodMatricula(),
+                m.getNumMatricula(),
+                m.getCodAlumno(),
+                m.getNombres(),
+                m.getApellidos(),
                 m.getCodCurso(),
-                m.getCodCurso(),
+                m.getAsignatura(),
                 m.getFecha(),
                 m.getHora(),
-                m.getEstado()
             };
             modeloBuscar.addRow(fila);
 		}

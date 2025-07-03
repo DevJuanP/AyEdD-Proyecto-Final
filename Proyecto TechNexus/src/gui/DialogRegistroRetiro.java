@@ -285,9 +285,9 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	ArreglosRetiro ar = new ArreglosRetiro();
 	
 	protected void do_btnBuscar_actionPerformed(ActionEvent e) {	
-		/*DialogBuscarRetiro buscarRetiro = new DialogBuscarRetiro(null, am);
+		DialogBuscarRetiro buscarRetiro = new DialogBuscarRetiro(this);
 		buscarRetiro.setLocationRelativeTo(null);
-		buscarRetiro.setVisible(true);*/
+		buscarRetiro.setVisible(true);
 	}
 
 	protected void actionPerformedBtnAdicionar(ActionEvent e) {
