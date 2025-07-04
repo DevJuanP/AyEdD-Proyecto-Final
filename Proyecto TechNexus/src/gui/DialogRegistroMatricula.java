@@ -11,7 +11,8 @@
 	
 	import java.awt.Font;
 	import javax.swing.SwingConstants;
-	import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.JTextField;
 	import java.awt.Color;
 	import javax.swing.JButton;
 	import javax.swing.JDialog;
@@ -71,13 +72,11 @@
 		private JScrollPane scrollPane;
 		private JTable TablaMatricula;
 		private JButton btnAdicionar;
-		private JButton btnNuevo;
 		private JButton btnModificar;
 		private JButton btnEliminar;
 		private DefaultTableModel modeloMatricula;
 		private JPanel panelConsulta;
 		private JPanel panelConsulta_1;
-		private ArreglosMatricula matricula001;
 	
 		public static void main(String[] args) {
 			EventQueue.invokeLater(new Runnable() {
@@ -91,6 +90,9 @@
 					}
 				}
 			});
+	        // Establece los textos de los botones en español
+	        UIManager.put("OptionPane.yesButtonText", "Sí");
+	        UIManager.put("OptionPane.noButtonText", "No");
 		}
 	
 		public DialogRegistroMatricula() {
@@ -312,31 +314,25 @@
 			btnAdicionar = new JButton("ADICIONAR");
 			btnAdicionar.setFont(new Font("Tahoma", Font.BOLD, 10));
 			btnAdicionar.addActionListener(this);
-			btnAdicionar.setBounds(170, 449, 110, 21);
+			btnAdicionar.setBounds(58, 449, 110, 21);
 			contentPane.add(btnAdicionar);
-			
-			btnNuevo = new JButton("NUEVO");
-			btnNuevo.setFont(new Font("Tahoma", Font.BOLD, 10));
-			btnNuevo.addActionListener(this);
-			btnNuevo.setBounds(30, 449, 110, 21);
-			contentPane.add(btnNuevo);
 			
 			btnModificar = new JButton("MODIFICAR");
 			btnModificar.setFont(new Font("Tahoma", Font.BOLD, 10));
 			btnModificar.addActionListener(this);
-			btnModificar.setBounds(310, 449, 110, 21);
+			btnModificar.setBounds(226, 449, 110, 21);
 			contentPane.add(btnModificar);
 			
 			btnEliminar = new JButton("ELIMINAR");
 			btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 10));
 			btnEliminar.addActionListener(this);
-			btnEliminar.setBounds(590, 449, 110, 21);
+			btnEliminar.setBounds(562, 449, 110, 21);
 			contentPane.add(btnEliminar);
 			
 			btnGuardar = new JButton("GUARDAR");
 			btnGuardar.setFont(new Font("Tahoma", Font.BOLD, 10));
 			btnGuardar.addActionListener(this);
-			btnGuardar.setBounds(450, 449, 110, 21);
+			btnGuardar.setBounds(394, 449, 110, 21);
 			contentPane.add(btnGuardar);
 			btnConsultarAlumn.addActionListener(this);
 			
@@ -458,7 +454,8 @@
 						txtAsignatura.setText(String.valueOf(TablaMatricula.getValueAt(fila, 5)));    
 						TXTfecha.setText(String.valueOf(TablaMatricula.getValueAt(fila, 6)));          
 						txtHora.setText(String.valueOf(TablaMatricula.getValueAt(fila, 7)));           
-						TXTestado.setText(String.valueOf(TablaMatricula.getValueAt(fila, 8)));           
+						TXTestado.setText(String.valueOf(TablaMatricula.getValueAt(fila, 8)));
+						ocultarCajas();
 						modeloMatricula = (DefaultTableModel) TablaMatricula.getModel();
 						modeloMatricula.removeRow(fila);
 					}
@@ -569,4 +566,14 @@
 			    TXTfecha.setText(fechaActual.format(formatoFecha));
 			    txtHora.setText(horaActual.format(formatoHora));
 			}
+		 
+		 void ocultarCajas() {
+			TXTestado.setEditable(false);
+			TXTedad.setEditable(false);
+			TXTdni.setEditable(false);
+			TXTcelular.setEditable(false);
+			txtCiclo.setEditable(false);
+			TXTcreditos.setEditable(false);
+			TXTHora.setEditable(false);
+		}
 	}

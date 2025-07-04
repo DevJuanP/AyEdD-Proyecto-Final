@@ -37,35 +37,47 @@ public class ArreglosRetiro {
 		return null;
 	}
 	
-	public void eliminar(Retiro x) {
-		listaRetiros.remove(x);
-		grabarArchivo();
+	public void eliminar(int codRetiro) {
+	    Retiro aux = null;
+	    for (Retiro r : listaRetiros) {
+	        if (r.getCodRetiro() == codRetiro) {
+	            aux = r;
+	            break;
+	        }
+	    }
+	    if (aux != null) {
+	        listaRetiros.remove(aux);
+	        grabarArchivo();
+	    }
 	}
 	
 	private void cargarRetiros() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("data/retiros.txt"));
 			String[] cadRetiros;
-			int codRetiro, codCurso, codMatricula;
-			String linea, nombre,apellido, curso, fecha, hora;
+			int codRetiro, codCurso, codMatricula, codAlum, estado;
+			String linea, nombre, apellido, curso, fecha, hora;
 			
-			while((linea = br.readLine()) != null) {
+			while ((linea = br.readLine()) != null) {
 				cadRetiros = linea.split(";");
-				codRetiro =Integer.parseInt(cadRetiros[0].trim());
+				codRetiro = Integer.parseInt(cadRetiros[0].trim());
 				codMatricula = Integer.parseInt(cadRetiros[1].trim());
-				nombre = cadRetiros[2].trim();
-				apellido = cadRetiros[3].trim();
-				codCurso = Integer.parseInt(cadRetiros[4].trim());
-				curso = cadRetiros[5].trim();
-				fecha = cadRetiros[6].trim();
-				hora = cadRetiros[7].trim();
-				adicionar(new Retiro(codRetiro, codMatricula, codMatricula, nombre, apellido, codCurso, curso, fecha, hora));
+				codAlum = Integer.parseInt(cadRetiros[2].trim());
+				nombre = cadRetiros[3].trim();
+				apellido = cadRetiros[4].trim();
+				codCurso = Integer.parseInt(cadRetiros[5].trim());
+				curso = cadRetiros[6].trim();
+				fecha = cadRetiros[7].trim();
+				hora = cadRetiros[8].trim();
+				estado = Integer.parseInt(cadRetiros[9].trim());
+				listaRetiros.add(new Retiro(codRetiro, codMatricula, codAlum, nombre, apellido, codCurso, curso, fecha, hora, estado));
 			}
 			br.close();
 		} catch (Exception e) {
-			//return 0;
+			e.printStackTrace();
 		}
 	}
+
 	
 	public void grabarArchivo() {
 		try {
@@ -75,14 +87,16 @@ public class ArreglosRetiro {
 			Retiro r;
 			for(int i = 0; i<tamanio(); i++) {
 				r=obtener(i);
-				linea = r.getCodRetiro()+";"
-						+r.getCodMatricula()+";"
-						+r.getNombres()+";"
-						+r.getApellidos()+";"
-						+r.getCodCurso()+";"
-						+r.getCurso()+";"
-						+r.getFecha()+";"
-						+r.getHora();
+				linea = r.getCodRetiro() + ";" +
+						r.getCodMatricula() + ";" +
+						r.getCodAlum() + ";" +
+						r.getNombres() + ";" +
+						r.getApellidos() + ";" +
+						r.getCodCurso() + ";" +
+						r.getCurso() + ";" +
+						r.getFecha() + ";" +
+						r.getHora() + ";" +
+						r.getEstado();
 				pw.println(linea);
 				//i++;
 			}

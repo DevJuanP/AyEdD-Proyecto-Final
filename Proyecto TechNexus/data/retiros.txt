@@ -1,5 +1,0 @@
-200001;100001;Armando;Paredes de las Casas;3003;Python;03/07/2025;21:50:16
-200002;100002;Jorge;Nitales Ríos;3004;PHP;03/07/2025;21:50:16
-200003;100002;Jorge;Nitales Ríos;3004;PHP;03/07/2025;21:50:16
-200004;100003;Luis;Ticona Quispe;3005;JavaScript;03/07/2025;21:50:16
-200005;100001;Armando;Paredes de las Casas;3003;Python;03/07/2025;21:50:16
