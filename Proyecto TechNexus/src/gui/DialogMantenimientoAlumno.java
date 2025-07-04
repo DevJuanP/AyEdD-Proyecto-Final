@@ -168,6 +168,7 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
         panelConsulta.add(txtBuscar);
         
         btnBuscar = new JButton("Buscar");
+        btnBuscar.addActionListener(this);
         btnBuscar.setBounds(474, 22, 100, 20);
         panelConsulta.add(btnBuscar);
         
@@ -229,6 +230,9 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
 	ArreglosAlumno aa = new ArreglosAlumno();
 	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnBuscar) {
+			actionPerformedBtnBuscar(e);
+		}
 		if (e.getSource() == btnModificar) {
 			actionPerformedBtnModificar(e);
 		}
@@ -268,11 +272,7 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
     	
     	return new Alumno(Edad, telefono, nombre, Apellidos, DNI, "LEER_DATOS");
 	}
-	/*private void imprimirDatos(Alumno a) {
-		txtCodigo.setText(""+a.getCodAlumno());
-    	modelo.addRow(new Object[] {a.getCodAlumno(),a.getNombres(), a.getApellidos(), a.getEdad(), a.getCelular(), a.getDni(), a.getEstado()});
-	}*/
-	
+
 	private void limpiarImputs() {
 		txtNombre.setText("");
 		txtApellidos.setText("");
@@ -283,57 +283,98 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
 	}
 	
 	private void cargarTabla() {
+		modelo.setRowCount(0);
 		for (Alumno a : alumnosList.getAlumnosList()) {
 		    modelo.addRow(new Object[] {a.getCodAlumno(),a.getNombres(), a.getApellidos(), a.getEdad(), a.getCelular(), a.getDni(), a.getEstado()});
 		}
 	}
 
 	protected void actionPerformedBtnEliminar(ActionEvent e) {
-		try {
-			int fila, respuesta;
-			
-			fila = tblAlumnos.getSelectedRow();
-			if(fila == -1) {
-				JOptionPane.showMessageDialog(this, "Selecciona primero un registro","Advertencia",JOptionPane.WARNING_MESSAGE);
-				return;
-			}
-			
-			int codigo = Integer.parseInt(tblAlumnos.getValueAt(fila, 0).toString());
-			Alumno x = aa.buscarCodigo(codigo);
-			if(x == null) {
-				JOptionPane.showMessageDialog(this, "Alumno no encontrado", "Error",JOptionPane.ERROR_MESSAGE);
-			}else {
-				respuesta = JOptionPane.showConfirmDialog(this, "¿Desea eliminar este alumno?","Confirmar",JOptionPane.YES_NO_OPTION);
-				if(respuesta==JOptionPane.YES_NO_OPTION) {
-					aa.Eliminar(x);
-					cargarTabla();
-					JOptionPane.showMessageDialog(this, "Alumno eliminado correctamente","Información",JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-			limpiarImputs();
-		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(this, "Error al intentar eliminar: ", "Error", JOptionPane.ERROR_MESSAGE);
-		}
+		 try {
+		        int fila = tblAlumnos.getSelectedRow();
+		        if (fila == -1) {
+		            JOptionPane.showMessageDialog(this, "Selecciona primero un registro", "Advertencia", JOptionPane.WARNING_MESSAGE);
+		            return;
+		        }
+
+		        int codigo = Integer.parseInt(tblAlumnos.getValueAt(fila, 0).toString());
+		        Alumno x = alumnosList.buscarCodigo(codigo);
+		        if (x == null) {
+		            JOptionPane.showMessageDialog(this, "Alumno no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+		        } else {
+		            int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea eliminar este alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
+		            if (respuesta == JOptionPane.YES_OPTION) {
+		                alumnosList.Eliminar(x);
+		                alumnosList.actualizarArchivo(); 
+		                cargarTabla();
+		                limpiarImputs();
+		                JOptionPane.showMessageDialog(this, "Alumno eliminado correctamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+		            }
+		        }
+		    } catch (Exception e2) {
+		        JOptionPane.showMessageDialog(this, "Error al intentar eliminar: " + e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		    }
 	}
 	protected void actionPerformedBtnModificar(ActionEvent e) {
 		try {
-			int codigo = Integer.parseInt(txtCodigo.getText().trim());
-			Alumno a = aa.buscarCodigo(codigo);
-			if(a == null) {
-				JOptionPane.showMessageDialog(this, "El código no existe");
-				return;
-			}
-			a.setNombres(txtNombre.getText().toString());
-			a.setApellidos(txtApellidos.getText().toString());
-			a.setEdad(Integer.parseInt(txtTelefono.getText().trim()));
-			a.setCelular(Integer.parseInt(txtTelefono.getText().trim()));
-			a.setDni(txtDNI.getText().toString());
-			aa.actualizarArchivo();
-			cargarTabla();
-			limpiarImputs();
-			JOptionPane.showMessageDialog(this, "Alumno modificado correctamente");
-		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(this, "Error al registrar cliente. Verifique los datos.");
+	        int codigo = Integer.parseInt(txtCodigo.getText().trim());
+	        Alumno a = alumnosList.buscarCodigo(codigo);
+	        if (a == null) {
+	            JOptionPane.showMessageDialog(this, "El código no existe");
+	            return;
+	        }
+	        a.setNombres(txtNombre.getText().trim());
+	        a.setApellidos(txtApellidos.getText().trim());
+	        a.setEdad(Integer.parseInt(txtEdad.getText().trim()));
+	        a.setCelular(Integer.parseInt(txtTelefono.getText().trim()));
+	        a.setDni(txtDNI.getText().trim());
+	        alumnosList.actualizarArchivo();
+	        cargarTabla();
+	        limpiarImputs();
+	        JOptionPane.showMessageDialog(this, "Alumno modificado correctamente");
+	    } catch (Exception e2) {
+	        JOptionPane.showMessageDialog(this, "Error al modificar alumno. Verifique los datos.");
+	    }
+	}
+	protected void actionPerformedBtnBuscar(ActionEvent e) {
+		String criterio = txtBuscar.getText().trim();
+		modelo = (DefaultTableModel) tblAlumnos.getModel();
+
+		// Si el campo de búsqueda está vacío, restaurar todos los alumnos
+		if (criterio.isEmpty()) {
+		    modelo.setRowCount(0);
+		    cargarTabla(); // vuelve a mostrar todos los alumnos
+		    return;
 		}
+
+		// Crear modelo temporal para resultados filtrados
+		DefaultTableModel modeloFiltrado = new DefaultTableModel();
+
+		// Copiar las columnas del modelo original
+		for (int i = 0; i < modelo.getColumnCount(); i++) {
+		    modeloFiltrado.addColumn(modelo.getColumnName(i));
+		}
+
+		// Recorrer todas las filas del modelo original
+		for (int i = 0; i < modelo.getRowCount(); i++) {
+		    String buscarValor = "";
+
+		    if (rdbDni.isSelected()) {
+		        buscarValor = modelo.getValueAt(i, 5).toString(); // Columna 5: DNI
+		    } else if (rdbApellidos.isSelected()) {
+		        buscarValor = modelo.getValueAt(i, 2).toString(); // Columna 2: Apellidos
+		    }
+
+		    if (buscarValor.toLowerCase().contains(criterio.toLowerCase())) {
+		        Object[] fila = new Object[modelo.getColumnCount()];
+		        for (int j = 0; j < modelo.getColumnCount(); j++) {
+		            fila[j] = modelo.getValueAt(i, j);
+		        }
+		        modeloFiltrado.addRow(fila);
+		    }
+		}
+
+		// Mostrar el modelo filtrado en la tabla
+		tblAlumnos.setModel(modeloFiltrado);
 	}
 }

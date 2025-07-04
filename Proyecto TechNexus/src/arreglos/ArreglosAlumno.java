@@ -44,22 +44,30 @@ public class ArreglosAlumno {
 		return null;
 	}
 	
-	public ArrayList <Alumno> buscarApellido(String apellido) {
-		ArrayList <Alumno> alumXapellido = new ArrayList <Alumno>();
-		String[] apellidosArr = apellido.split(" ");
-		for(String apN : apellidosArr) {
-			for(Alumno a : alumnosList) {
-				if(a.getApellidos().contains(apN)) alumXapellido.add(a);
-			}
-		}
-		return alumXapellido.size() == 0? null: alumXapellido;
+	public Alumno buscarCodigo(int codigo) {
+	    for (Alumno a : alumnosList) {
+	        if (a.getCodAlumno() == codigo)
+	            return a;
+	    }
+	    return null;
 	}
-	
-	public Alumno buscarCodigo(int codigoTF) {
-		for (Alumno a : alumnosList) {
-			if(a.getCodAlumno() == codigoTF) return a;
-		}
-		return null;
+
+	public Alumno buscarDni(String dni) {
+	    for (Alumno a : alumnosList) {
+	        if (a.getDni().equalsIgnoreCase(dni))
+	            return a;
+	    }
+	    return null;
+	}
+
+	public ArrayList<Alumno> buscarPorApellidos(String apellidos) {
+	    ArrayList<Alumno> resultados = new ArrayList<>();
+	    for (Alumno a : alumnosList) {
+	        if (a.getApellidos().toLowerCase().contains(apellidos.toLowerCase())) {
+	            resultados.add(a);
+	        }
+	    }
+	    return resultados;
 	}
 	
 	public void Eliminar (Alumno a) {
