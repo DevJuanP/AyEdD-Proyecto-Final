@@ -60,14 +60,14 @@ public class DialogBuscarAlumnos extends JDialog implements ActionListener {
 		contentPane.add(lblAsignatura);
 		
 		txtBuscar = new JTextField();
-		txtBuscar.setBounds(120, 12, 223, 19);
+		txtBuscar.setBounds(109, 12, 254, 19);
 		contentPane.add(txtBuscar);
 		txtBuscar.setColumns(10);
 		
-		btEnviar = new JButton("Enviar");
+		btEnviar = new JButton("Enviar Dialogo");
 		btEnviar.addActionListener(this);
 		btEnviar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btEnviar.setBounds(488, 10, 85, 21);
+		btEnviar.setBounds(387, 10, 186, 21);
 		contentPane.add(btEnviar);
 		
 		scrollPane = new JScrollPane();

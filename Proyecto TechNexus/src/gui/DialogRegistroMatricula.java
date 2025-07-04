@@ -383,7 +383,7 @@
 		    TXTedad.setText(String.valueOf(a.getEdad()));
 		    TXTcelular.setText(String.valueOf(a.getCelular()));
 		    TXTdni.setText(a.getDni());
-		    TXTestado.setText(a.getEstado() == 1 ? "Activo" : "Inactivo");
+		    TXTestado.setText(String.valueOf(a.getEstado()));
 		}
 	
 		

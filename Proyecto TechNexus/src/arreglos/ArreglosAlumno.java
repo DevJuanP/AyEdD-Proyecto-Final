@@ -16,9 +16,6 @@ public class ArreglosAlumno {
 		cargarAlumnos();
 	}
 	
-	
-
-
 	public ArrayList<Alumno> getAlumnosList() {
 		return alumnosList;
 	}
@@ -29,6 +26,7 @@ public class ArreglosAlumno {
 
 	public void adicionar(Alumno a) {
 		alumnosList.add(a);
+		grabarAlumnos();
 	}
 	
 	public int tamanio() {
@@ -66,21 +64,21 @@ public class ArreglosAlumno {
 	
 	public void Eliminar (Alumno a) {
 		alumnosList.remove(a);
+		grabarAlumnos();
+		
 	}
 	
 	public int getNextCodigo() {
 		return tamanio()+202500001;
 	}
 	
-	public int cargarAlumnos() {
+	private void cargarAlumnos() {
 		try {
-			
 			BufferedReader br = new BufferedReader(new FileReader("data/alumnos.txt"));
 			String[] cadDatos;
-			int i=0, codAlumno, edad, celular, estado;
+			int codAlumno, edad, celular, estado;
 			String linea, nombres, apellidos, dni;
 			while ((linea = br.readLine()) != null) {
-				i++;
 				cadDatos = linea.split(";");
 				codAlumno = Integer.parseInt(cadDatos[0].trim());
 				nombres = cadDatos[1].trim();
@@ -92,15 +90,12 @@ public class ArreglosAlumno {
 				adicionar(new Alumno(codAlumno, nombres, apellidos, edad, celular, dni, estado));
 			}
 			br.close();
-			return i;
 		}catch(Exception e){
-			return 0;
 		}
 	}
 	
-	public int cargarALToTxtfile() {
+	private void grabarAlumnos() {
 		try {
-			int i = 0;
 			PrintWriter pw = new PrintWriter(new FileWriter("data/alumnos.txt"));
 			String linea;
 			for(Alumno a : alumnosList) {
@@ -112,16 +107,14 @@ public class ArreglosAlumno {
 						+a.getDni()+";"
 						+a.getEstado();
 				pw.println(linea);
-				i++;
 			}
 			pw.close();
-			return i;
 		}catch(Exception e) {
-			return 0;
 		}
 	}
 	
-	
-	
+	public void actualizarArchivo() {
+		grabarAlumnos();
+	}
 	
 }

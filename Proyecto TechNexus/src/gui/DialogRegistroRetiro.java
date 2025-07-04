@@ -1,4 +1,4 @@
-package gui;
+	package gui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -331,7 +331,7 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 							error("Ingrese apellido", txtApellidos);
 						}
 					} catch (Exception e2) {
-						error("Ingeese nombre",  txtNombres);
+						error("Ingrese nombre",  txtNombres);
 					}
 				}else {
 					error("Ingrese codigo de alumno", txtCodAlum);

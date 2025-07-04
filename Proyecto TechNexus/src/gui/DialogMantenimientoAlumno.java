@@ -10,6 +10,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+
 import arreglos.ArreglosAlumno;
 import clases.Alumno;
 
@@ -180,6 +181,22 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
         scrollTabla.setBounds(30, 220, 624, 143);
         getContentPane().add(scrollTabla);
         
+        tblAlumnos.getSelectionModel().addListSelectionListener(e ->{
+        	if(!e.getValueIsAdjusting() && tblAlumnos.getSelectedRow() != -1) {
+        		int fila = tblAlumnos.getSelectedRow();
+        		if(fila == -1) {
+        			JOptionPane.showMessageDialog(this, "Seleccione una fila para editar.");
+        			return;
+        		}
+        		txtCodigo.setText(tblAlumnos.getValueAt(fila, 0).toString());
+        		txtNombre.setText(tblAlumnos.getValueAt(fila, 1).toString());
+        		txtApellidos.setText(tblAlumnos.getValueAt(fila, 2).toString());
+        		txtEdad.setText(tblAlumnos.getValueAt(fila, 3).toString());
+        		txtTelefono.setText(tblAlumnos.getValueAt(fila, 4).toString());
+        		txtDNI.setText(tblAlumnos.getValueAt(fila, 5).toString());
+        	}
+   
+        });
         //carga la tabla
         
         cargarTabla();
@@ -197,17 +214,27 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
         btnRegistrar.addActionListener(this);
         
         btnModificar = new JButton("Modificar");
+        btnModificar.addActionListener(this);
         btnModificar.setBounds(368, 373, 100, 25);
         getContentPane().add(btnModificar);
         
         btnEliminar = new JButton("Eliminar");
+        btnEliminar.addActionListener(this);
         btnEliminar.setBounds(524, 373, 100, 25);
         getContentPane().add(btnEliminar);
         
 	}
 	
+	//Delcaracion global
+	ArreglosAlumno aa = new ArreglosAlumno();
 	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnModificar) {
+			actionPerformedBtnModificar(e);
+		}
+		if (e.getSource() == btnEliminar) {
+			actionPerformedBtnEliminar(e);
+		}
 		if(e.getSource() == btnRegistrar) {
 			doBtnRegistrarActionPerformed(e);
 		}
@@ -227,8 +254,7 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
     	
     	Alumno a = new Alumno(datos.getEdad(), datos.getCelular(), datos.getNombres(), datos.getApellidos(), datos.getDni());
     	alumnosList.adicionar(a);
-    	alumnosList.cargarALToTxtfile();//para actualizar
-    	imprimirDatos(a);
+    	cargarTabla();
     	limpiarImputs();
 	}
 	
@@ -242,10 +268,11 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
     	
     	return new Alumno(Edad, telefono, nombre, Apellidos, DNI, "LEER_DATOS");
 	}
-	private void imprimirDatos(Alumno a) {
+	/*private void imprimirDatos(Alumno a) {
 		txtCodigo.setText(""+a.getCodAlumno());
     	modelo.addRow(new Object[] {a.getCodAlumno(),a.getNombres(), a.getApellidos(), a.getEdad(), a.getCelular(), a.getDni(), a.getEstado()});
-	}
+	}*/
+	
 	private void limpiarImputs() {
 		txtNombre.setText("");
 		txtApellidos.setText("");
@@ -261,4 +288,52 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
 		}
 	}
 
+	protected void actionPerformedBtnEliminar(ActionEvent e) {
+		try {
+			int fila, respuesta;
+			
+			fila = tblAlumnos.getSelectedRow();
+			if(fila == -1) {
+				JOptionPane.showMessageDialog(this, "Selecciona primero un registro","Advertencia",JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
+			int codigo = Integer.parseInt(tblAlumnos.getValueAt(fila, 0).toString());
+			Alumno x = aa.buscarCodigo(codigo);
+			if(x == null) {
+				JOptionPane.showMessageDialog(this, "Alumno no encontrado", "Error",JOptionPane.ERROR_MESSAGE);
+			}else {
+				respuesta = JOptionPane.showConfirmDialog(this, "¿Desea eliminar este alumno?","Confirmar",JOptionPane.YES_NO_OPTION);
+				if(respuesta==JOptionPane.YES_NO_OPTION) {
+					aa.Eliminar(x);
+					cargarTabla();
+					JOptionPane.showMessageDialog(this, "Alumno eliminado correctamente","Información",JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+			limpiarImputs();
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(this, "Error al intentar eliminar: ", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	protected void actionPerformedBtnModificar(ActionEvent e) {
+		try {
+			int codigo = Integer.parseInt(txtCodigo.getText().trim());
+			Alumno a = aa.buscarCodigo(codigo);
+			if(a == null) {
+				JOptionPane.showMessageDialog(this, "El código no existe");
+				return;
+			}
+			a.setNombres(txtNombre.getText().toString());
+			a.setApellidos(txtApellidos.getText().toString());
+			a.setEdad(Integer.parseInt(txtTelefono.getText().trim()));
+			a.setCelular(Integer.parseInt(txtTelefono.getText().trim()));
+			a.setDni(txtDNI.getText().toString());
+			aa.actualizarArchivo();
+			cargarTabla();
+			limpiarImputs();
+			JOptionPane.showMessageDialog(this, "Alumno modificado correctamente");
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(this, "Error al registrar cliente. Verifique los datos.");
+		}
+	}
 }

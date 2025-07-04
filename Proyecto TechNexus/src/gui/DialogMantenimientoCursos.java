@@ -1,6 +1,6 @@
 	package gui;
 	
-	import java.awt.EventQueue;
+import java.awt.EventQueue;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -8,15 +8,17 @@ import javax.swing.border.TitledBorder;
 
 import java.awt.Font;
 
-	import java.awt.Color;
+import java.awt.Color;
 
 import javax.swing.table.DefaultTableModel;
 
-	import arreglos.ArreglosCursos;
-	import clases.Curso;
+import arreglos.ArreglosCursos;
+import clases.Curso;
 
 import java.awt.event.ActionListener;
-	import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 	
@@ -311,6 +313,7 @@ import javax.swing.*;
 				mensaje("Ocurrió un error al intentar modificar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		 }
+
 		 
 		 
 		 void leerDatosGuardar() {
@@ -368,11 +371,11 @@ import javax.swing.*;
 			}
 		 }
 		 
-		 void leerDatosBuscar() {
+		void leerDatosBuscar() {
 			 String criterio = txtBusquedaFiltrada.getText().trim();
 			 modelo = (DefaultTableModel) table.getModel();
 			 
-				// Si el campo de búsqueda está vacío, restaurar la tabla desde cursoLista
+				// Si el campo de búsqueda está vacifío, restaurar la tabla desde cursoLista
 				if (criterio.isEmpty()) {
 					modelo.setRowCount(0); // Limpiar filas existentes
 					listar();;// Rellenar la tabla con todos los cursos
