@@ -236,7 +236,6 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 		listar();
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnBuscar) do_btnBuscar_actionPerformed();
 		if (e.getSource() == btnAdicionar) actionPerformedBtnAdicionar();
@@ -245,9 +244,9 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 	}
 
 	private void do_btnBuscar_actionPerformed() {
-		DialogBuscarRetiro buscarRetiro = new DialogBuscarRetiro(this);
-		buscarRetiro.setLocationRelativeTo(null);
-		buscarRetiro.setVisible(true);
+		DialogBuscarMatricula dBMatricula = new DialogBuscarMatricula(this);
+		dBMatricula.setLocationRelativeTo(null);
+		dBMatricula.setVisible(true);
 	}
 
 	private void actionPerformedBtnAdicionar() {

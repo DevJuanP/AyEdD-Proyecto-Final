@@ -72,3 +72,4 @@ public class DialogNuevaConsulta extends JDialog {
 		scrollPane.setViewportView(txtS);
 	}
 }
+
