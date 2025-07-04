@@ -194,7 +194,7 @@ import javax.swing.*;
 			btnBuscar.addActionListener(this);
 			btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 11));
 	
-			btnRegistrar = new JButton("REGISTRAR");
+			btnRegistrar = new JButton("ADICIONAR");
 			btnRegistrar.addActionListener(this);
 			btnRegistrar.setFont(new Font("Tahoma", Font.BOLD, 11));
 			btnRegistrar.setBounds(39, 368, 107, 21);

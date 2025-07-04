@@ -1,26 +1,17 @@
 package gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.awt.Font;
-import java.awt.Frame;
-import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import arreglos.ArreglosMatricula;
-import arreglos.ArreglosRetiro;
 import clases.Matricula;
-import clases.Retiro;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -29,7 +20,7 @@ import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class DialogBuscarRetiro extends JDialog implements ActionListener {
+public class DialogBuscarMatricula extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -41,13 +32,13 @@ public class DialogBuscarRetiro extends JDialog implements ActionListener {
 	private DefaultTableModel modeloBuscar;
 	public DialogRegistroRetiro dlgRegistroRetiro;
 	
-	public DialogBuscarRetiro(DialogRegistroRetiro dlg) {
+	public DialogBuscarMatricula(DialogRegistroRetiro dlg) {
 		this.dlgRegistroRetiro = dlg;
 		initComponents();
 	}
 
 	private void initComponents() {
-		setTitle("Buscar Cursos");
+		setTitle("Buscar Matricula");
 		setBounds(100, 100, 607, 276);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -91,27 +82,6 @@ public class DialogBuscarRetiro extends JDialog implements ActionListener {
 		scrollPane.setViewportView(table);
 		
 		listaDatos();
-		
-		/*txtBuscar.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				listaDatos(txtBuscar.getText());				
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});*/
-		
 	}
 	
 	
@@ -143,20 +113,6 @@ public class DialogBuscarRetiro extends JDialog implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtEnviar(ActionEvent e) {
-		/*int fila = table.getSelectedRow();
-		if (fila == -1) {
-			JOptionPane.showMessageDialog(this,"Selecciona una fila" + "Advertencia" + JOptionPane.WARNING_MESSAGE);
-			return;
-		}
-		
-		int numMatricula = Integer.parseInt(table.getValueAt(fila, 0).toString());
-		int numCodAlumno = Integer.parseInt(table.getValueAt(fila, 1).toString());
-		int codCurso = Integer.parseInt(table.getValueAt(fila, 2).toString());
-		String nombres = table.getValueAt(fila, 3).toString();
-		String apellidos = table.getValueAt(fila, 4).toString();  // ← Error corregido
-		String fecha = table.getValueAt(fila, 5).toString();       // ← Mantener como String
-		String hora = table.getValueAt(fila, 6).toString();*/
-		
 		 int fila = table.getSelectedRow();
 		    if (fila == -1) {
 		        JOptionPane.showMessageDialog(this, "Selecciona una fila", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -172,9 +128,6 @@ public class DialogBuscarRetiro extends JDialog implements ActionListener {
 		        String asignatura = table.getValueAt(fila, 5).toString();
 		        String fecha = table.getValueAt(fila, 6).toString();
 		        String hora = table.getValueAt(fila, 7).toString();
-		        // Aquí puedes usar los valores numéricos obtenidos
-		        // Por ejemplo, pasarlos al diálogo de registro:
-		        //dlgRegistroRetiro.setDatosRetiro(numMatricula, numCodAlumno, codCurso);
 		        Matricula m = new Matricula(numMatricula,numCodAlumno,codCurso,nombre,apellido,asignatura,fecha,hora, codCurso);
 		       dlgRegistroRetiro.leerBusquedaRetiro(m);
 		        this.dispose();

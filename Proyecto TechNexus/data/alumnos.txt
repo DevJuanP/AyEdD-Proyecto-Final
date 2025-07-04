@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 202510002;Jorge;Nitales Ríos;24;912345678;70643219;0
 202510003;Carlos;Ramirez Huaman;25;987654321;71234567;0
 202510004;Elena;Flores del Valle;26;954786321;70829473;0
@@ -5,3 +6,6 @@
 202510006;Ana Lisa;Melano Salas;28;934561278;70987654;0
 202510009;Lucia;Reyes Zarate;27;947891234;71344567;0
 202510001;oscar;jjjjj;33;999999999;657676576;0
+=======
+202510001;Sofia;Ramirez;23;998794211;71253945;0
+>>>>>>> branch 'master' of https://github.com/DevJuanP/AyEdD-Proyecto-Final.git

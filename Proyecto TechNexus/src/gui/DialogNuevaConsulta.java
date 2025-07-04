@@ -137,3 +137,4 @@ public class DialogNuevaConsulta extends JDialog {
 		});
 	}
 }
+

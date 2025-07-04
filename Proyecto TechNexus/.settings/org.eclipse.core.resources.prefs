@@ -2,7 +2,7 @@
 <<<<<<<=HEAD
 >>>>>>>=branch 'master' of https\://github.com/DevJuanP/AyEdD-Proyecto-Final
 eclipse.preferences.version=1
-encoding//src/gui/DialogBuscarRetiro.java=UTF-8
+encoding//src/gui/DialogBuscarMatricula.java=UTF-8
 encoding//src/gui/DialogMantenimientoAlumno.java=UTF-8
 encoding//src/gui/DialogMantenimientoCursos.java=UTF-8
 encoding//src/gui/DialogRegistroMatricula.java=UTF-8

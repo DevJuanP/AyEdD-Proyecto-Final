@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Retiro {
 
-	private int codRetiro, codMatricula, codAlum, codCurso;
+	private int codRetiro, codMatricula, codAlum, codCurso, estado;
 	private String nombres, apellidos, curso, fecha, hora;
 	private static int contador;
 	static {
@@ -14,7 +14,7 @@ public class Retiro {
 	}
 
 	public Retiro(int codRetiro, int codMatricula, int codAlum, String nombres, String apellidos,int codCurso,
-			String curso, String fecha, String hora) {
+			String curso, String fecha, String hora, int estado) {
 		this.codRetiro = contador++;
 		this.codMatricula = codMatricula;
 		this.codAlum = codAlum;
@@ -24,6 +24,7 @@ public class Retiro {
 		this.curso = curso;
 		this.fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         this.hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        this.estado=estado;
 	}
 	
 	public Retiro() {
@@ -110,9 +111,12 @@ public class Retiro {
 	public static void setContador(int contador) {
 		Retiro.contador = contador;
 	}
+	
+	public int getEstado() {
+	    return estado;
+	}
 
-	public Object getEstado() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setEstado(int estado) {
+	    this.estado = estado;
 	}
 }

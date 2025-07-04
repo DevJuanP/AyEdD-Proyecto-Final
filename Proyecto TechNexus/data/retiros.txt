@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 200001;100001;Armando;Paredes de las Casas;3003;Python;03/07/2025;23:06:19
 200002;100002;Jorge;Nitales Ríos;3004;PHP;03/07/2025;23:06:19
 200003;100002;Jorge;Nitales Ríos;3004;PHP;03/07/2025;23:06:19
@@ -5,3 +6,5 @@
 200005;100001;Armando;Paredes de las Casas;3003;Python;03/07/2025;23:06:19
 200007;100003;Luis;Ticona Quispe;3005;JavaScript;03/07/2025;23:06:45
 200008;100003;Luis;Ticona Quispe;3005;JavaScript;03/07/2025;23:07:04
+=======
+>>>>>>> branch 'master' of https://github.com/DevJuanP/AyEdD-Proyecto-Final.git
