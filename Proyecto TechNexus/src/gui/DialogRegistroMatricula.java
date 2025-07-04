@@ -341,6 +341,8 @@
 			btnConsultarAlumn.addActionListener(this);
 			
 			mostrarFechaHoraActual();
+			TXTcodigoMatricula.setText("" + am.generateCod()); 
+
 			
 		}
 		
@@ -357,9 +359,7 @@
 			if (e.getSource() == btnAdicionar) {
 				actionPerformedBtnAdicionar(e);
 			}
-			if (e.getSource() == btnNuevo) {
-				actionPerformedBtnNuevo(e);
-			}
+		
 			if (e.getSource() == btnConsultarCurso) {
 				actionPerformedBtnConsultarCurso(e);
 			}
@@ -406,13 +406,7 @@
 		private JButton btnGuardar;
 		
 	
-		
-		protected void actionPerformedBtnNuevo(ActionEvent e) {
-			limpiar();
-			TXTcodigoMatricula.setText("" + am.generateCod()); 
-			mostrarFechaHoraActual();
-			
-		}
+	
 		protected void actionPerformedBtnAdicionar(ActionEvent e) {
 			try {
 				if (TXTcodigoMatricula.getText().trim().isEmpty()) {
