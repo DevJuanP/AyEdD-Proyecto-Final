@@ -255,13 +255,20 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
 	
 	protected void doBtnRegistrarActionPerformed(ActionEvent e) {
 		Alumno datos = leerDatos();
+		
+		if(alumnosList.buscarDni(datos.getDni()) != null) {
+			mensaje("El DNI de este alumno ya está registrado");
+		}
     	
-    	Alumno a = new Alumno(datos.getEdad(), datos.getCelular(), datos.getNombres(), datos.getApellidos(), datos.getDni());
+    	Alumno a = new Alumno(alumnosList.getNextCodigo() ,datos.getNombres(), datos.getApellidos(), datos.getEdad(), datos.getCelular(), datos.getDni(), 0);
     	alumnosList.adicionar(a);
     	cargarTabla();
     	limpiarImputs();
 	}
 	
+	private void mensaje(String str) {
+		JOptionPane.showMessageDialog(this, str, "Error", JOptionPane.ERROR_MESSAGE);
+	}
 	//metodos de agregar:
 	private Alumno leerDatos() {
 		String nombre = txtNombre.getText();
@@ -302,6 +309,14 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
 		        if (x == null) {
 		            JOptionPane.showMessageDialog(this, "Alumno no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 		        } else {
+		        	if(x.getEstado() == 1) {
+		        		mensaje("no se puede eliminar a un alumno matriculado");
+		        		return;
+		        	}
+		        	if(x.getEstado() == 2) {
+		        		mensaje("no se puede eliminar a un alumno retirado");
+		        		return;
+		        	}
 		            int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea eliminar este alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
 		            if (respuesta == JOptionPane.YES_OPTION) {
 		                alumnosList.Eliminar(x);
@@ -323,11 +338,15 @@ public class DialogMantenimientoAlumno extends JDialog implements ActionListener
 	            JOptionPane.showMessageDialog(this, "El código no existe");
 	            return;
 	        }
+	        if(!txtDNI.getText().trim().equalsIgnoreCase(a.getDni())) {
+	        	mensaje("El DNI no puede ser modificado");
+	        	return ;
+	        }
 	        a.setNombres(txtNombre.getText().trim());
 	        a.setApellidos(txtApellidos.getText().trim());
 	        a.setEdad(Integer.parseInt(txtEdad.getText().trim()));
 	        a.setCelular(Integer.parseInt(txtTelefono.getText().trim()));
-	        a.setDni(txtDNI.getText().trim());
+
 	        alumnosList.actualizarArchivo();
 	        cargarTabla();
 	        limpiarImputs();

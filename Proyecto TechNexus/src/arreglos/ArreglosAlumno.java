@@ -77,7 +77,11 @@ public class ArreglosAlumno {
 	}
 	
 	public int getNextCodigo() {
-		return tamanio()+202500001;
+		int nextCodigo = tamanio()+202510001;
+		while(buscarCodigo(nextCodigo) != null) {
+			nextCodigo++;
+		}
+		return nextCodigo;
 	}
 	
 	private void cargarAlumnos() {
