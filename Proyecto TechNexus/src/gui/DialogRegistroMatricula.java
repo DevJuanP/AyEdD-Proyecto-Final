@@ -473,6 +473,9 @@ import arreglos.ArreglosMatricula;
 						TXTestado.setText(""+a.getEstado());
 						
 						ocultarCajas();
+						btnModificar.setEnabled(false);
+						btnConsultarAlumn.setEnabled(false);
+						
 						
 						modeloMatricula = (DefaultTableModel) TablaMatricula.getModel();
 						modeloMatricula.removeRow(fila);
@@ -537,6 +540,8 @@ import arreglos.ArreglosMatricula;
 		        listar();
 		        limpiar();
 		        JOptionPane.showMessageDialog(this, "Cambios guardados correctamente.");
+		        btnModificar.setEnabled(true);
+				btnConsultarAlumn.setEnabled(true);
 		    } catch (Exception e1) {
 		        JOptionPane.showMessageDialog(this, "Error al guardar los cambios. Verifique los datos.", "Error", JOptionPane.ERROR_MESSAGE);
 		        e1.printStackTrace();
