@@ -30,7 +30,6 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 	private JLabel lblConsultar;
 	private JComboBox<String> cmbBuscar;
 	private JButton btnBuscar;
-	private JButton btnLimpiar;
 	private JScrollPane scrollPane;
 	private JTextArea txtS;
 	private JTextField txtCodigo;
@@ -78,11 +77,6 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 		btnBuscar.setBounds(363, 32, 129, 21);
 		contentPanel.add(btnBuscar);
 		
-		btnLimpiar = new JButton("LIMPIAR");
-		btnLimpiar.addActionListener(this);
-		btnLimpiar.setBounds(363, 60, 129, 21);
-		contentPanel.add(btnLimpiar);
-		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(21, 109, 472, 221);
 		contentPanel.add(scrollPane);
@@ -107,9 +101,6 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 	ArreglosCursos ac = new ArreglosCursos();
 	
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnLimpiar) {
-			actionPerformedBtnLimpiar(e);
-		}
 		if (e.getSource() == btnBuscar) {
 			actionPerformedBtnBuscar(e);
 		}
@@ -127,26 +118,29 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 			  String resultado = "";
 			  switch (categoria) {
 			  case "ALUMNO":
+				  	txtCodigo.setText("");
+				  	txtS.setText("");
 				    Alumno a = aa.buscarCodigo(codigo);
 				    if (a != null) {
-				        resultado = ">>>>>DATOS ALUMNOS<<<<<\n\n" +
-				                    "Nombre \t: " + a.getNombres() + "\n" +
-				                    "Apellidos \t: " + a.getApellidos() + "\n" +
-				                    "Edad \t: " + a.getEdad() + "\n" +
-				                    "DNI \t: " + a.getDni() + "\n" +
-				                    "Teléfono \t: " + a.getCelular() + "\n" +
+				        resultado = "DATOS ALUMNOS\n\n" +
+				                    "→Nombre \t: " + a.getNombres() + "\n" +
+				                    "→Apellidos \t: " + a.getApellidos() + "\n" +
+				                    "→Edad \t: " + a.getEdad() + "\n" +
+				                    "→DNI \t: " + a.getDni() + "\n" +
+				                    "→Teléfono \t: " + a.getCelular() + "\n" +
 				                    "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" + "\n" +
 				                    "CUSOS MATRICULADOS:" + "\n\n";
 				        
 				        for (int i = 0; i < am.tamanio(); i++) {
-				            if (am.obtener(i).getCodAlumno() == codigo) {
+				        	Matricula  m1 = am.obtener(i);
+				            if (m1.getCodAlumno() == codigo) {
 				                Curso c1 = ac.buscarCodigo(am.obtener(i).getCodCurso());
 				                if (c1 != null) {
-				                    resultado += "Código de curso \t: " + c1.getCodCurso() +"\n" +
-										  		 "Asignatura \t\t: " + c1.getAsignatura() + "\n" +
-										  		 "Ciclo \t\t: " + c1.getCiclo() + "\n" +
-										  		 "Créditos \t\t: " + c1.getCreditos() + "\n" +
-										  		 "Horas \t\t: " + c1.getHoras()+ "\n" +
+				                    resultado += "→  Código de curso \t: " + c1.getCodCurso() +"\n" +
+										  		 "→  Asignatura \t\t: " + c1.getAsignatura() + "\n" +
+										  		 "→  Ciclo \t\t: " + c1.getCiclo() + "\n" +
+										  		 "→  Créditos \t\t: " + c1.getCreditos() + "\n" +
+										  		 "→  Horas \t\t: " + c1.getHoras()+ "\n" +
 				                    			 "**************************************************" + "\n";
 				                }
 				            }
@@ -160,47 +154,52 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 			  //////////////////////////////////////////////
 
 			  case "CURSO":
+					txtCodigo.setText("");
+					txtS.setText("");
 				  Curso c = ac.buscarCodigo(codigo);
 				  if(c != null) {
-					  resultado="Código de curso \t: " + c.getCodCurso() +"\n" +
-							  	"Asignatura \t\t: " + c.getAsignatura() + "\n" +
-							  	"Ciclo \t\t: " + c.getCiclo() + "\n" +
-							  	"Créditos \t\t: " + c.getCreditos() + "\n" +
-							  	"Horas \t\t: " + c.getHoras()+ "\n";
+					  resultado="→  Código de curso \t: " + c.getCodCurso() +"\n" +
+							  	"→  Asignatura \t\t: " + c.getAsignatura() + "\n" +
+							  	"→  Ciclo \t\t: " + c.getCiclo() + "\n" +
+							  	"→  Créditos \t\t: " + c.getCreditos() + "\n" +
+							  	"→  Horas \t\t: " + c.getHoras()+ "\n";
 					  txtS.append(resultado);
 				  }else {
-					  mensaje("Matricula no encontrado","Advertencia", JOptionPane.ERROR_MESSAGE);
+					  mensaje("Curso no encontrado","Advertencia", JOptionPane.ERROR_MESSAGE);
 				  }
 				  break;
 				  
 			  //////////////////////////////////////////////	
 			    
 			  case "MATRICULA":
+				  txtCodigo.setText("");
+				  txtS.setText("");
 				  Matricula m = am.buscarMatricula(codigo);
 				  if(m != null) {
 					  Alumno a2 = aa.buscarCodigo(m.getCodAlumno());
-					  resultado = ">>>>> DATOS DE LA MATRÍCULA <<<<<" + "\n\n" +
-							  	  "Código Matricula \t: " + m.getNumMatricula() + "\n" +
-							  	  "Codigo Alumno \t\t: "+ a2.getCodAlumno() + "\n" +
-			                      "Nombre \t\t: " + a2.getNombres() + "\n" +
-			                      "Apellidos \t\t: " + a2.getApellidos() + "\n" +
-			                      "Edad \t\t: " + a2.getEdad() + "\n" +
-			                      "DNI \t\t: " + a2.getDni() + "\n" +
-			                      "Teléfono \t\t: " + a2.getCelular() + "\n" +
+					  resultado = "DATOS DE LA MATRÍCULA" + "\n\n" +
+							  	  "→  Código Matricula \t: " + m.getNumMatricula() + "\n" +
+							  	  "→  Codigo Alumno \t: "+ a2.getCodAlumno() + "\n" +
+			                      "→  Nombre \t\t: " + a2.getNombres() + "\n" +
+			                      "→  Apellidos \t\t: " + a2.getApellidos() + "\n" +
+			                      "→  Edad \t\t: " + a2.getEdad() + "\n" +
+			                      "→  DNI \t\t: " + a2.getDni() + "\n" +
+			                      "→  Teléfono \t\t: " + a2.getCelular() + "\n" +
 			                      "--------------------------------------------------\n\n" +
 			                      "CUSOS MATRICULADOS:" + "\n\n";
 					  
 					  for (int i = 0; i < am.tamanio(); i++) {
-				            if (am.obtener(i).getCodAlumno() == a2.getCodAlumno()) {
+						  Matricula m2 = am.obtener(i);
+				            if (m2.getCodAlumno() == a2.getCodAlumno()) {
 				                Curso c2 = ac.buscarCodigo(am.obtener(i).getCodCurso());
 				                if (c2 != null) {
-				                    resultado += "Código de curso \t: " + c2.getCodCurso() +"\n" +
-										  		 "Asignatura \t\t: " + c2.getAsignatura() + "\n" +
-										  		 "Ciclo \t\t: " + c2.getCiclo() + "\n" +
-										  		 "Créditos \t\t: " + c2.getCreditos() + "\n" +
-										  		 "Horas \t\t: " + c2.getHoras()+ "\n" +
-										  		 "Fecha matrícula \t: " + am.obtener(i).getFecha() + "\n" +
-				                                 "Hora matrícula \t\t: " + am.obtener(i).getHora()+ "\n" +
+				                    resultado += "→  Código de curso \t: " + c2.getCodCurso() +"\n" +
+										  		 "→  Asignatura \t\t: " + c2.getAsignatura() + "\n" +
+										  		 "→  Ciclo \t\t: " + c2.getCiclo() + "\n" +
+										  		 "→  Créditos \t\t: " + c2.getCreditos() + "\n" +
+										  		 "→  Horas \t\t: " + c2.getHoras()+ "\n" +
+										  		 "→  Fecha matrícula \t: " + m2.getFecha() + "\n" +
+				                                 "→  Hora matrícula \t: " + m2.getHora()+ "\n" +
 				                    			 "**************************************************" + "\n";
 				                }
 				            }
@@ -217,14 +216,6 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 		}
 	}
 	
-	protected void actionPerformedBtnLimpiar(ActionEvent e) {
-		limpiar();
-	}
-	
-	void limpiar() {
-		txtS.setText("");
-		txtCodigo.setText("");
-	}
 	void mensaje(String s, String titulo, int tipo) {
 		JOptionPane.showMessageDialog(null, s, titulo, tipo);
 	}

@@ -31,9 +31,9 @@ public class DialogNuevoReporte extends JDialog {
 	
 	private JTextArea txtArea;
 	private JScrollPane scrollPane;
-	private JComboBox cmbCategoria;
-	private JLabel lblNewLabel;
+	private JComboBox <String> cmbCategoria;
 	private JButton btnNewButton;
+	private JLabel lblNewLabel_1;
 	
 	
 
@@ -45,6 +45,7 @@ public class DialogNuevoReporte extends JDialog {
 			DialogNuevoReporte dialog = new DialogNuevoReporte();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
+			dialog.setLocationRelativeTo(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -54,32 +55,32 @@ public class DialogNuevoReporte extends JDialog {
 	 * Create the dialog.
 	 */
 	public DialogNuevoReporte() {
-		setBounds(100, 100, 475, 561);
+		setTitle("Nuevo Reporte");
+		setBounds(100, 100, 476, 528);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		lblNewLabel = new JLabel("REPORTE");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel.setBounds(175, 10, 75, 30);
-		contentPanel.add(lblNewLabel);
-		
-		cmbCategoria = new JComboBox();
-		cmbCategoria.setModel(new DefaultComboBoxModel(new String[] {"Matricula Pendiente", "Matricula vigente", "Alumno por curso"}));
-		cmbCategoria.setBounds(20, 64, 167, 21);
+		cmbCategoria = new JComboBox<String>();
+		cmbCategoria.setModel(new DefaultComboBoxModel<String>(new String[] {"Matricula Pendiente", "Matricula vigente", "Alumno por curso"}));
+		cmbCategoria.setBounds(128, 34, 180, 21);
 		contentPanel.add(cmbCategoria);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 95, 425, 398);
+		scrollPane.setBounds(20, 65, 425, 398);
 		contentPanel.add(scrollPane);
 		
 		txtArea = new JTextArea();
 		scrollPane.setViewportView(txtArea);
 		
 		btnNewButton = new JButton("CARGAR");
-		btnNewButton.setBounds(200, 64, 85, 21);
+		btnNewButton.setBounds(330, 34, 115, 21);
 		contentPanel.add(btnNewButton);
+		
+		lblNewLabel_1 = new JLabel("Tipo de reporte:");
+		lblNewLabel_1.setBounds(20, 34, 98, 17);
+		contentPanel.add(lblNewLabel_1);
 		/*
 		 Alumnos con matrÃ­cula pendiente: mostar los datos completos de aquellos alumnos
 que solamente estÃ¡n registrados.
@@ -113,10 +114,10 @@ en cada uno de los cursos
 		for (int i = 0; i < arregloAlumno.tamanio(); i++) {
 			Alumno a = arregloAlumno.obtener(i);
 			if (a.getEstado() == 0) {
-				txtArea.append("Nombre: " + a.getNombres() + "\n");
-				txtArea.append("Apellidos: " + a.getApellidos() + "\n");
-				txtArea.append("Celular: " + a.getCelular() + "\n");
-				txtArea.append("DNI: " + a.getDni() + "\n");
+				txtArea.append("→  Nombre: " + a.getNombres() + "\n");
+				txtArea.append("→  Apellidos: " + a.getApellidos() + "\n");
+				txtArea.append("→  Celular: " + a.getCelular() + "\n");
+				txtArea.append("→  DNI: " + a.getDni() + "\n");
 				txtArea.append("--------------------------\n");
 			} 
 			
@@ -162,10 +163,10 @@ en cada uno de los cursos
 			for (int i = 0; i < arregloAlumno.tamanio(); i++) {
 				Alumno a = arregloAlumno.obtener(i);
 				if (a.getEstado() == 1) {
-					txtArea.append("Nombre: " + a.getNombres() + "\n");
-					txtArea.append("Apellidos: " + a.getApellidos() + "\n");
-					txtArea.append("Celular: " + a.getCelular() + "\n");
-					txtArea.append("DNI: " + a.getDni() + "\n");
+					txtArea.append("→  Nombre: " + a.getNombres() + "\n");
+					txtArea.append("→  Apellidos: " + a.getApellidos() + "\n");
+					txtArea.append("→  Celular: " + a.getCelular() + "\n");
+					txtArea.append("→  DNI: " + a.getDni() + "\n");
 					txtArea.append("----------------------------------------------------------\n");
 				} 
 				
@@ -201,10 +202,10 @@ en cada uno de los cursos
 			
 		}
 		private void listarAlumno(Alumno a) {
-			txtArea.append("\t→ Nombre: " + a.getNombres() + "\n");
-			txtArea.append("\t→ Apellidos: " + a.getApellidos() + "\n");
-			txtArea.append("\t→ Celular: " + a.getCelular() + "\n");
-			txtArea.append("\t→ DNI: " + a.getDni() + "\n");
+			txtArea.append("→  Nombre: " + a.getNombres() + "\n");
+			txtArea.append("→  Apellidos: " + a.getApellidos() + "\n");
+			txtArea.append("→  Celular: " + a.getCelular() + "\n");
+			txtArea.append("→  DNI: " + a.getDni() + "\n");
 			txtArea.append("-----------------------------------------------------------\n");
 		}
 		
