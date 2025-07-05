@@ -27,6 +27,8 @@ public class DialogNuevoReporte extends JDialog {
 	
 	ArreglosAlumno arregloAlumno = new ArreglosAlumno();
 	ArreglosMatricula arregloMatricula = new ArreglosMatricula();
+	ArreglosCursos ac = new ArreglosCursos();
+	
 	private JTextArea txtArea;
 	private JScrollPane scrollPane;
 	private JComboBox cmbCategoria;
@@ -79,11 +81,11 @@ public class DialogNuevoReporte extends JDialog {
 		btnNewButton.setBounds(200, 64, 85, 21);
 		contentPanel.add(btnNewButton);
 		/*
-		 Alumnos con matrícula pendiente: mostar los datos completos de aquellos alumnos
-que solamente están registrados.
- Alumnos con matrícula vigente: mostar los datos completos de aquellos alumnos
-que solamente están matriculados.
- Alumnos matriculados por curso: mostar los nombres de los alumnos matriculados
+		 Alumnos con matrÃ­cula pendiente: mostar los datos completos de aquellos alumnos
+que solamente estÃ¡n registrados.
+ïƒ° Alumnos con matrÃ­cula vigente: mostar los datos completos de aquellos alumnos
+que solamente estÃ¡n matriculados.
+ïƒ° Alumnos matriculados por curso: mostar los nombres de los alumnos matriculados
 en cada uno de los cursos
 		 */
 		 
@@ -137,7 +139,7 @@ en cada uno de los cursos
 				 for (int i = 0 ;i < arregloAlumno.tamanio();i++) {
 					 Alumno a = arregloAlumno.obtener(i);
 					 if(!CodigosMatriculados.contains(a.getCodAlumno())) {
-						 sb.append("Código: ").append(a.getCodAlumno()).append("\n");
+						 sb.append("CÃ³digo: ").append(a.getCodAlumno()).append("\n");
 			                sb.append("Nombre: ").append(a.getNombres()).append("\n");
 			                sb.append("Apellidos: ").append(a.getApellidos()).append("\n");
 			                sb.append("DNI: ").append(a.getDni()).append("\n");
@@ -149,7 +151,7 @@ en cada uno de los cursos
 					 }
 				 }
 				 if (sb.length() == 0) {
-			            txtArea.setText("Todos los alumnos están matriculados.");
+			            txtArea.setText("Todos los alumnos estÃ¡n matriculados.");
 			        } else {
 			            txtArea.setText(sb.toString());
 			        }
@@ -177,7 +179,39 @@ en cada uno de los cursos
 		}
 		
 		void mostrarAlumnoPorCurso() {
+			txtArea.setText("");
+			for(Curso c : ac.getCursoLista()) {
+				imprimir("Alumnos matriculdos en "+c.getAsignatura()+" :");
+				int acum = 0;
+				for(Matricula m : arregloMatricula.getMatricula001()) {
+					if(c.getCodCurso() == m.getCodCurso()) {
+						Alumno a = arregloAlumno.buscarCodigo(m.getCodAlumno());
+						if(a != null) {
+							listarAlumno(a);
+							acum ++;	
+						}
+					}
+				}
+				if(acum == 0) {
+					imprimir("Aún ningún alumno matriculado en este curso");
+					imprimir("-----------------------------");
+					
+				}
+			}
 			
-			
+		}
+		private void listarAlumno(Alumno a) {
+			txtArea.append("→ Nombre: " + a.getNombres() + "\n");
+			txtArea.append("→ Apellidos: " + a.getApellidos() + "\n");
+			txtArea.append("→ Celular: " + a.getCelular() + "\n");
+			txtArea.append("→ DNI: " + a.getDni() + "\n");
+			txtArea.append("--------------------------\n");
+		}
+		
+		private void imprimir(String s) {
+			txtArea.append(s+"\n");
+		}
+		private void imprimir() {
+			imprimir("");
 		}
 }

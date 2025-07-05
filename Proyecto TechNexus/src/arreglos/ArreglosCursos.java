@@ -17,6 +17,14 @@ public class ArreglosCursos {
 		cargarCursos();
 	}
 	
+	
+	
+	public ArrayList<Curso> getCursoLista() {
+		return cursoLista;
+	}
+
+
+
 	public void adicionar(Curso x) {
 		 cursoLista.add(x);
 		 grabarCursos();
