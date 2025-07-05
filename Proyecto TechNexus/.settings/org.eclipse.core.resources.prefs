@@ -5,6 +5,7 @@ eclipse.preferences.version=1
 encoding//src/gui/DialogBuscarMatricula.java=UTF-8
 encoding//src/gui/DialogMantenimientoAlumno.java=UTF-8
 encoding//src/gui/DialogMantenimientoCursos.java=UTF-8
+encoding//src/gui/DialogNuevaConsulta.java=UTF-8
 encoding//src/gui/DialogNuevoReporte.java=UTF-8
 encoding//src/gui/DialogRegistroMatricula.java=UTF-8
 encoding//src/gui/DialogRegistroRetiro.java=UTF-8
