@@ -54,7 +54,7 @@ public class DialogNuevoReporte extends JDialog {
 	 * Create the dialog.
 	 */
 	public DialogNuevoReporte() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 475, 561);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -71,7 +71,7 @@ public class DialogNuevoReporte extends JDialog {
 		contentPanel.add(cmbCategoria);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 95, 416, 158);
+		scrollPane.setBounds(10, 95, 425, 398);
 		contentPanel.add(scrollPane);
 		
 		txtArea = new JTextArea();
@@ -166,7 +166,7 @@ en cada uno de los cursos
 					txtArea.append("Apellidos: " + a.getApellidos() + "\n");
 					txtArea.append("Celular: " + a.getCelular() + "\n");
 					txtArea.append("DNI: " + a.getDni() + "\n");
-					txtArea.append("--------------------------\n");
+					txtArea.append("----------------------------------------------------------\n");
 				} 
 				
 			}
@@ -193,19 +193,19 @@ en cada uno de los cursos
 					}
 				}
 				if(acum == 0) {
-					imprimir("Aún ningún alumno matriculado en este curso");
-					imprimir("-----------------------------");
+					imprimir("  Aún ningún alumno matriculado en este curso");
+					imprimir("-----------------------------------------------------------------");
 					
 				}
 			}
 			
 		}
 		private void listarAlumno(Alumno a) {
-			txtArea.append("→ Nombre: " + a.getNombres() + "\n");
-			txtArea.append("→ Apellidos: " + a.getApellidos() + "\n");
-			txtArea.append("→ Celular: " + a.getCelular() + "\n");
-			txtArea.append("→ DNI: " + a.getDni() + "\n");
-			txtArea.append("--------------------------\n");
+			txtArea.append("\t→ Nombre: " + a.getNombres() + "\n");
+			txtArea.append("\t→ Apellidos: " + a.getApellidos() + "\n");
+			txtArea.append("\t→ Celular: " + a.getCelular() + "\n");
+			txtArea.append("\t→ DNI: " + a.getDni() + "\n");
+			txtArea.append("-----------------------------------------------------------\n");
 		}
 		
 		private void imprimir(String s) {
