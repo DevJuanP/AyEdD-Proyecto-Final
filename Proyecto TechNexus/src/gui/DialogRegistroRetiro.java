@@ -15,7 +15,12 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import arreglos.ArreglosAlumno;
+import arreglos.ArreglosCursos;
+import arreglos.ArreglosMatricula;
 import arreglos.ArreglosRetiro;
+import clases.Alumno;
+import clases.Curso;
 import clases.Matricula;
 import clases.Retiro;
 
@@ -325,16 +330,38 @@ public class DialogRegistroRetiro extends JDialog implements ActionListener {
 			mensaje("Retiro eliminado correctamente.");
 		}
 	}
+	
+	ArreglosAlumno aa = new ArreglosAlumno();
+	ArreglosCursos ac = new ArreglosCursos();
+	ArreglosMatricula am = new ArreglosMatricula();
 
 	private void listar() {
 		model.setRowCount(0);
 		for (int i = 0; i < ar.tamanio(); i++) {
 			Retiro r = ar.obtener(i);
-			model.addRow(new Object[]{
-					r.getCodRetiro(), r.getCodMatricula(), r.getCodAlum(),
-					r.getNombres(), r.getApellidos(), r.getCodCurso(),
-					r.getCurso(), r.getFecha(), r.getHora(), r.getEstado() // NUEVO
-			});
+			
+			int codMatric = r.getCodMatricula();
+			Matricula  m =  am.buscarMatricula(codMatric);
+			
+			if(m != null ) {
+				int codAlum = m.getCodAlumno();
+				int codCurso = m.getCodCurso();
+				
+				Alumno a = aa.buscarCodigo(codAlum);
+				Curso c = ac.buscarCodigo(codCurso);
+				
+				if(a != null && c != null) {
+					model.addRow(new Object[]{
+							r.getCodRetiro(), r.getCodMatricula(), codAlum,
+							a.getNombres(), a.getApellidos(), codCurso,
+							c.getAsignatura(), r.getFecha(), r.getHora(), a.getEstado() // NUEVO
+					});
+					
+				}
+				
+				
+			}
+			
 		}
 	}
 
