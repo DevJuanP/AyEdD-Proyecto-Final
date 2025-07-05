@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import arreglos.ArreglosAlumno;
 import clases.Alumno;
 import clases.Retiro;
 
@@ -114,4 +115,7 @@ public class Andres extends JFrame {
 	    void Limpiar() {
 	        txtOut.setText("");
 	    }
+	    
+	    
+	   
 }

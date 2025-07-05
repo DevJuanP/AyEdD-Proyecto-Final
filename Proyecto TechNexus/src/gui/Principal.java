@@ -32,15 +32,15 @@ public class Principal extends JFrame implements ActionListener {
 	private JMenuItem mntmRetiro;
 	private JMenuItem mntmSalir;
 	private JLabel lblFondo;
-	private JMenuItem mntmNewMenuItem;
 	private JMenuItem mntmNewMenuItem_1;
+	private JMenuItem mntmNuevaConsulta;
 
 	public static void main(String[] args) {
 		Principal frame = new Principal();
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
-        // Establece los textos de los botones en español
-        UIManager.put("OptionPane.yesButtonText", "Sí");
+        // Establece los textos de los botones en espaï¿½ol
+        UIManager.put("OptionPane.yesButtonText", "Sï¿½");
         UIManager.put("OptionPane.noButtonText", "No");
 	}
 
@@ -84,8 +84,9 @@ public class Principal extends JFrame implements ActionListener {
 		mnConsulta.setFont(new Font("Tahoma", Font.BOLD, 12));
 		menuBar.add(mnConsulta);
 		
-		mntmNewMenuItem = new JMenuItem("Nueva Consulta");
-		mnConsulta.add(mntmNewMenuItem);
+		mntmNuevaConsulta = new JMenuItem("Nueva Consulta");
+		mntmNuevaConsulta.addActionListener(this);
+		mnConsulta.add(mntmNuevaConsulta);
 		
 		mnReporte = new JMenu("Reporte");
 		mnReporte.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -120,6 +121,9 @@ public class Principal extends JFrame implements ActionListener {
 		
 	}
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == mntmNuevaConsulta) {
+			actionPerformedMntmNuevaConsulta(e);
+		}
 		if (e.getSource() == mntmRetiro) {
 			doMntmRetiroActionPerformed(e);
 		}
@@ -137,11 +141,11 @@ public class Principal extends JFrame implements ActionListener {
 		}
 	}
 	protected void doMntmSalirActionPerformed(ActionEvent e) {
-        // Establece los textos de los botones en español
-        UIManager.put("OptionPane.yesButtonText", "Sí");
+        // Establece los textos de los botones en espaï¿½ol
+        UIManager.put("OptionPane.yesButtonText", "Sï¿½");
         UIManager.put("OptionPane.noButtonText", "No");
 		int respuesta;
-		respuesta=JOptionPane.showConfirmDialog(this, "¿Estas seguro que desea salir?","IMPORTANTE",JOptionPane.YES_NO_OPTION);
+		respuesta=JOptionPane.showConfirmDialog(this, "ï¿½Estas seguro que desea salir?","IMPORTANTE",JOptionPane.YES_NO_OPTION);
 		if(respuesta == 0)
 		System.exit(0);
 	}
@@ -165,5 +169,10 @@ public class Principal extends JFrame implements ActionListener {
 		DialogRegistroRetiro dRRetiro = new DialogRegistroRetiro();
 		dRRetiro.setLocationRelativeTo(dRRetiro);
 		dRRetiro.setVisible(true);
+	}
+	protected void actionPerformedMntmNuevaConsulta(ActionEvent e) {
+		DialogNuevaConsulta dialogNuevaConsulta = new DialogNuevaConsulta();
+		dialogNuevaConsulta.setLocationRelativeTo(dialogNuevaConsulta);
+		dialogNuevaConsulta.setVisible(true);
 	}
 }

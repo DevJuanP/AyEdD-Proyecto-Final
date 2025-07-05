@@ -23,7 +23,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class DialogNuevaConsulta extends JDialog {
+public class DialogNuevaConsulta extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -68,16 +68,17 @@ public class DialogNuevaConsulta extends JDialog {
 		cmbBuscar.addItem("CURSO");
 		cmbBuscar.addItem("MATRICULA");
 		cmbBuscar.addItem("RETIRO");
-		cmbBuscar.setBounds(108, 32, 195, 21);
+		cmbBuscar.setBounds(108, 32, 203, 21);
 		contentPanel.add(cmbBuscar);
 		
 		btnBuscar = new JButton("BUSCAR");
+		btnBuscar.addActionListener(this);
 		
-		btnBuscar.setBounds(218, 60, 85, 21);
+		btnBuscar.setBounds(363, 32, 129, 21);
 		contentPanel.add(btnBuscar);
 		
 		btnLimpiar = new JButton("LIMPIAR");
-		btnLimpiar.setBounds(313, 45, 85, 21);
+		btnLimpiar.setBounds(363, 60, 129, 21);
 		contentPanel.add(btnLimpiar);
 		
 		scrollPane = new JScrollPane();
@@ -88,7 +89,7 @@ public class DialogNuevaConsulta extends JDialog {
 		scrollPane.setViewportView(txtS);
 		
 		txtCodigo = new JTextField();
-		txtCodigo.setBounds(108, 61, 88, 19);
+		txtCodigo.setBounds(108, 61, 111, 19);
 		contentPanel.add(txtCodigo);
 		txtCodigo.setColumns(10);
 		
@@ -96,45 +97,68 @@ public class DialogNuevaConsulta extends JDialog {
 		lblCodigo.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblCodigo.setBounds(21, 61, 88, 22);
 		contentPanel.add(lblCodigo);
-		
-		ArreglosAlumno RRalum = new ArreglosAlumno();
-		ArreglosMatricula RRmatri = new ArreglosMatricula();
-		ArreglosCursos RRcurs = new ArreglosCursos();	
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				  String categoria = (String) cmbBuscar.getSelectedItem();
-				  String codigoTexto = txtCodigo.getText().trim();
-				  if(codigoTexto.isEmpty()) {
-					  JOptionPane.showMessageDialog(null, "Ingrese un c�digo para buscar.");
-			            return;
+			
+	}
+	//DECLARACION GLOBAL
+	ArreglosAlumno aa = new ArreglosAlumno();
+	ArreglosMatricula am = new ArreglosMatricula();
+	ArreglosCursos ac = new ArreglosCursos();
+	
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnBuscar) {
+			actionPerformedBtnBuscar(e);
+		}
+	}
+	protected void actionPerformedBtnBuscar(ActionEvent e) {
+		  String categoria = (String) cmbBuscar.getSelectedItem();
+		  String codigoTexto = txtCodigo.getText().trim();
+		  if(codigoTexto.isEmpty()) {
+			  JOptionPane.showMessageDialog(null, "Ingrese un código para buscar.");
+	            return;
+		  }
+		  try {
+			  int codigo= Integer.parseInt(codigoTexto);
+			  String resultado = "";
+			  switch (categoria) {
+			  case "ALUMNO":
+				  Alumno a = aa.buscarCodigo(codigo);
+				  if(a != null) {
+					  resultado = ">>>>>DATOS ALUMNOS<<<<<" + "\n" +
+							  	"" + "\n" +
+							  "Nombre \t: " + a.getNombres() + "\n" +
+                              "Apellidos \t: " + a.getApellidos() + "\n" +
+                              "Edad \t: " + a.getEdad() +"\n" +
+                              "DNI \t: " + a.getDni() +"\n" +
+                              "Telefóno \t: " + a.getCelular();
+					  txtS.append(resultado);
 				  }
-				  try {
-					  int codigo= Integer.parseInt(codigoTexto);
-					  String resultado = "";
-					  switch (categoria) {
-					  case "ALUMNO":
-						  Alumno a = RRalum.buscarCodigo(codigo);
-						  if(a != null) {
-							  resultado = "Nombre: " + a.getNombres() +
-	                                    "\nApellidos: " + a.getApellidos() +
-	                                    "\nEdad: " + a.getEdad() +
-	                                    "\nDNI: " + a.getDni();
-							  Matricula m = RRmatri.buscarMatricula(codigo);
-							  if(m != null) {
-								  Curso c = RRcurs.buscarCodigo(codigo);
-								  resultado += "\n\nCurso Matriculado: " + c.getAsignatura() + 
-                                          "\nCiclo: " + c.getCiclo();
-							  }
-							  txtS.setText(resultado);
-
-						  }
+			  case "CURSO":
+				  Curso c = ac.buscarCodigo(codigo);
+				  if(c != null) {
+					  resultado=">>>>>DATOS CURSO<<<<<" + "\n" +
+							  	"" + "\n" +
+							  	"Código \t: " + c.getCodCurso() + "\n" +
+							  	"Asignatura \t: " + c.getAsignatura() + "\n" +
+							  	"Ciclo \t: " + c.getCiclo() + "\n" +
+							  	"Créditos \t: " + c.getCreditos() + "\n" +
+							  	"Horas \t: " + c.getHoras();
+					  txtS.append(resultado);
+				  }
+			  case "MATRICULA":
+				  Matricula m = am.buscarMatricula(codigo);
+				  if(m != null) {
+					  resultado = ">>>>>DATOS MATRICULA<<<<<" + "\n" +
+							  	"" + "\n" +
+							  	"Nombre \t: " + m.getNombres() + "\n" +
+							  	"Apellidos \t: " + m.getApellidos() + "\n" +
+							  	"Asignatura \t: " + m.getAsignatura();
+					  txtS.append(resultado);
+				  }
+			  }
+					  }catch(Exception x) {
+						  JOptionPane.showMessageDialog(null, "Ingrese un c�digo para buscar.");
+				            return;
 					  }
-							  }catch(Exception x) {
-								  JOptionPane.showMessageDialog(null, "Ingrese un c�digo para buscar.");
-						            return;
-							  }
-			}
-		});
 	}
 }
 
