@@ -116,11 +116,14 @@ en cada uno de los cursos
 				txtArea.append("Celular: " + a.getCelular() + "\n");
 				txtArea.append("DNI: " + a.getDni() + "\n");
 				txtArea.append("--------------------------\n");
-			} else {
-				txtArea.setText("");
-				txtArea.append("TODOS ESTAN MATRICULADOS");
-				
-			}
+			} 
+			
+		}
+		
+		if(txtArea.getText().isEmpty()){
+			txtArea.setText("");
+			txtArea.append("TODOS ESTAN MATRICULADOS");
+			
 		}
 	} 
 			
