@@ -43,6 +43,7 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 			DialogNuevaConsulta dialog = new DialogNuevaConsulta();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
+			dialog.setLocationRelativeTo(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -113,6 +114,7 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 			actionPerformedBtnBuscar(e);
 		}
 	}
+	
 	protected void actionPerformedBtnBuscar(ActionEvent e) {
 		  String categoria = (String) cmbBuscar.getSelectedItem();
 		  String codigoTexto = txtCodigo.getText().trim();
@@ -125,52 +127,108 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 			  String resultado = "";
 			  switch (categoria) {
 			  case "ALUMNO":
-				  txtS.setText("");
-				  Alumno a = aa.buscarCodigo(codigo);
-				  if(a != null) {
-					  resultado = ">>>>>DATOS ALUMNOS<<<<<" + "\n" +
-							  	"" + "\n" +
-							  "Nombre \t: " + a.getNombres() + "\n" +
-                              "Apellidos \t: " + a.getApellidos() + "\n" +
-                              "Edad \t: " + a.getEdad() +"\n" +
-                              "DNI \t: " + a.getDni() +"\n" +
-                              "Telefóno \t: " + a.getCelular();
-					  txtS.append(resultado);
-				  }
+				    Alumno a = aa.buscarCodigo(codigo);
+				    if (a != null) {
+				        resultado = ">>>>>DATOS ALUMNOS<<<<<\n\n" +
+				                    "Nombre \t: " + a.getNombres() + "\n" +
+				                    "Apellidos \t: " + a.getApellidos() + "\n" +
+				                    "Edad \t: " + a.getEdad() + "\n" +
+				                    "DNI \t: " + a.getDni() + "\n" +
+				                    "Teléfono \t: " + a.getCelular() + "\n" +
+				                    "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" + "\n" +
+				                    "CUSOS MATRICULADOS:" + "\n\n";
+				        
+				        for (int i = 0; i < am.tamanio(); i++) {
+				            if (am.obtener(i).getCodAlumno() == codigo) {
+				                Curso c1 = ac.buscarCodigo(am.obtener(i).getCodCurso());
+				                if (c1 != null) {
+				                    resultado += "Código de curso \t: " + c1.getCodCurso() +"\n" +
+										  		 "Asignatura \t\t: " + c1.getAsignatura() + "\n" +
+										  		 "Ciclo \t\t: " + c1.getCiclo() + "\n" +
+										  		 "Créditos \t\t: " + c1.getCreditos() + "\n" +
+										  		 "Horas \t\t: " + c1.getHoras()+ "\n" +
+				                    			 "**************************************************" + "\n";
+				                }
+				            }
+				        }
+
+				        txtS.append(resultado);
+				    } else {
+				        mensaje("Alumno no encontrado","Advertencia", JOptionPane.ERROR_MESSAGE);
+				    }
+				    break;
+			  //////////////////////////////////////////////
+
 			  case "CURSO":
-				  //txtS.setText("");
 				  Curso c = ac.buscarCodigo(codigo);
 				  if(c != null) {
-					  resultado=">>>>>DATOS CURSO<<<<<" + "\n" +
-							  	"" + "\n" +
-							  	"Código \t: " + c.getCodCurso() + "\n" +
-							  	"Asignatura \t: " + c.getAsignatura() + "\n" +
-							  	"Ciclo \t: " + c.getCiclo() + "\n" +
-							  	"Créditos \t: " + c.getCreditos() + "\n" +
-							  	"Horas \t: " + c.getHoras();
+					  resultado="Código de curso \t: " + c.getCodCurso() +"\n" +
+							  	"Asignatura \t\t: " + c.getAsignatura() + "\n" +
+							  	"Ciclo \t\t: " + c.getCiclo() + "\n" +
+							  	"Créditos \t\t: " + c.getCreditos() + "\n" +
+							  	"Horas \t\t: " + c.getHoras()+ "\n";
 					  txtS.append(resultado);
+				  }else {
+					  mensaje("Matricula no encontrado","Advertencia", JOptionPane.ERROR_MESSAGE);
 				  }
+				  break;
+				  
+			  //////////////////////////////////////////////	
+			    
 			  case "MATRICULA":
 				  Matricula m = am.buscarMatricula(codigo);
 				  if(m != null) {
-					  Alumno alu = aa.buscarCodigo(m.getCodAlumno());
-					  Curso cur = ac.buscarCodigo(m.getCodCurso());
+					  Alumno a2 = aa.buscarCodigo(m.getCodAlumno());
+					  resultado = ">>>>> DATOS DE LA MATRÍCULA <<<<<" + "\n\n" +
+							  	  "Código Matricula \t: " + m.getNumMatricula() + "\n" +
+							  	  "Codigo Alumno \t\t: "+ a2.getCodAlumno() + "\n" +
+			                      "Nombre \t\t: " + a2.getNombres() + "\n" +
+			                      "Apellidos \t\t: " + a2.getApellidos() + "\n" +
+			                      "Edad \t\t: " + a2.getEdad() + "\n" +
+			                      "DNI \t\t: " + a2.getDni() + "\n" +
+			                      "Teléfono \t\t: " + a2.getCelular() + "\n" +
+			                      "--------------------------------------------------\n\n" +
+			                      "CUSOS MATRICULADOS:" + "\n\n";
 					  
-					  resultado = ">>>>>DATOS MATRICULA<<<<<" + "\n" +
-							  	"" + "\n" +
-							  	"Nombre \t: " + alu.getNombres() + "\n" +
-							  	"Apellidos \t: " + alu.getApellidos() + "\n" +
-							  	"Asignatura \t: " + cur.getAsignatura();
-					  txtS.append(resultado);
+					  for (int i = 0; i < am.tamanio(); i++) {
+				            if (am.obtener(i).getCodAlumno() == a2.getCodAlumno()) {
+				                Curso c2 = ac.buscarCodigo(am.obtener(i).getCodCurso());
+				                if (c2 != null) {
+				                    resultado += "Código de curso \t: " + c2.getCodCurso() +"\n" +
+										  		 "Asignatura \t\t: " + c2.getAsignatura() + "\n" +
+										  		 "Ciclo \t\t: " + c2.getCiclo() + "\n" +
+										  		 "Créditos \t\t: " + c2.getCreditos() + "\n" +
+										  		 "Horas \t\t: " + c2.getHoras()+ "\n" +
+										  		 "Fecha matrícula \t: " + am.obtener(i).getFecha() + "\n" +
+				                                 "Hora matrícula \t\t: " + am.obtener(i).getHora()+ "\n" +
+				                    			 "**************************************************" + "\n";
+				                }
+				            }
+				        }
+					  txtS.setText(resultado);
+				  }else {
+					  mensaje("Matricula no encontrado","Advertencia", JOptionPane.ERROR_MESSAGE);
 				  }
+				  break;
 			  }
-					  }catch(Exception x) {
-						  JOptionPane.showMessageDialog(null, "Ingrese un c�digo para buscar.");
-				            return;
-					  }
+		 }catch(Exception x) {
+			 JOptionPane.showMessageDialog(null, "Ingrese un c�digo para buscar.");
+					 return;
+		}
 	}
+	
 	protected void actionPerformedBtnLimpiar(ActionEvent e) {
-		txtS.setText("");
+		limpiar();
 	}
+	
+	void limpiar() {
+		txtS.setText("");
+		txtCodigo.setText("");
+	}
+	void mensaje(String s, String titulo, int tipo) {
+		JOptionPane.showMessageDialog(null, s, titulo, tipo);
+	}
+	
+	
 }
 

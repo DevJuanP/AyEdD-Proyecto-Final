@@ -75,6 +75,7 @@ import arreglos.ArreglosMatricula;
 		private JTable TablaMatricula;
 		private JButton btnAdicionar;
 		private JButton btnModificar;
+		private JButton btnGuardar;
 		private JButton btnEliminar;
 		private DefaultTableModel modeloMatricula;
 		private JPanel panelConsulta;
@@ -403,7 +404,6 @@ import arreglos.ArreglosMatricula;
 		ArreglosMatricula am = new ArreglosMatricula();
 		ArreglosAlumno aa = new ArreglosAlumno();
 		ArreglosCursos ac = new ArreglosCursos();
-		private JButton btnGuardar;
 		
 	
 	
