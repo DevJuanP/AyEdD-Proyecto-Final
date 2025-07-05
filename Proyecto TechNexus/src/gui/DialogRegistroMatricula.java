@@ -19,8 +19,10 @@
 	import javax.swing.JScrollPane;
 	import javax.swing.JTable;
 	import javax.swing.table.DefaultTableModel;
-	
-	import arreglos.ArreglosMatricula;
+
+import arreglos.ArreglosAlumno;
+import arreglos.ArreglosCursos;
+import arreglos.ArreglosMatricula;
 	import clases.Alumno;
 	import clases.Curso;
 	import clases.Matricula;
@@ -399,30 +401,27 @@
 		
 		//Globalizacion
 		ArreglosMatricula am = new ArreglosMatricula();
+		ArreglosAlumno aa = new ArreglosAlumno();
+		ArreglosCursos ac = new ArreglosCursos();
 		private JButton btnGuardar;
 		
 	
 	
 		protected void actionPerformedBtnAdicionar(ActionEvent e) {
 			try {
-				if (TXTcodigoMatricula.getText().trim().isEmpty()) {
-					JOptionPane.showMessageDialog(this, "Presiona el botón NUEVO para generar el código de matrícula.");
-					return;
-				}
-
-				int numMatricula = Integer.parseInt(TXTcodigoMatricula.getText().trim());
+				int numMatricula =am.generateCod();
+				TXTcodigoMatricula.setText(""+numMatricula);
 				int codAlumno = Integer.parseInt(TXTcodigoAlum.getText().trim());
 				int codCurso = Integer.parseInt(TXTcodigoCurso.getText().trim());
-				String nombres = TXTnombres.getText().trim();
-				String apellidos = TXTapellidos.getText().trim();
-				String asignatura = txtAsignatura.getText().trim();
-				String fecha = TXTfecha.getText().trim();
-				String hora = txtHora.getText().trim();
+				
+				if(matchAlumnoCurso(codAlumno, codCurso)) {
+					JOptionPane.showMessageDialog(this, "Alumno ya matriculado en este curso","Advertencia",JOptionPane.WARNING_MESSAGE);
+				}
 				
 				int estado = 1;
-				TXTestado.getText().trim().toLowerCase();
-				
-				am.adicionarMatricula(new Matricula(numMatricula, codAlumno, codCurso, nombres, apellidos, asignatura, fecha, hora, estado));
+				aa.buscarCodigo(codAlumno).setEstado(estado);
+				aa.actualizarArchivo();
+				am.adicionarMatricula(new Matricula(numMatricula, codAlumno, codCurso));
 				listar();
 				limpiar();
 
@@ -435,6 +434,13 @@
 				e2.printStackTrace();
 			} 
 		}
+		
+		private boolean matchAlumnoCurso(int CodAlu, int CodCurso) {
+			for(Matricula m : am.getMatricula001()) {
+				if(m.getCodAlumno() == CodAlu && m.getCodCurso() == CodCurso) return true;
+			}
+			return false;
+		}
 
 		
 		protected void actionPerformedBtnModificar(ActionEvent e) {
@@ -446,16 +452,28 @@
 				}else {
 					respuesta=JOptionPane.showConfirmDialog(this, "¿Desea modificar este registro?","Modificar",JOptionPane.YES_NO_OPTION);
 					if(respuesta == JOptionPane.YES_NO_OPTION) {
-						TXTcodigoMatricula.setText(String.valueOf(TablaMatricula.getValueAt(fila, 0)));  
-						TXTcodigoAlum.setText(String.valueOf(TablaMatricula.getValueAt(fila, 1)));    
-						TXTcodigoCurso.setText(String.valueOf(TablaMatricula.getValueAt(fila, 2)));    
-						TXTnombres.setText(String.valueOf(TablaMatricula.getValueAt(fila, 3)));      
-						TXTapellidos.setText(String.valueOf(TablaMatricula.getValueAt(fila, 4)));    
-						txtAsignatura.setText(String.valueOf(TablaMatricula.getValueAt(fila, 5)));    
-						TXTfecha.setText(String.valueOf(TablaMatricula.getValueAt(fila, 6)));          
-						txtHora.setText(String.valueOf(TablaMatricula.getValueAt(fila, 7)));           
-						TXTestado.setText(String.valueOf(TablaMatricula.getValueAt(fila, 8)));
+						//alumno
+						int CodMatr = Integer.parseInt(TablaMatricula.getValueAt(fila, 0).toString());
+						int CodAlum = Integer.parseInt(TablaMatricula.getValueAt(fila, 1).toString());
+						int CodCurs = Integer.parseInt(TablaMatricula.getValueAt(fila, 2).toString());
+
+						Alumno a = aa.buscarCodigo(CodAlum);
+						Curso c = ac.buscarCodigo(CodCurs);
+						Matricula m = am.buscarMatricula(CodMatr);
+						
+						
+						TXTcodigoMatricula.setText(""+CodMatr);  
+						TXTcodigoAlum.setText(""+CodAlum);    
+						TXTcodigoCurso.setText(""+CodCurs);    
+						TXTnombres.setText(a.getNombres());      
+						TXTapellidos.setText(a.getApellidos());    
+						txtAsignatura.setText(c.getAsignatura());    
+						TXTfecha.setText(m.getFecha());          
+						txtHora.setText(m.getHora());           
+						TXTestado.setText(""+a.getEstado());
+						
 						ocultarCajas();
+						
 						modeloMatricula = (DefaultTableModel) TablaMatricula.getModel();
 						modeloMatricula.removeRow(fila);
 					}
@@ -529,17 +547,31 @@
 		 void listar() {
 			 modeloMatricula.setRowCount(0);
 			 for (int i = 0; i < am.tamanio(); i++) {
-				Object[] fila = {
-						am.obtener(i).getNumMatricula(),
-						am.obtener(i).getCodAlumno(),
-						am.obtener(i).getCodCurso(),
-						am.obtener(i).getNombres(),
-						am.obtener(i).getApellidos(),
-						am.obtener(i).getAsignatura(),
-						am.obtener(i).getFecha(),
-						am.obtener(i).getHora(),
-						am.obtener(i).getEstado(),};
-				modeloMatricula.addRow(fila);
+				 int NumMatricula = am.obtener(i).getNumMatricula();
+				 int CodAlumno = am.obtener(i).getCodAlumno();
+				 int CodCurso = am.obtener(i).getCodCurso();
+				 
+				 Alumno a = aa.buscarCodigo(CodAlumno);
+				 Curso c = ac.buscarCodigo(CodCurso);
+				 
+				 if(a != null && c != null) {
+					 String nombres = a.getNombres();
+					 String Apellidos = a.getApellidos();
+					 String Asignatura = c.getAsignatura();
+					 int Estado = a.getEstado();
+					 
+					 Object[] fila = {
+							 NumMatricula,
+							 CodAlumno,
+							 CodCurso,
+							 nombres,
+							 Apellidos,
+							 Asignatura,
+							 am.obtener(i).getFecha(),
+							 am.obtener(i).getHora(),
+							 Estado,};
+					 modeloMatricula.addRow(fila);
+				 } 
 			}
 		 }
 		 void limpiar() {

@@ -16,6 +16,20 @@ public class ArreglosMatricula {
 		cargarMatricula();
 	}
 	
+	
+	
+	public ArrayList<Matricula> getMatricula001() {
+		return matricula001;
+	}
+
+
+
+	public void setMatricula001(ArrayList<Matricula> matricula001) {
+		this.matricula001 = matricula001;
+	}
+
+
+
 	public void adicionarMatricula(Matricula M) {
 		matricula001.add(M);
 		grabarMatricula();
@@ -42,7 +56,11 @@ public class ArreglosMatricula {
 	}
 	
 	public int generateCod() {
-		return tamanio()+100001;
+		int nextCod = tamanio()+100001;
+		while(buscarMatricula(nextCod)!=null) {
+			nextCod++;
+		}
+		return nextCod;
 	}
 	
 	public void Eliminar(Matricula M) {

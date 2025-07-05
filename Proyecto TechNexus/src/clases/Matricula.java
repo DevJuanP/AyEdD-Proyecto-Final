@@ -30,6 +30,14 @@ public class Matricula {
         this.hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
     	this.estado = estado;
 	}
+	
+	public Matricula(int numMatricula, int codAlumno, int codCurso) {
+		this.numMatricula = numMatricula;
+		this.codAlumno = codAlumno;
+		this.codCurso = codCurso;
+		this.fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        this.hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+	}
 
 
 	//get y set
