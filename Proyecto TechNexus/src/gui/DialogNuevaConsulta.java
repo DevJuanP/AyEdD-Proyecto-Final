@@ -78,6 +78,7 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 		contentPanel.add(btnBuscar);
 		
 		btnLimpiar = new JButton("LIMPIAR");
+		btnLimpiar.addActionListener(this);
 		btnLimpiar.setBounds(363, 60, 129, 21);
 		contentPanel.add(btnLimpiar);
 		
@@ -105,6 +106,9 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 	ArreglosCursos ac = new ArreglosCursos();
 	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnLimpiar) {
+			actionPerformedBtnLimpiar(e);
+		}
 		if (e.getSource() == btnBuscar) {
 			actionPerformedBtnBuscar(e);
 		}
@@ -121,6 +125,7 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 			  String resultado = "";
 			  switch (categoria) {
 			  case "ALUMNO":
+				  txtS.setText("");
 				  Alumno a = aa.buscarCodigo(codigo);
 				  if(a != null) {
 					  resultado = ">>>>>DATOS ALUMNOS<<<<<" + "\n" +
@@ -133,6 +138,7 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 					  txtS.append(resultado);
 				  }
 			  case "CURSO":
+				  //txtS.setText("");
 				  Curso c = ac.buscarCodigo(codigo);
 				  if(c != null) {
 					  resultado=">>>>>DATOS CURSO<<<<<" + "\n" +
@@ -147,11 +153,14 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 			  case "MATRICULA":
 				  Matricula m = am.buscarMatricula(codigo);
 				  if(m != null) {
+					  Alumno alu = aa.buscarCodigo(m.getCodAlumno());
+					  Curso cur = ac.buscarCodigo(m.getCodCurso());
+					  
 					  resultado = ">>>>>DATOS MATRICULA<<<<<" + "\n" +
 							  	"" + "\n" +
-							  	"Nombre \t: " + m.getNombres() + "\n" +
-							  	"Apellidos \t: " + m.getApellidos() + "\n" +
-							  	"Asignatura \t: " + m.getAsignatura();
+							  	"Nombre \t: " + alu.getNombres() + "\n" +
+							  	"Apellidos \t: " + alu.getApellidos() + "\n" +
+							  	"Asignatura \t: " + cur.getAsignatura();
 					  txtS.append(resultado);
 				  }
 			  }
@@ -159,6 +168,9 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 						  JOptionPane.showMessageDialog(null, "Ingrese un c�digo para buscar.");
 				            return;
 					  }
+	}
+	protected void actionPerformedBtnLimpiar(ActionEvent e) {
+		txtS.setText("");
 	}
 }
 
