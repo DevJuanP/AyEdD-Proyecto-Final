@@ -99,6 +99,8 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 	ArreglosAlumno aa = new ArreglosAlumno();
 	ArreglosMatricula am = new ArreglosMatricula();
 	ArreglosCursos ac = new ArreglosCursos();
+	ArreglosRetiro ar = new ArreglosRetiro();
+	
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnBuscar) {
@@ -209,6 +211,40 @@ public class DialogNuevaConsulta extends JDialog implements ActionListener {
 					  mensaje("Matricula no encontrado","Advertencia", JOptionPane.ERROR_MESSAGE);
 				  }
 				  break;
+				  
+			  case "RETIRO":
+				  Retiro r = ar.buscar(codigo);
+				  if(r != null) {
+					  Alumno a3 = aa.buscarCodigo(r.getCodRetiro());
+					  resultado = "DATOS DE LA MATRÍCULA" + "\n\n" +
+							  	  "→  Código Matricula \t: " + r + "\n" +
+							  	  "→  Codigo Alumno \t: "+ a3.getCodAlumno() + "\n" +
+			                      "→  Nombre \t\t: " + a3.getNombres() + "\n" +
+			                      "→  Apellidos \t\t: " + a3.getApellidos() + "\n" +
+			                      "→  Edad \t\t: " + a3.getEdad() + "\n" +
+			                      "→  DNI \t\t: " + a3.getDni() + "\n" +
+			                      "→  Teléfono \t\t: " + a3.getCelular() + "\n" +
+			                      "--------------------------------------------------\n\n" +
+			                      "CUSOS RETIRADOS:" + "\n\n";
+					  
+					  for (int i = 0; i < am.tamanio(); i++) {
+						 Retiro r2 = ar.obtener(i);
+				            if (r2.getCodAlumno() == a3.getCodAlumno()) {
+				                Curso c3 = ac.buscarCodigo(am.obtener(i).getCodCurso());
+				                if (c3 != null) {
+				                    resultado += "→  Código de curso \t: " + c3.getCodCurso() +"\n" +
+										  		 "→  Asignatura \t\t: " + c3.getAsignatura() + "\n" +
+										  		 "→  Ciclo \t\t: " + c3.getCiclo() + "\n" +
+										  		 "→  Créditos \t\t: " + c3.getCreditos() + "\n" +
+										  		 "→  Horas \t\t: " + c3.getHoras()+ "\n" +
+										  		 "→  Fecha matrícula \t: " + m2.getFecha() + "\n" +
+				                                 "→  Hora matrícula \t: " + m2.getHora()+ "\n" +
+				                    			 "**************************************************" + "\n";
+				                }
+				            }
+				        }
+				  }
+				  
 			  }
 		 }catch(Exception x) {
 			 JOptionPane.showMessageDialog(null, "Ingrese un c�digo para buscar.");
